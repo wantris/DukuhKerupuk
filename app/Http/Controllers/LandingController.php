@@ -10,4 +10,14 @@ class LandingController extends Controller
     {
         return view('welcome');
     }
+
+    public function mitra()
+    {
+        return view('landing.mitra');
+    }
+
+    public function agen()
+    {
+        return view('landing.agen');
+    }
 }
