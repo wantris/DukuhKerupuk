@@ -16,4 +16,9 @@ class AuthKonsumenController extends Controller
     {
         return view('konsumen.auth.login');
     }
+
+    public function verificationView()
+    {
+        return view('konsumen.auth.verification');
+    }
 }

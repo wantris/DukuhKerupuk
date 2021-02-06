@@ -550,6 +550,127 @@ section.login-mitra {
     max-width: 170px;
 }
 
+.profil-review-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+}
+
+.mitra-shop {
+    margin-top: 60px;
+    margin-bottom: 60px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+.mitra-shop:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.chat-mitra-btn {
+    height: 34px;
+    margin-right: 10px;
+    padding: 5px 15px;
+    min-width: 60px;
+    max-width: 190px;
+    background: rgba(161, 252, 152, 0.1);
+    border: 1px solid #25c666;
+    box-shadow: 0 1px 1px 0 rgb(0 0 0 / 3%);
+    color: #25c666;
+    font-size: 14px;
+}
+
+.shop-mitra-btn {
+    height: 34px;
+    margin-right: 10px;
+    padding: 5px 15px;
+    min-width: 60px;
+    max-width: 190px;
+    background: rgba(142, 155, 248, 0.1);
+    border: 1px solid #05386b;
+    box-shadow: 0 1px 1px 0 rgb(0 0 0 / 3%);
+    color: #05386b;
+    font-size: 14px;
+}
+
+.shop-mitra-btn:hover {
+    color: #05386b;
+    border: 1px solid #05386b;
+}
+
+.view-mitra {
+    font-size: 1.275rem;
+}
+
+.mitra-bannder-detail {
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s; */
+}
+
+.card-banner-mitra-detail {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    padding: 0px 40px;
+}
+
+.profil-mitra {
+    width: 100%;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+    background: #fff;
+    border-radius: 10px;
+    min-height: 100px;
+}
+
+.mitra-category-page {
+    border-bottom: 3px solid #25c666;
+}
+
+.link-title a {
+    color: #25c666;
+    text-decoration: none !important;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.sort-product {
+    height: 40px !important;
+    border-radius: 5px;
+    font-size: 14px;
+    padding-right: 5px;
+}
+
+.minus-btn {
+    width: 40px;
+    height: 40px;
+    background-color: #3e549b;
+    color: #fff;
+    border: none;
+}
+
+.minus-btn:hover {
+    background-color: #25c666;
+}
+
+.quantity {
+    width: 70px;
+    height: 40px;
+    background-color: #fff;
+    border: 1px solid #999;
+    text-align: center;
+    -moz-appearance: textfield;
+}
+
+/* Chrome, Safari, Edge, Opera */
+.quantity::-webkit-outer-spin-button,
+.quantity::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.type-checkout {
+    font-size: 15px !important;
+}
+
 .masonry-wrapper .grid-item .grid-item__inner,
 .setting .grid-item .grid-item__inner {
     position: relative;

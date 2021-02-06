@@ -20,4 +20,9 @@ class LandingController extends Controller
     {
         return view('landing.agen');
     }
+
+    public function detailMitra()
+    {
+        return view('landing.detail_mitra');
+    }
 }

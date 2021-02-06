@@ -33,3 +33,20 @@ Route::get('/login/mitra', 'Mitra\AuthMitraController@loginMitra')->name('login.
 Route::get('/register/konsumen', 'Konsumen\AuthKonsumenController@registerMitra')->name('register.konsumen');
 Route::get('/verification/konsumen', 'Konsumen\AuthKonsumenController@verificationView')->name('verification.konsumen');
 Route::get('/login/konsumen', 'Konsumen\AuthKonsumenController@loginKonsumen')->name('login.konsumen');
+
+// Produk Landing
+Route::get('/produk', 'ProdukController@listProduk')->name('produk');
+Route::get('/produk/detail', 'ProdukController@detailProduk')->name('detail.produk');
+
+
+//Mitra landing
+Route::get('/mitra/detail', 'LandingController@detailMitra')->name('detail.mitra');
+
+//keranjang
+Route::get('/cart', 'Konsumen\KeranjangController@index')->name('keranjang.index');
+
+Route::group(['prefix' => 'checkout'], function () {
+
+    Route::get('/', 'Konsumen\CheckoutController@index');
+    Route::get('/cities/{province_id}', 'Konsumen\CheckoutController@getCities');
+});
