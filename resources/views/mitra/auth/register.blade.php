@@ -48,7 +48,7 @@
                             </div>
                             <div class="row mt-3">
                                 <div class="col-12 text-center">
-                                    <span style="color: #25c666; font-size:15px">Sudah punya akun? <a href="{{route('login.mitra')}}" style="text-decoration: none; color:#05386b">Login</a> </span>
+                                    <span style="color: #7fad39; font-size:15px">Sudah punya akun? <a href="{{route('login.mitra')}}" style="text-decoration: none; color:#05386b">Login</a> </span>
                                 </div>
                             </div>
                         </div>

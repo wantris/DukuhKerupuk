@@ -9,11 +9,11 @@ class ProdukController extends Controller
 
     public function listProduk()
     {
-        return view('landing.list_produk');
+        return view('landing.product_list');
     }
 
     public function detailProduk()
     {
-        return view('landing.detail_produk');
+        return view('landing.product_detail');
     }
 }

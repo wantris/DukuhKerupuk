@@ -473,7 +473,7 @@
 }
 
 .form-control-register:focus {
-    border: 1px solid #25c666;
+    border: 1px solid #7fad39;
 }
 
 .control-label {
@@ -482,7 +482,7 @@
     opacity: 0;
     bottom: 1.9rem;
     margin-bottom: 20px;
-    color: #25c666;
+    color: #7fad39;
     transition: 0.2s ease-in-out transform;
     font-size: 16px;
     font-weight: 500;
@@ -490,7 +490,7 @@
 
 .verif-label {
     display: block;
-    color: #25c666;
+    color: #7fad39;
     font-size: 16px;
     font-weight: 500;
 }
@@ -518,8 +518,8 @@
     width: 100%;
     height: 44px;
     color: #fff;
-    border: 2px solid #25c666;
-    background: #25c666;
+    border: 2px solid #7fad39;
+    background: #7fad39;
     border-radius: 5px;
 }
 
@@ -536,12 +536,12 @@ section.login-mitra {
 .login-mitra-banner {
     font-size: 35px;
     font-weight: 700;
-    color: #25c666;
+    color: #7fad39;
 }
 
 .universal-link {
     text-decoration: none;
-    color: #25c666;
+    color: #7fad39;
     font-size: 13px;
     font-weight: 500;
 }
@@ -574,9 +574,9 @@ section.login-mitra {
     min-width: 60px;
     max-width: 190px;
     background: rgba(161, 252, 152, 0.1);
-    border: 1px solid #25c666;
+    border: 1px solid #7fad39;
     box-shadow: 0 1px 1px 0 rgb(0 0 0 / 3%);
-    color: #25c666;
+    color: #7fad39;
     font-size: 14px;
 }
 
@@ -1862,6 +1862,9 @@ body {
         float: none;
         left: 0;
         max-width: 300px;
+    }
+    .product_title_fav {
+        font-size: 12px !important;
     }
     .ps-products-wrap .ps-products {
         width: 100%;

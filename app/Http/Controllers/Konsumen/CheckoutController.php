@@ -13,7 +13,7 @@ class CheckoutController extends Controller
     {
 
         $province = Province::all();
-        return view('konsumen.checkout', compact('province'));
+        return view('konsumen.checkout_page', compact('province'));
     }
 
     public function getCities($id)

@@ -2,7 +2,7 @@
     <header class="header">
       <nav class="navigation" >
         <div class="container-fluid">
-          <div class="navigation__column left border" style="">
+          <div class="navigation__column left" style="">
             <div class="header__logo"><a class="ps-logo" href="index.html" style="font-size: 25px;"><span style="color: #002e5b;font-family: 'B612', sans-serif; "><b>Dukuh</b></span><span style="color: #fff;font-family: 'B612', sans-serif; "> <b>Kerupuk</b></span></a></div>
           </div>
           <div class="navigation__column center" style="">

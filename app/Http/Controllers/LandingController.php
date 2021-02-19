@@ -8,7 +8,7 @@ class LandingController extends Controller
 {
     public function index()
     {
-        return view('welcome');
+        return view('home');
     }
 
     public function mitra()
@@ -24,5 +24,15 @@ class LandingController extends Controller
     public function detailMitra()
     {
         return view('landing.detail_mitra');
+    }
+
+    public function produkMitra()
+    {
+        return view('landing.produk_mitra');
+    }
+
+    public function produkMitraFav()
+    {
+        return view('landing.produk_mitra_fav');
     }
 }
