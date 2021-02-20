@@ -34,6 +34,13 @@ Route::group(['prefix' => 'konsumen'], function () {
     Route::get('/verification', 'Konsumen\AuthKonsumenController@verificationView')->name('verification.konsumen');
     Route::get('/login', 'Konsumen\AuthKonsumenController@loginKonsumen')->name('login.konsumen');
 
+    // account
+    Route::get('/account/profil', 'Konsumen\KonsumenController@profile')->name('profile.konsumen');
+    Route::get('/account/alamat', 'Konsumen\KonsumenController@address')->name('address.konsumen');
+    Route::get('/account/password', 'Konsumen\KonsumenController@changePassword')->name('password.konsumen');
+    Route::get('/account/purchase/type/{type}', 'Konsumen\KonsumenController@purchase')->name('purchase.konsumen');
+    Route::get('/account/cities/{province_id}', 'Konsumen\CheckoutController@getCities');
+
     //keranjang
     Route::get('/cart', 'Konsumen\KeranjangController@index')->name('cart.index');
 });

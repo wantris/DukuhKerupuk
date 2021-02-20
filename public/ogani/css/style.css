@@ -219,6 +219,56 @@ section.login-mitra {
 }
 /* end login mitra */
 
+.link-account-profile:hover,
+.link-account-profile,
+.link-account-profile:focus {
+    text-decoration: none !important;
+    color: #7fad39;
+}
+
+.circle-icon {
+    background: #7fad39;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 100px;
+    vertical-align: middle;
+    padding: 9px;
+    font-size: 13px;
+}
+.child-link {
+    margin-left: 50px;
+}
+
+.profile-header {
+    color: #7fad39;
+    font-size: 20px;
+}
+.profile-title {
+    font-size: 13px;
+}
+
+.form-control:focus {
+    border-color: #7fad39;
+
+    box-shadow: 0 0 8px rgba(127, 173, 57, 1);
+}
+
+.link-account-child:hover,
+.link-account-child:focus {
+    color: #7fad39 !important;
+}
+
+.change-profile-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
+.image-rule {
+    font-size: 14px;
+}
+
 /* detail produk */
 .total-like-user-main a {
     display: inline-block;
@@ -275,6 +325,7 @@ section.login-mitra {
     right: 15px;
     z-index: 999;
 }
+
 .offer-dedicated-nav .nav-link.active,
 .offer-dedicated-nav .nav-link:hover,
 .offer-dedicated-nav .nav-link:focus {
@@ -467,6 +518,10 @@ img {
     .view-mitra {
         font-size: 0.9rem;
     }
+}
+
+.address-header {
+    font-size: 20px;
 }
 
 input:focus,

@@ -6,3 +6,4 @@
 <link rel="stylesheet" href="{{url("ogani/css/owl.carousel.min.css")}}" type="text/css">
 <link rel="stylesheet" href="{{url("ogani/css/slicknav.min.css")}}" type="text/css">
 <link rel="stylesheet" href="{{url("ogani/css/style.css")}}" type="text/css">
+<link rel="stylesheet" href="{{url("ogani/icofont/icofont.min.css")}}" type="text/css">
