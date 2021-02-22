@@ -60,6 +60,9 @@ Route::group(['prefix' => 'mitra'], function () {
     Route::get('/register', 'Mitra\AuthMitraController@registerMitra')->name('register.mitra');
     Route::get('/verification', 'Mitra\AuthMitraController@verificationView')->name('verification.mitra');
     Route::get('/login', 'Mitra\AuthMitraController@loginMitra')->name('login.mitra');
+
+    // portal mitra
+    Route::get('/portal', 'Mitra\MitraController@index')->name('portal.mitra');
 });
 
 

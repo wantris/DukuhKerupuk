@@ -150,7 +150,7 @@
                             </div>
                         </div>
                         <div class="sidebar__item">
-                            <a href="#" class="link-account-profile" style="text-decoration: none" >
+                            <a href="{{route('purchase.konsumen', 1)}}" class="link-account-profile" style="text-decoration: none" >
                                 <i class="icofont-notepad circle-icon text-white mr-3"></i>
                                 Pesanan Saya
                             </a>

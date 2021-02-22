@@ -28,17 +28,17 @@ class KonsumenController extends Controller
 
     public function purchase($type)
     {
-        if ($type === 1) {
+        if ($type === "1") {
             return view('konsumen.purchase.index');
-        } elseif ($type === 2) {
+        } elseif ($type === "2") {
             return view('konsumen.purchase.unpaid');
-        } elseif ($type === 3) {
+        } elseif ($type === "3") {
             return view('konsumen.purchase.packed');
-        } elseif ($type === 4) {
+        } elseif ($type === "4") {
             return view('konsumen.purchase.sent');
-        } elseif ($type === 5) {
+        } elseif ($type === "5") {
             return view('konsumen.purchase.finish');
-        } elseif ($type === 6) {
+        } elseif ($type === "6") {
             return view('konsumen.purchase.canceled');
         }
     }
