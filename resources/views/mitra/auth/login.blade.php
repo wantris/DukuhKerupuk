@@ -31,7 +31,7 @@
                             </div>
                             <div class="row mt-5">
                                 <div class="col-12 text-left mt-4" style="padding: 0 35px">
-                                    <span style="color:  #05386b; font-size:14px" >Belum punya akun? <a href="" class="universal-link"> Daftar Sekarang</a> </span>
+                                    <span style="color:  #05386b; font-size:14px" >Belum punya akun? <a href="{{route('register.mitra')}}" class="universal-link"> Daftar Sekarang</a> </span>
                                 </div>
                             </div>
                             <div class="row">

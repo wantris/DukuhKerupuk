@@ -130,7 +130,7 @@
                 <div class="grid-item nike">
                   <div class="grid-item__content-wrapper">
                     <div class="ps-shoe mb-30">
-                      <div class="ps-shoe__thumbnail"><a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a><img src="{{("assets-user/upload-produk/kerupuk2.jpeg")}}" alt=""><a class="ps-shoe__overlay" href="product-detail.html"></a>
+                      <div class="ps-shoe__thumbnail"><a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a><img src="{{("assets-user/upload-produk/kerupuk2.jpeg")}}" alt=""><a class="ps-shoe__overlay" href="{{route('detail.produk')}}"></a>
                       </div>
                       <div class="ps-shoe__content">
                         <div class="ps-shoe__variants">

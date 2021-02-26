@@ -10,9 +10,15 @@
     "require": {
         "php": "^7.1.3",
         "fideloper/proxy": "^4.0",
+        "kavist/rajaongkir": "1.1",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
-        "realrashid/sweet-alert": "^3.2"
+        "o2system/curl": "^2.2",
+        "o2system/gear": "^2.1",
+        "o2system/kernel": "^2.0",
+        "o2system/psr": "^1.2",
+        "o2system/spl": "^1.2",
+        "steevenz/rajaongkir": "^2.2"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

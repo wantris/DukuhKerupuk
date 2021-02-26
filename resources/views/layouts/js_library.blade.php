@@ -23,4 +23,5 @@
   <script type="text/javascript" src="{{url("user/plugins/revolution/js/extensions/revolution.extension.parallax.min.js")}}"></script>
   <script type="text/javascript" src="{{url("user/plugins/revolution/js/extensions/revolution.extension.actions.min.js")}}"></script>
   <script type="text/javascript" src="{{url("user/plugins/revolution/js/extensions/revolution.extension.kenburn.min.js")}}"></script>
-  <script type="text/javascript" src="{{url("user/plugins/revolution/js/extensions/revolution.extension.migration.min.js")}}"></script> 
+  <script type="text/javascript" src="{{url("user/plugins/revolution/js/extensions/revolution.extension.migration.min.js")}}"></script>
+  <script type="text/javascript" src="{{url("user/js/main.js")}}"></script> 
