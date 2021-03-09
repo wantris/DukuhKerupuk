@@ -18,8 +18,8 @@ class CreateMitraTable extends Migration
             $table->string('nama_mitra', 100);
             $table->string('username')->unique();
             $table->string('password');
-            $table->string('alamat_mitra', 100);
-            $table->string('no_tlp',12);
+            $table->boolean('isVerified')->default(false);
+            $table->string('no_tlp', 13)->unique();
             $table->timestamps();
         });
     }

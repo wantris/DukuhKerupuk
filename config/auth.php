@@ -46,6 +46,14 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+        'mitra'  => [
+            'driver'  => 'session',
+            'provider' => 'mitra',
+        ],
+        'users'  => [
+            'driver'  => 'session',
+            'provider' => 'users',
+        ],
     ],
 
     /*
@@ -70,6 +78,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
+        'mitra' => [
+            'driver' => 'eloquent',
+            'model'  => App\Mitra::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
@@ -93,8 +105,8 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'user' => [
+            'provider' => 'user',
             'table' => 'password_resets',
             'expire' => 60,
         ],

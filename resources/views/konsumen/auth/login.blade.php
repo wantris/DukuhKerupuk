@@ -1,92 +1,94 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login Akun dukuhkerupuk | Dukuhkerupuk.com</title>
-    @include('layouts.head')
-    <style>
-        .login-mitra-banner{
-            color: #002e5b;
-        }
-        .control-label{
-            color: #002e5b;
-        }
-        .register-btn-mitra{
-            background-color: #002e5b;
-            border-color: #002e5b;
-        }
-        .form-control-register:focus {
-            border: 1px solid #05386b;
-        }
-    </style>
-</head>
-<body>
-    
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
 
-    <section class="login-mitra">
-        <div class="container">
+  <title>@yield('title')</title>
+
+  @include('mitra.layouts.head')
+
+</head>
+
+<body>
+    <div id="app">
+        <section class="section">
+          <div class="container mt-5">
             <div class="row">
-                <div class="col-12 text-center">
-                    <a class="ps-logo" href="index.html" style="font-size: 25px;"><span style="color: #002e5b;font-family: 'B612', sans-serif; "><b>Dukuh</b></span><span style="color: #25c666;font-family: 'B612', sans-serif; "> <b>Kerupuk</b></span></a>
+              <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+                <div class="login-brand">
+                  <img src="../dist/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
                 </div>
-                <div class="col-12 mt-5 text-center">
-                    <p class="login-mitra-title">Silahkan masuk ke dalam akun kamu</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card shadow register-card mx-auto" style="max-width: 500px">
-                        <div class="card-body">
-                            <div class="row mt-3 mb-5">
-                                <div class="col-12 text-center">
-                                    <h3 class="login-mitra-banner"> Konsumen </h3>
-                                </div>
-                            </div>
-                            <div class="row mt-5">
-                                <div class="col-12 text-left mt-4" style="padding: 0 35px">
-                                    <span style="color:  #05386b; font-size:14px" >Belum punya akun? <a href="" class="universal-link"> Daftar Sekarang</a> </span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 " style="padding: 0 35px; margin-bottom:40px; margin-top:40px">
-                                    <div class="input-wrapper">
-                                        <input type="text" id="input" class="form-control-register" placeholder="Nomor Telepon ">
-                                        <label for="input" class="control-label">Nomor Telepon</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 " style="padding: 0 35px;">
-                                    <div class="input-wrapper">
-                                        <input type="text" id="input" class="form-control-register" placeholder="Password ">
-                                        <label for="input" class="control-label">Password</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-5"  style="padding: 0 20px;">
-                                <div class="col-6" >
-                                    <label for=""  style="font-size: 13px">
-                                        <input type="checkbox" name="" id=""> Ingat Saya
-                                    </label>
-                                </div>
-                                <div class="col-6 text-right">
-                                    <a href="" class="universal-link">Lupa Password?</a>
-                                </div>
-                            </div>
-                            <div class="row mt-5 mb-5">
-                                <div class="col-12 text-center" style="padding: 0 35px">
-                                    <input type="submit" value="Login" class="register-btn-mitra">
-                                </div>
-                            </div>
+                @if (session()->has('verifySuccess'))
+                    <div class="alert alert-success alert-dismissible show fade">
+                        <div class="alert-body">
+                        <button class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                        {{Session::get('verifySuccess')}}.
                         </div>
                     </div>
+                @endif
+                <div class="card card-success">
+                  <div class="card-header"><h4 class="text-success">Login Konsumen</h4></div>
+                  <div class="card-body">
+                    <form method="POST" action="{{route('login.konsumen.post')}}" class="needs-validation" novalidate="">
+                      @csrf
+                      <div class="form-group">
+                        <label for="email">Username</label>
+                        <input id="email" type="text"  class="form-control" name="username" tabindex="1" required autofocus>
+                        <div class="invalid-feedback">
+                          Tolong input username kamu
+                        </div>
+                      </div>
+    
+                      <div class="form-group">
+                        <div class="d-block">
+                            <label for="password" class="control-label">Password</label>
+                          <div class="float-right">
+                            <a href="auth-forgot-password.html" class="text-small" style="color: #7fad39">
+                              Forgot Password?
+                            </a>
+                          </div>
+                        </div>
+                        <input id="password" type="password" class="form-control" name="password" tabindex="2" required>
+                        <div class="invalid-feedback">
+                          Tolong input password kamu
+                        </div>
+                      </div>
+    
+                      <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }} class="custom-control-input" tabindex="3" id="remember-me">
+                          <label class="custom-control-label" for="remember-me">Remember Me</label>
+                        </div>
+                      </div>
+    
+                      <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-lg btn-block" tabindex="4">
+                          Login
+                        </button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
+                <div class="mt-5 text-muted text-center">
+                  Belum punya akun Mitra? <a href="{{route('register.mitra')}}" style="color: #7fad39">Daftar Sekarang</a>
+                </div>
+                <div class="simple-footer">
+                  Copyright &copy; DukuhKerupuk 2021
+                </div>
+              </div>
             </div>
-        </div>
-    </section>
+          </div>
+        </section>
+      </div>
 
-    @include('layouts.js_library')
+  @include('mitra.layouts.js')
+
+  @stack('scripts')
+
+
 </body>
 </html>

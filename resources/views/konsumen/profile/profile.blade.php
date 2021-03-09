@@ -179,102 +179,123 @@
                             <hr>
                             <div class="row">
                                 <div class="col-12 col-lg-8 mb-5 border-right pr-5">
-                                    <div class="row mt-3">
-                                        <div class="col-4 text-right">
-                                            <label for="exampleInputEmail1" class="mt-1 text-secondary">Nomor Telepon</label>
+                                    <form action="{{route('profile.konsumen.update')}}" method="post">
+                                        @csrf
+                                        <div class="row mt-3">
+                                            <div class="col-4 text-right">
+                                                <label for="exampleInputEmail1" class="mt-1 text-secondary">Nomor Telepon</label>
+                                            </div>
+                                            <div class="col-8">
+                                                <input type="text" class="form-control" id="exampleInputEmail1" name="phone_number" value="{{$user->no_tlp}}" aria-describedby="emailHelp" disabled placeholder="Nomor Telepon">
+                                            </div>
                                         </div>
-                                        <div class="col-8">
-                                            <input type="text" class="form-control" id="exampleInputEmail1" name="phone" aria-describedby="emailHelp" placeholder="Nomor Telepon">
+                                        <div class="row mt-4">
+                                            <div class="col-4 text-right">
+                                                <label for="exampleInputEmail1" class="mt-1 text-secondary">Nama Lengkap</label>
+                                            </div>
+                                            <div class="col-8">
+                                                <input type="text" class="form-control" id="exampleInputEmail1" name="name" value="{{$user->nama_user}}" aria-describedby="emailHelp" placeholder="Nama Lengkap">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row mt-4">
-                                        <div class="col-4 text-right">
-                                            <label for="exampleInputEmail1" class="mt-1 text-secondary">Nama Lengkap</label>
+                                        <div class="row mt-4">
+                                            <div class="col-4 text-right">
+                                                <label for="exampleInputEmail1" class="mt-1 text-secondary">Email</label>
+                                            </div>
+                                            <div class="col-8">
+                                                <input type="email" class="form-control" id="exampleInputEmail1" name="email" value="{{$user->email}}" aria-describedby="emailHelp" placeholder="Email">
+                                            </div>
                                         </div>
-                                        <div class="col-8">
-                                            <input type="text" class="form-control" id="exampleInputEmail1" name="name" aria-describedby="emailHelp" placeholder="Nama Lengkap">
-                                        </div>
-                                    </div>
-                                    <div class="row mt-4">
-                                        <div class="col-4 text-right">
-                                            <label for="exampleInputEmail1" class="mt-1 text-secondary">Email</label>
-                                        </div>
-                                        <div class="col-8">
-                                            <input type="email" class="form-control" id="exampleInputEmail1" name="name" aria-describedby="emailHelp" placeholder="Email">
-                                        </div>
-                                    </div>
-                                    <div class="row mt-4">
-                                        <div class="col-4 text-right">
-                                            <label for="exampleInputEmail1" class="mt-1 text-secondary">Jenis Kelamin</label>
-                                        </div>
-                                        <div class="col-8">
-                                            <div class="row">
-                                                <div class="col-lg-6 col-12">
-                                                    <label class="custom-control fill-checkbox mr-3">
-                                                        <input type="radio" class="fill-control-input" name="gender" id="checkAll">
-                                                        <span class="fill-control-indicator"></span>
-                                                        Laki-laki
-                                                    </label>
-                                                </div>
-                                                <div class="col-lg-6 col-12">
-                                                    <label class="custom-control fill-checkbox mr-3"> 
-                                                        <input type="radio" class="fill-control-input" name="gender" id="checkAll">
-                                                        <span class="fill-control-indicator"></span>
-                                                        Perempuan
-                                                    </label>
-                                                </div>
-                                                <div class="col-lg-6 col-12">
-                                                    <label class="custom-control fill-checkbox">
-                                                        <input type="radio" class="fill-control-input" name="gender" id="checkAll">
-                                                        <span class="fill-control-indicator"></span>
-                                                        Lainnya
-                                                    </label>
+                                        <div class="row mt-4">
+                                            <div class="col-4 text-right">
+                                                <label for="exampleInputEmail1" class="mt-1 text-secondary">Jenis Kelamin</label>
+                                            </div>
+                                            <div class="col-8">
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-12">
+                                                        <label class="custom-control fill-checkbox mr-3">
+                                                            <input type="radio" class="fill-control-input" value="Laki-laki" name="gender" id="checkAll">
+                                                            <span class="fill-control-indicator"></span>
+                                                            Laki-laki
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-lg-6 col-12">
+                                                        <label class="custom-control fill-checkbox mr-3"> 
+                                                            <input type="radio" class="fill-control-input" value="Perempuan" name="gender" id="checkAll">
+                                                            <span class="fill-control-indicator"></span>
+                                                            Perempuan
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-lg-6 col-12">
+                                                        <label class="custom-control fill-checkbox">
+                                                            <input type="radio" class="fill-control-input" value="Lainnya" name="gender" id="checkAll">
+                                                            <span class="fill-control-indicator"></span>
+                                                            Lainnya
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row mt-4">
-                                        <div class="col-4 text-right">
-                                            <label for="exampleInputEmail1" class="mt-1 text-secondary">Tanggal lahir</label>
-                                        </div>
-                                        <div class="col-8">
-                                           <div class="row">
-                                               <div class="col-lg-4 col-12 mb-2">
-                                                    <select name="" id="">
-                                                        @for ($i = 1; $i <= 30; $i++)
-                                                            <option value="{{$i}}">{{$i}}</option>
-                                                        @endfor
-                                                    </select>
-                                               </div>
-                                               <div class="col-lg-4 col-12 mb-2">
-                                                    <select name="" id="">
-                                                        @php
-                                                            $month = Config::get('month.month');
-                                                            $parsed = eval("return " . $month . ";");
-                                                            $count = count($parsed);
-                                                        @endphp
-                                                            @for ($i = 0; $i < $count; $i++)
-                                                                <option value="">{{$parsed[$i]}}</option>
+                                        <div class="row mt-4">
+                                            <div class="col-4 text-right">
+                                                <label for="exampleInputEmail1" class="mt-1 text-secondary">Tanggal lahir</label>
+                                            </div>
+                                            <div class="col-8">
+                                            <div class="row">
+                                                @php
+                                                    if($user->birth_day != null){
+                                                        $tanggal = $user->birth_day;
+                                                        $Pecah = explode( "-", $tanggal );
+                                                    }
+                                                @endphp
+                                                <div class="col-lg-4 col-12 mb-2">
+                                                        <select name="day" id="">
+                                                            @if ($user->birth_day != null)
+                                                                <option value="{{$Pecah[2]}}" selected>{{$Pecah[2]}}</option>
+                                                            @endif
+                                                            @for ($i = 1; $i <= 30; $i++)
+                                                                <option value="{{$i}}">{{$i}}</option>
                                                             @endfor
-                                                    </select>
+                                                        </select>
                                                 </div>
                                                 <div class="col-lg-4 col-12 mb-2">
-                                                    <select name="" id="">
-                                                        @for ($i = 1950; $i <= now()->year; $i++)
-                                                            <option value="{{$i}}">{{$i}}</option>
-                                                        @endfor
-                                                    </select>
-                                                </div>
-                                           </div>
+                                                        <select name="month" id="">
+                                                            @php
+                                                                $month = Config::get('month.month');
+                                                                $parsed = eval("return " . $month . ";");
+                                                                $count = count($parsed);
+                                                                if($user->birth_day != null){
+                                                                    $i = $Pecah[1]*1;
+                                                                }
+                                                            @endphp
+                                                            @if ($user->birth_day != null)
+                                                                <option value="{{$i}}">{{$parsed[$i]}}</option>
+                                                            @endif
+                                                            @for ($i = 0; $i < $count; $i++)
+                                                                <option value="{{$i}}">{{$parsed[$i]}}</option>
+                                                            @endfor
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-4 col-12 mb-2">
+                                                        <select name="year" id="">
+                                                            @if ($user->birth_day != null)
+                                                                <option value="{{$Pecah[0]}}">{{$Pecah[0]}}</option>
+                                                            @endif
+                                                            @for ($i = 1950; $i <= now()->year; $i++)
+                                                                <option value="{{$i}}">{{$i}}</option>
+                                                            @endfor
+                                                        </select>
+                                                    </div>
+                                            </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row mt-5">
-                                        <div class="col-4 text-right">
+                                        <div class="row mt-5">
+                                            <div class="col-4 text-right">
+                                            </div>
+                                            <div class="col-8">
+                                                <input type="submit" class="site-btn" value="Simpan">
+                                            </div>
                                         </div>
-                                        <div class="col-8">
-                                            <input type="submit" class="site-btn" value="Simpan">
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div>
                                 <div class="col-lg-4 col-12">
                                     <div class="row">

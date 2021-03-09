@@ -18,7 +18,8 @@
         "o2system/kernel": "^2.0",
         "o2system/psr": "^1.2",
         "o2system/spl": "^1.2",
-        "steevenz/rajaongkir": "^2.2"
+        "steevenz/rajaongkir": "^2.2",
+        "twilio/sdk": "^6.18"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

@@ -34,27 +34,38 @@ Route::put('/admin/user/update_user/{id_admin}', 'UserController@update_user')->
 Route::get('/admin/user/delete_user/{id_admin}', 'UserController@delete_user')->name('delete_user');
 
 
+// Route::get('/admin/subscriber/', 'SubscriberController@data_user')->name('data_user');
+
 // User
 Route::get('/', 'LandingController@index');
 Route::get('/mitra', 'LandingController@mitra')->name('Mitra');
 Route::get('/agen', 'LandingController@agen')->name('Agen');
-
+Route::post('/subscriber', 'SubscriberController@register')->name('subscriber.post');
 // Auth Mitra
 
 
 // Konsumen
 Route::group(['prefix' => 'konsumen'], function () {
     // auth
-    Route::get('/register', 'Konsumen\AuthKonsumenController@registerMitra')->name('register.konsumen');
+    Route::get('/register',   'Konsumen\AuthKonsumenController@registerMitra')->name('register.konsumen');
+    Route::post('/register',   'Konsumen\AuthKonsumenController@saveKonsumen')->name('register.konsumen.post');
+    Route::get('/cities/{province_id}', 'Konsumen\CheckoutController@getCities');
     Route::get('/verification', 'Konsumen\AuthKonsumenController@verificationView')->name('verification.konsumen');
+    Route::post('/verification', 'Konsumen\AuthKonsumenController@verify')->name('verification.konsumen.post');
     Route::get('/login', 'Konsumen\AuthKonsumenController@loginKonsumen')->name('login.konsumen');
+    Route::post('/login', 'Auth\LoginController@login')->name('login.konsumen.post');
+    Route::get('/logout', 'Auth\LoginController@logout')->name('logout.konsumen');
 
-    // account
-    Route::get('/account/profil', 'Konsumen\KonsumenController@profile')->name('profile.konsumen');
-    Route::get('/account/alamat', 'Konsumen\KonsumenController@address')->name('address.konsumen');
-    Route::get('/account/password', 'Konsumen\KonsumenController@changePassword')->name('password.konsumen');
-    Route::get('/account/purchase/type/{type}', 'Konsumen\KonsumenController@purchase')->name('purchase.konsumen');
-    Route::get('/account/cities/{province_id}', 'Konsumen\CheckoutController@getCities');
+    // 
+    Route::group(['middleware' => 'users'], function () {
+        Route::get('/account/profil', 'Konsumen\KonsumenController@profile')->name('profile.konsumen');
+        Route::post('/account/profil', 'Konsumen\KonsumenController@profileSave')->name('profile.konsumen.update');
+        Route::get('/account/alamat', 'Konsumen\KonsumenController@address')->name('address.konsumen');
+        Route::get('/account/password', 'Konsumen\KonsumenController@changePassword')->name('password.konsumen');
+        Route::get('/account/purchase/type/{type}', 'Konsumen\KonsumenController@purchase')->name('purchase.konsumen');
+        Route::get('/account/cities/{province_id}', 'Konsumen\CheckoutController@getCities');
+    });
+
 
     //keranjang
     Route::get('/cart', 'Konsumen\KeranjangController@index')->name('cart.index');
@@ -72,12 +83,24 @@ Route::group(['prefix' => 'mitra'], function () {
     Route::get('/detail', 'LandingController@detailMitra')->name('detail.mitra');
     Route::get('/produk', 'LandingController@produkMitra')->name('produk.mitra');
     Route::get('/produk/favorite', 'LandingController@produkMitraFav')->name('produk.mitra.favorite');
-    Route::get('/register', 'Mitra\AuthMitraController@registerMitra')->name('register.mitra');
-    Route::get('/verification', 'Mitra\AuthMitraController@verificationView')->name('verification.mitra');
-    Route::get('/login', 'Mitra\AuthMitraController@loginMitra')->name('login.mitra');
 
-    // portal mitra
-    Route::get('/portal', 'Mitra\MitraController@index')->name('portal.mitra');
+    // Auth
+    Route::get('/register', 'Mitra\AuthMitraController@registerMitra')->name('register.mitra');
+    Route::post('/register', 'Mitra\AuthMitraController@saveMitra')->name('register.mitra.post');
+    Route::get('/verification', 'Mitra\AuthMitraController@verificationView')->name('verification.mitra');
+    Route::post('/verification', 'Mitra\AuthMitraController@verify')->name('verify.mitra');
+    Route::get('/login', 'Mitra\AuthMitraController@loginMitra')->name('login.mitra');
+    Route::post('/post', 'Mitra\AuthMitraController@login')->name('login.mitra.post');
+    Route::get('/logout', 'Mitra\AuthMitraController@logout')->name('mitra.logout');
+
+    Route::group(['middleware' => 'mitra'], function () {
+        Route::get('/portal', 'Mitra\MitraController@index')->name('portal.mitra');
+        Route::get('/portal/produk/list', 'Mitra\ProductController@index')->name('portal.mitra.product.list');
+        Route::get('/portal/produk/list/habis', 'Mitra\ProductController@habis')->name('portal.mitra.product.list.habis');
+        Route::get('/portal/produk/list/arsip', 'Mitra\ProductController@arsip')->name('portal.mitra.product.list.arsip');
+        Route::get('/portal/produk/add/', 'Mitra\ProductController@add')->name('portal.mitra.product.add');
+        Route::post('/portal/produk/add/', 'Mitra\ProductController@save')->name('portal.mitra.product.save');
+    });
 });
 
 

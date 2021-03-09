@@ -12,32 +12,36 @@
         </div>
         <div class="humberger__menu__widget">
             <div class="header__top__right__auth mr-2">
-                <a href="#"><i class="fa fa-user"></i>Mitra</a>
+                <a href="#"><i class="fa fa-user"></i> Mitra</a>
             </div>
             <div class="header__top__right__auth mr-2">
                 <a href="#"><i class="fa fa-user"></i>Konsumen</a>
             </div>
             <div class="header__top__right__language">
-                <div>Login</div>
-                <span class="arrow_carrot-down"></span>
-                <ul>
-                    <li><a href="{{route('login.mitra')}}">Mitra</a></li>
-                    <li><a href="{{route('login.konsumen')}}">Konsumen</a></li>
-                </ul>
+                @if (Auth::guard('users')->check())
+                    <div><a href="{{url('konsumen/logout')}}" style="text-decoration: none;color:black">Logout</a></div>
+                @else 
+                    <div>Login</div>
+                    <span class="arrow_carrot-down"></span>
+                    <ul>
+                        <li><a href="{{route('login.mitra')}}">Mitra</a></li>
+                        <li><a href="{{route('login.konsumen')}}">Konsumen</a></li>
+                    </ul>
+                 @endif
             </div>
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
                 <li class="active"><a href="./index.html">Utama</a></li>
                 <li><a href="{{route('produk')}}">Produk</a></li>
-                <li><a href="#">Pages</a>
+                {{-- <li><a href="#">Pages</a>
                     <ul class="header__menu__dropdown">
                         <li><a href="./shop-details.html">Shop Details</a></li>
                         <li><a href="./shoping-cart.html">Shoping Cart</a></li>
                         <li><a href="./checkout.html">Check Out</a></li>
                         <li><a href="./blog-details.html">Blog Details</a></li>
                     </ul>
-                </li>
+                </li> --}}
                 <li><a href="./blog.html">Blog</a></li>
                 <li><a href="./contact.html">Kontak</a></li>
             </ul>
@@ -84,12 +88,17 @@
                                 <a href="#"><i class="fa fa-user"></i>Konsumen</a>
                             </div>
                             <div class="header__top__right__language">
-                                <div>Login</div>
-                                <span class="arrow_carrot-down"></span>
-                                <ul>
-                                    <li><a href="{{route('login.mitra')}}">Mitra</a></li>
-                                    <li><a href="{{route('login.konsumen')}}">Konsumen</a></li>
-                                </ul>
+                                @if (Auth::guard('users')->check())
+                                    <div><a href="{{url('konsumen/logout')}}" style="text-decoration: none;color:black">Logout</a></div>
+                                @else 
+                                    <div>Login</div>
+                                    <span class="arrow_carrot-down"></span>
+                                    <ul>
+                                        <li><a href="{{route('login.mitra')}}">Mitra</a></li>
+                                        <li><a href="{{route('login.konsumen')}}">Konsumen</a></li>
+                                    </ul>
+                                @endif
+                                
                             </div>
                         </div>
                     </div>
@@ -108,14 +117,14 @@
                         <ul>
                             <li class="active"><a href="./index.html">Utama</a></li>
                             <li><a href="{{route('produk')}}">Produk</a></li>
-                            <li><a href="#">Pages</a>
+                            {{-- <li><a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
                                     <li><a href="./shop-details.html">Shop Details</a></li>
                                     <li><a href="./shoping-cart.html">Shoping Cart</a></li>
                                     <li><a href="./checkout.html">Check Out</a></li>
                                     <li><a href="./blog-details.html">Blog Details</a></li>
                                 </ul>
-                            </li>
+                            </li> --}}
                             <li><a href="./blog.html">Blog</a></li>
                             <li><a href="./contact.html">Kontak</a></li>
                         </ul>

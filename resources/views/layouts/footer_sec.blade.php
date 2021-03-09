@@ -35,8 +35,9 @@
                 <div class="footer__widget">
                     <h6>Gabung Newsletter Kami Sekarang</h6>
                     <p>Dapatkan email tentang promo terbaru kami.</p>
-                    <form action="#">
-                        <input type="text" placeholder="Email">
+                    <form action="POST" action="{{route('subscriber.post')}}">
+                        @csrf
+                        <input type="text" name="From" placeholder="Nomor Telepon">
                         <button type="submit" class="site-btn">Gabung</button>
                     </form>
                     <div class="footer__widget__social">

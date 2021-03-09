@@ -32,7 +32,8 @@
                                 </div>
                                 <div class="col-12 mt-5" style="padding: 0 35px; margin-bottom:20px">
                                     <div class="input-wrapper">
-                                        <input type="text" id="input" class="form-control-register" placeholder="Kode OTP">
+                                        <input type="hidden" name="phone_number" value="{{session('phone_number')}}">
+                                        <input type="text" id="input" name="verification_code" class="form-control-register" placeholder="Kode OTP">
                                         <label for="input" class="control-label">Kode OTP</label>
                                     </div>
                                 </div>
