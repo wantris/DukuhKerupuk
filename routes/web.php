@@ -95,11 +95,24 @@ Route::group(['prefix' => 'mitra'], function () {
 
     Route::group(['middleware' => 'mitra'], function () {
         Route::get('/portal', 'Mitra\MitraController@index')->name('portal.mitra');
+
         Route::get('/portal/produk/list', 'Mitra\ProductController@index')->name('portal.mitra.product.list');
         Route::get('/portal/produk/list/habis', 'Mitra\ProductController@habis')->name('portal.mitra.product.list.habis');
         Route::get('/portal/produk/list/arsip', 'Mitra\ProductController@arsip')->name('portal.mitra.product.list.arsip');
         Route::get('/portal/produk/add/', 'Mitra\ProductController@add')->name('portal.mitra.product.add');
         Route::post('/portal/produk/add/', 'Mitra\ProductController@save')->name('portal.mitra.product.save');
+        Route::get('/portal/produk/edit/{slug}', 'Mitra\ProductController@edit')->name('portal.mitra.product.edit');
+        Route::patch('/portal/produk/edit/{id}', 'Mitra\ProductController@update')->name('portal.mitra.product.update');
+        Route::get('/portal/produk/delete/{id}', 'Mitra\ProductController@delete')->name('portal.mitra.product.delete');
+        Route::post('/portal/produk/change-status', 'Mitra\ProductController@changeStatus')->name('portal.mitra.product.status');
+
+        Route::get('/portal/promo/list/{type}', 'Mitra\PromoController@index')->name('portal.mitra.promo.list');
+        Route::get('/portal/promo/add', 'Mitra\PromoController@create')->name('portal.mitra.promo.create');
+        Route::post('/portal/promo/add', 'Mitra\PromoController@save')->name('portal.mitra.promo.save');
+        Route::get('/portal/promo/edit/{id}', 'Mitra\PromoController@edit')->name('portal.mitra.promo.edit');
+        Route::patch('/portal/promo/edit/{id}', 'Mitra\PromoController@update')->name('portal.mitra.promo.update');
+        Route::get('/portal/promo/delete/{id}', 'Mitra\PromoController@delete')->name('portal.mitra.promo.delete');
+        Route::post('/portal/promo/change-status', 'Mitra\PromoController@changeStatus')->name('portal.mitra.promo.status');
     });
 });
 

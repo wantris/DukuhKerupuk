@@ -5,7 +5,7 @@
 
     @section('content')
         <div class="section-header">
-            <h1>Produk Saya</h1>
+            <h1>Promo Saya </h1>
             <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
             <div class="breadcrumb-item"><a href="#">Bootstrap Components</a></div>
@@ -29,10 +29,37 @@
             <div class="col-lg-12">
                 <div class="card card-statistic-2">
                     <div class="card-stats mb-4">
-                        <div class="topnav mx-4">
-                            <a class="tablinks {{ Request::routeIs('portal.mitra.product.list') ? 'active' : '' }}" href="#">Semua</a>
-                            <a href="{{route('portal.mitra.product.list.habis')}}" class="tablinks {{ Request::routeIs('portal.mitra.product.list.habis') ? 'active' : '' }}"  >Habis</a>
-                            <a href="{{route('portal.mitra.product.list.arsip')}}" class="tablinks {{ Request::routeIs('portal.mitra.product.list.arsip') ? 'active' : '' }}" >Arsip</a>
+                        <div class="d-flex ml-5 mt-3">
+                            <a href="{{route('portal.mitra.promo.list', 'promo-toko')}}" class="mr-5" style="text-decoration: none">
+                                <div class="card @if(Request::url() === url('/mitra/portal/promo/list/promo-toko')) shadow @else shadow-sm @endif border" id="promo_toko" style="width: 200px;position:relative">
+                                    <div class="border shadow-sm bg-white" style="position:absolute; width:40px; height:40px; border-radius:50%; right:-20px; top:8px;"><i class="icon-promo-card @if(Request::url() === url('/mitra/portal/promo/list/promo-toko')) check-icon @endif fas fa-check-circle"></i></div>
+                                    <div class="card-body py-2">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <img src="{{url('icon/store.svg')}}" style="width:30px; height:30px" alt="">
+                                            </div>
+                                            <div class="col-8">
+                                                <p class="text-left text-promo">Promo Toko</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="{{route('portal.mitra.promo.list', 'promo-produk')}}" style="text-decoration: none">
+                                <div class="card @if(Request::url() === url('/mitra/portal/promo/list/promo-produk')) shadow @else shadow-sm @endif border" id="promo_toko" style="width: 200px;position:relative">
+                                    <div class="border shadow-sm bg-white" style="position:absolute; width:40px; height:40px; border-radius:50%; right:-20px; top:8px;"><i class="icon-promo-card @if(Request::url() === url('/mitra/portal/promo/list/promo-produk')) check-icon @endif fas fa-check-circle"></i></div>
+                                    <div class="card-body py-2">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <img src="{{url('icon/voucher-icon.svg')}}" style="width:30px; height:30px" alt="">
+                                            </div>
+                                            <div class="col-8">
+                                                <p class="text-left text-promo">Promo Produk</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                     </div>
                     <div class="row tabcontent" id="kalender">
@@ -40,43 +67,36 @@
                             <div class="row ml-4 mr-4">
                                 <div class="col-6">
                                     <div class="form-group row">
-                                        <label for="inputEmail3" class="col-sm-3 col-form-label">Nama Produk</label>
+                                        <label for="inputEmail3" class="col-sm-3 col-form-label">Nama Promo</label>
                                         <div class="col-sm-8">
                                           <input type="text" class="form-control" id="inputEmail3" placeholder="Input">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Stok</label>
-                                        <div class="col-sm-3">
-                                          <input type="text" class="form-control" id="inputEmail3" placeholder="Input">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Periode</label>
+                                        <div class="col-sm-4">
+                                          <input type="date" class="form-control" id="inputEmail3" placeholder="Input">
                                         </div>
                                         <label for="inputEmail3" class="col-form-label">-</label>
-                                        <div class="col-sm-3">
-                                            <input type="text" class="form-control" id="inputEmail3" placeholder="Input">
+                                        <div class="col-sm-4">
+                                            <input type="date" class="form-control" id="inputEmail3" placeholder="Input">
                                           </div>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group row">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Kategori</label>
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Status</label>
                                         <div class="col-sm-8">
                                           <select name="" id="category_select">
-                                              <option selected>Pilih Kategori</option>
-                                              @foreach ($ct as $ct)
-                                                <option value="{{$ct->id}}">{{$ct->name}}</option>
-                                              @endforeach
+                                              <option selected>Pilih Status</option>
                                           </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="inputEmail3" class="col-sm-3 col-form-label">Penjualan</label>
-                                        <div class="col-sm-3">
-                                          <input type="number" class="form-control" id="inputEmail3" placeholder="Input">
+                                        <label for="inputEmail3" class="col-sm-3 col-form-label">Kode Promo</label>
+                                        <div class="col-sm-4">
+                                          <input type="text" class="form-control" id="inputEmail3" placeholder="Input">
                                         </div>
-                                        <label for="inputEmail3" class="col-form-label">-</label>
-                                        <div class="col-sm-3">
-                                            <input type="number" class="form-control" id="inputEmail3" placeholder="Input">
-                                          </div>
                                     </div>
                                 </div>
                             </div>
@@ -88,13 +108,13 @@
                             </div>
                             <div class="row ml-4 mr-4 mt-5">
                                 <div class="col-lg-4 col-12 d-flex mb-3">
-                                    <p class="h5 mr-3 mt-1">{{$pr->count()}} Produk</p>
+                                    <p class="h5 mr-3 mt-1">{{$promo->count()}} Promo</p>
                                     <div class="btn btn-primary" style="border-radius: 20px; padding:5px 20px">
-                                        {{$pr->count()}}/100
+                                        {{$promo->count()}}/20
                                     </div>
                                 </div>
                                 <div class="col-lg-8 col-12 text-right">
-                                    <a href="{{route('portal.mitra.product.add')}}" type="submit" class="btn btn-primary mr-3"><i class="fas fa-plus mr-2"></i>Tambah Produk</a>
+                                    <a href="{{route('portal.mitra.promo.create')}}" type="submit" class="btn btn-primary mr-3"><i class="fas fa-plus mr-2"></i>Tambah Promo</a>
                                 </div>
                             </div>
                             <div class="row mx-2 ">
@@ -109,99 +129,66 @@
                                                     <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                                                   </div>
                                                 </th>
-                                                <th onclick="sortTable(0)">Nama Produk</th>
-                                                <th>Kategori</th>
-                                                <th>Harga</th>
-                                                <th>Stok</th>
-                                                <th>Penjualan</th>
+                                                <th onclick="sortTable(0)">Nama Promo</th>
+                                                <th>Tipe Promo</th>
+                                                <th>Kode Promo</th>
+                                                <th>Periode Promo</th>
+                                                <th>Jumlah Diskon</th>
+                                                <th>Kuota</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                               </tr>
                                           </thead>
                                           <tbody>
-                                              @foreach ($pr as $item)
-                                              <tr id="tr_{{$item->id_produk}}">
-                                                    <td><div class="custom-checkbox custom-control">
-                                                        <input type="checkbox"  class="custom-control-input" id="checkbox-all">
-                                                        <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-                                                    </div></td>
-                                                    <td>{{$item->nama_produk}}</td>
-                                                    <td>
-                                                        {{$item->categories->name}}
-                                                    </td>
-                                                    <td>Rp.{{$item->harga}}</td>
-                                                    <td>{{$item->stok}}</td>
-                                                    <td>{{$item->penjualan}}</td>
-                                                    <td><div id="ket_status_{{$item->id_Produk}}">
-                                                        {{$item->status}}
-                                                        </div></td>
-                                                    <td><div class="d-flex">
-                                                            <a href="{{route('portal.mitra.product.edit', $item->slug)}}" class="btn btn-primary mr-2" title="Edit Produk"><i class="fas fa-edit"></i></a>
-                                                            <a href="#" onclick="confirmDelete('{{$item->id_produk}}')" class="btn btn-danger mr-2" title="Hapus Produk"><i class="fas fa-trash"></i></a>
+                                              @foreach ($promo as $item)
+                                                  <tr id="tr_{{$item->id}}">
+                                                      <td>
+                                                        <div class="custom-checkbox custom-control">
+                                                            <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
+                                                            <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                                                          </div>
+                                                      </td>
+                                                      <td>{{$item->nama_promo}}</td>
+                                                      <td>
+                                                          @if ((bool)$item->tipe_promo === true)
+                                                            Tersedia
+                                                          @else
+                                                            Tidak tersedia
+                                                          @endif
+                                                      </td>
+                                                      <td>{{$item->kode_voucher}}</td>
+                                                      <td>{{$item->start_date}} - {{$item->end_date}}</td>
+                                                      <td>{{$item->jumlah_diskon}}</td>
+                                                      <td>{{$item->kuota}}</td>
+                                                      <td>{{$item->status}}</td>
+                                                      <td>
+                                                        <div class="d-flex">
+                                                            <a href="{{route('portal.mitra.promo.edit', $item->id)}}" class="btn btn-primary mr-2" title="Edit Produk"><i class="fas fa-edit"></i></a>
+                                                            <a href="#" onclick="confirmDelete('{{$item->id}}')" class="btn btn-danger mr-2" title="Hapus Promo"><i class="fas fa-trash"></i></a>
                                                             <div id="status_{{$item->id_produk}}">
-                                                                @if($item->status === "publik")
-                                                                    <a href="#" onclick="changeStatus('{{$item->id_produk}}', 'arsip')" class="btn btn-info" title="Pindah ke Arsip"><i class="fas fa-folder-open"></i></a>
+                                                                @if((string)$item->status === "1")
+                                                                    <a href="#" onclick="changeStatus('{{$item->id}}', '0')" class="btn btn-info" title="Tutup Promo"><i class="fas fa-power-off"></i></a>
                                                                 @else
-                                                                    <a href="#" onclick="changeStatus('{{$item->id_produk}}', 'publik')" class="btn btn-info" title="Pindah ke Publik"><i class="fas fa-eye"></i></a>
+                                                                    <a href="#" onclick="changeStatus('{{$item->id}}', '1')" class="btn btn-info" title="Buka Promo"><i class="fas fa-eye"></i></a>
                                                                 @endif
                                                             </div>
-                                                            
                                                         </div>
-                                                    </td>
-                                              </tr>
+                                                      </td>
+                                                  </tr>
                                               @endforeach
                                           </tbody>
                                         </table>
-                                        @if ($pr->count() === 0)
-                                        <div class="col-lg-12 text-center mt-5 mb-4" >
-                                            <img src="{{url('icon/shopping-bag.svg')}}" style="max-width: 120px; height:auto" alt="">
-                                            <p class="text-secondary">Tidak ada produk</p>
-                                        </div>
+                                        @if ($promo->count() === 0)
+                                            <div class="col-lg-12 text-center mt-5 mb-4" >
+                                                <img src="{{url('icon/voucher.svg')}}" style="max-width: 120px; height:auto" alt="">
+                                                <p class="text-secondary">Tidak ada produk</p>
+                                            </div>
                                         @endif
-                                        {{-- <div class="text-right mt-3 mr-3">
-                                            <nav class="d-inline-block">
-                                                <ul class="pagination mb-0">
-                                                  <li class="page-item disabled">
-                                                    <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
-                                                  </li>
-                                                  <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
-                                                  <li class="page-item">
-                                                    <a class="page-link" href="#">2</a>
-                                                  </li>
-                                                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                  <li class="page-item">
-                                                    <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
-                                                  </li>
-                                                </ul>
-                                              </nav>
-                                        </div> --}}
                                       </div>
                                     </div>
                               </div>
                         </div>
                     </div>
-                    {{-- <div class="row tabcontent" id="produk" style="display: none;">
-                        <div class="col-lg-12 text-center mt-4 mb-4">
-                            <img src="{{url('icon/voucher-adm.svg')}}" style="max-width: 120px; height:auto" alt="">
-                            <p class="text-secondary">Tidak ada data</p>
-                        </div>
-                        <div class="col-12 pl-5 mt-3">
-                            <a href="#" class="text-primary">Lihat semua promo produk <i class="fas fa-chevron-right mr-2"></i></a>
-                        </div>
-                    </div>
-                    <div class="row tabcontent" id="voucher" style="display: none;">
-                        <div class="col-lg-12 text-center mt-4 mb-4">
-                            <img src="{{url('icon/voucher-adm.svg')}}" style="max-width: 120px; height:auto" alt="">
-                            <p class="text-secondary">Tidak ada data</p>
-                        </div>
-                        <div class="col-12 pl-5 mt-3">
-                            <a href="#" class="text-primary">Lihat semua promo voucher <i class="fas fa-chevron-right mr-2"></i></a>
-                        </div>
-                    </div> --}}
-                    {{-- <div class="card-wrap">
-                      <div class="card-body">
-                      </div>
-                    </div> --}}
                   </div>
             </div>
         </div>
@@ -231,11 +218,11 @@
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, hapus produk!'
+                    confirmButtonText: 'Yes, hapus promo!'
                 })
                 .then(function (success) {
                     if (success.value) {
-                        var url = '{{ url("mitra/portal/produk/delete/") }}/'+id;
+                        var url = '{{ url("mitra/portal/promo/delete/") }}/'+id;
                         console.log(url);
                         $.ajax({
                             url: url,
@@ -269,18 +256,24 @@
 
             function changeStatus(id, status){
                 event.preventDefault();
-                console.log(id, status);
+                var status_desc;
+                if(status === "1"){
+                    status_desc = "buka";
+                }else{
+                    status_desc = "tutup";
+                }
+                console.log(id, status, status_desc);
                 Swal.fire({
                     title: 'Apakah Anda Yakin?',
-                    text: "Produk akan di "+status+" !",
+                    text: "Promo akan di "+status_desc+" !",
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ya, '+status+'kan!'
+                    confirmButtonText: 'Ya, '+status_desc+'kan!'
                 })
                 .then(function (success) {
                     if (success.value) {
-                        var url = '{{ url("mitra/portal/produk/change-status") }}';
+                        var url = '{{ url("mitra/portal/promo/change-status") }}';
                         console.log(url);
                         $.ajax({
                             url: url,
@@ -295,12 +288,12 @@
                                     Swal.fire({
                                         title: "Success!",
                                         type: "success",
-                                        text: "Produk telah di "+status+"kan \n Click OK",
+                                        text: "Promo telah di "+status_desc+" \n Click OK",
                                         icon: "success",
                                         confirmButtonClass: "btn btn-outline-info",
                                     });
 
-                                    location.replace("{{ route('portal.mitra.product.list') }}");
+                                    location.replace("{{ route('portal.mitra.promo.list',$type) }}");
                                     
                                     // document.getElementById('ket_status_'+id).text() = status;
                                     // document.getElementById('status_'+id).innerHTML = data.html;
@@ -319,6 +312,7 @@
                     }
                 });
             }
+
         </script>
     @endpush
       

@@ -17,9 +17,11 @@ class AddColumnToProductTable extends Migration
             $table->bigInteger('product_category_id')->unsigned()->after('nama_produk');
             $table->text('deskripsi_produk')->after('product_category_id');
             $table->bigInteger('product_expired_id')->unsigned()->after('deskripsi_produk');
+            $table->integer('penjualan')->after('product_expired_id');
+            $table->string('status', 100)->after('penjualan');
 
-            $table->foreign('product_category_id')->references('id')->on('product_categories');
-            $table->foreign('product_expired_id')->references('id')->on('product_expireds');
+            $table->foreign('product_category_id')->references('id')->on('product_categories')->onDelete('cascade');
+            $table->foreign('product_expired_id')->references('id')->on('product_expireds')->onDelete('cascade');
         });
     }
 

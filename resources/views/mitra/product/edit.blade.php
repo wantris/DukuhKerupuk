@@ -5,7 +5,7 @@
 
     @section('content')
         <div class="section-header">
-            <h1>Tambah Produk</h1>
+            <h1>Edit Produk</h1>
             <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
             <div class="breadcrumb-item"><a href="#">Bootstrap Components</a></div>
@@ -17,15 +17,16 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="card-stats-title mt-3">
-                            <p class="h3 font-weight-bold">Tambah Produk Baru</p>
-                            <p class="">Pilih kategori yang tepat untuk produkmu</p>
+                            <p class="h3 font-weight-bold">{{$ps->nama_produk}}</p>
+                            <p class="">Edit data produk mu</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <form action="{{route('portal.mitra.product.save')}}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('portal.mitra.product.update', $ps->id_produk)}}" method="POST" enctype="multipart/form-data">
             @csrf
+            @method('patch')
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -50,7 +51,7 @@
                             <div class="form-group row mt-5">
                                 <p class="mt-1 col-sm-2 col-form-label">Nama Produk : </p>
                                 <div class="col-lg-9 col-12">
-                                    <input type="text" name="product_name" class="@error('product_name') is-invalid @enderror form-control" id="inputEmail3" placeholder="Nama Produk">
+                                    <input type="text" name="product_name" value="{{$ps->nama_produk}}" class="@error('product_name') is-invalid @enderror form-control" id="inputEmail3" placeholder="Nama Produk">
                                     @error('product_name')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -63,7 +64,11 @@
                                         $pc = App\ProductCategories::all();
                                     @endphp
                                     <select name="product_category" class=" @error('product_category') is-invalid @enderror ml-4" id="category_select">
-                                        <option selected>Pilih Kategori Produk</option>
+                                        @if ($ps->product_category_id != null)
+                                            <option selected value="{{$ps->categories->id}}" >{{$ps->categories->name}}</option>
+                                        @else
+                                            <option selected>Pilih Kategori Produk</option>
+                                        @endif
                                         @foreach ($pc as $pc)
                                             <option value="{{$pc->id}}">{{$pc->name}}</option>
                                         @endforeach
@@ -76,7 +81,7 @@
                             <div class="form-group row">
                                 <p class="mt-1 col-sm-2 col-form-label">Deskripsi Produk : </p>
                                 <div class="col-lg-9 col-12">
-                                    <textarea class="form-control @error('product_description') is-invalid @enderror" name="product_description" style="min-height: 150px">Deskripsi Produk</textarea>
+                                    <textarea class="form-control @error('product_description') is-invalid @enderror" name="product_description" style="min-height: 150px">{{$ps->deskripsi_produk}}</textarea>
                                     @error('product_description')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -89,7 +94,12 @@
                                         $pe = App\ProductExpired::all();
                                     @endphp
                                     <select name="product_expired" class="ml-4 @error('product_expired') is-invalid @enderror" id="kadaluwarsa_select">
-                                        <option selected>Pilih Kadaluwarsa Produk</option>
+                                        
+                                        @if ($ps->product_expired_id != null)
+                                            <option selected value="{{$ps->expireds->id}}" >{{$ps->expireds->name}}</option>
+                                        @else
+                                            <option selected>Pilih Kadaluwarsa Produk</option>
+                                        @endif
                                         @foreach ($pe as $pe)
                                             <option value="{{$pe->id}}">{{$pe->name}}</option>
                                         @endforeach
@@ -120,7 +130,7 @@
                                             Rp
                                         </div>
                                         </div>
-                                        <input type="number" name="product_price" class="form-control phone-number @error('product_price') is-invalid @enderror">
+                                        <input type="number" name="product_price" value="{{$ps->harga}}" class="form-control phone-number @error('product_price') is-invalid @enderror">
                                     </div>
                                     @error('product_price')
                                             <div class="text-danger">{{ $message }}</div>
@@ -130,7 +140,7 @@
                             <div class="form-group row">
                                 <p class="mt-1 col-sm-2 col-form-label">Stok Produk : </p>
                                 <div class="col-lg-9 col-12">
-                                    <input type="number" name="product_stock" class="form-control phone-number @error('product_stock') is-invalid @enderror" placeholder="0">
+                                    <input type="number" name="product_stock" value="{{$ps->stok}}" class="form-control phone-number @error('product_stock') is-invalid @enderror" placeholder="0">
                                     @error('product_stock')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -200,37 +210,59 @@
                             </div>
                             <div class="form-group row " style="margin-top: -8%">
                                 <p class="mt-1 col-sm-2 col-form-label"></p>
-                                <div class="col-lg-2 col-6">
-                                        <div class="text-center product-photo" id="image_div_1">
+                                
+                                    <div class="col-lg-2 col-6">
+                                            <div class="text-center product-photo" id="image_div_1">
+                                                @if ($img != null)
+                                                    <span class="pip">
+                                                        <img src="{{url('/mitra/product_image/'.$img->image)}}" alt="" class="image-product-upload mb-3" id="image_product_1"><br/>
+                                                        <a href="#" id="remove_image_1" onclick="removeImage(1)">Remove image</a>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        <div class="text-center text-photo">
+                                            <p class="text-secondary">*Foto Utama</p>
                                         </div>
-                                    <div class="text-center text-photo">
-                                        <p class="text-secondary">*Foto Utama</p>
                                     </div>
-                                </div>
-                                <div class="col-lg-2 col-6">
-                                    <div class="text-center product-photo" id="image_div_2">
-                                        
+                                    <div class="col-lg-2 col-6">
+                                        <div class="text-center product-photo" id="image_div_2">
+                                            @if ($img2 != null)
+                                                <span class="pip">
+                                                    <img src="{{url('/mitra/product_image/'.$img2->image)}}" alt="" class="image-product-upload mb-3" id="image_product_2"><br/>
+                                                    <a href="#" id="remove_image_2" onclick="removeImage(2)">Remove image</a>
+                                                </span>
+                                            @endif
+                                        </div>
+                                        <div class="text-center text-photo">
+                                            <p class="text-secondary">Foto 1</p>
+                                        </div>
                                     </div>
-                                    <div class="text-center text-photo">
-                                        <p class="text-secondary">Foto 1</p>
+                                    <div class="col-lg-2 col-6">
+                                        <div class="text-center product-photo" id="image_div_3">
+                                            @if ($img3 != null)
+                                                <span class="pip">
+                                                    <img src="{{url('/mitra/product_image/'.$img3->image)}}" alt="" class="image-product-upload mb-3" id="image_product_3"><br/>
+                                                    <a href="#" id="remove_image_3" onclick="removeImage(3)">Remove image</a>
+                                                </span>
+                                            @endif  
+                                        </div>
+                                        <div class="text-center text-photo">
+                                            <p class="text-secondary">Foto 2</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-2 col-6">
-                                    <div class="text-center product-photo" id="image_div_3">
-                                            
+                                    <div class="col-lg-2 col-6">
+                                        <div class="text-center product-photo" id="image_div_4">
+                                            @if ($img4 != null)
+                                                <span class="pip">
+                                                    <img src="{{url('/mitra/product_image/'.$img4->image)}}" alt="" class="image-product-upload mb-3" id="image_product_4"><br/>
+                                                    <a href="#" id="remove_image_4" onclick="removeImage(4)">Remove image</a>
+                                                </span>
+                                            @endif  
+                                        </div>
+                                        <div class="text-center text-photo">
+                                            <p class="text-secondary">Foto 3</p>
+                                        </div>
                                     </div>
-                                    <div class="text-center text-photo">
-                                        <p class="text-secondary">Foto 2</p>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-6">
-                                    <div class="text-center product-photo" id="image_div_4">
-                                            
-                                    </div>
-                                    <div class="text-center text-photo">
-                                        <p class="text-secondary">Foto 3</p>
-                                    </div>
-                                </div>
                             </div>
                             {{-- <div class="row">
                                 <div class="col-12">

@@ -85,26 +85,63 @@
                                 <div class="col-12">
                                     <div class="table-responsive border pb-3" style="min-height: 300px">
                                         <table class="table table-striped" id="product-table">
-                                          <tr>
-                                            <th>
-                                              <div class="custom-checkbox custom-control">
-                                                <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
-                                                <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-                                              </div>
-                                            </th>
-                                            <th onclick="sortTable(0)">Nama Produk</th>
-                                            <th>Kategori</th>
-                                            <th>Harga</th>
-                                            <th>Stok</th>
-                                            <th>Penjualan</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                          </tr>
+                                          <thead>
+                                            <tr>
+                                                <th>
+                                                  <div class="custom-checkbox custom-control">
+                                                    <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
+                                                    <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                                                  </div>
+                                                </th>
+                                                <th onclick="sortTable(0)">Nama Produk</th>
+                                                <th>Kategori</th>
+                                                <th>Harga</th>
+                                                <th>Stok</th>
+                                                <th>Penjualan</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              @foreach ($pr as $item)
+                                              <tr id="tr_{{$item->id_produk}}">
+                                                    <td><div class="custom-checkbox custom-control">
+                                                        <input type="checkbox"  class="custom-control-input" id="checkbox-all">
+                                                        <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                                                    </div></td>
+                                                    <td>{{$item->nama_produk}}</td>
+                                                    <td>
+                                                        {{$item->categories->name}}
+                                                    </td>
+                                                    <td>Rp.{{$item->harga}}</td>
+                                                    <td>{{$item->stok}}</td>
+                                                    <td>{{$item->penjualan}}</td>
+                                                    <td><div id="ket_status_{{$item->id_Produk}}">
+                                                        {{$item->status}}
+                                                        </div></td>
+                                                    <td><div class="d-flex">
+                                                            <a href="{{route('portal.mitra.product.edit', $item->slug)}}" class="btn btn-primary mr-2" title="Edit Produk"><i class="fas fa-edit"></i></a>
+                                                            <a href="#" onclick="confirmDelete('{{$item->id_produk}}')" class="btn btn-danger mr-2" title="Hapus Produk"><i class="fas fa-trash"></i></a>
+                                                            <div id="status_{{$item->id_produk}}">
+                                                                @if($item->status === "publik")
+                                                                    <a href="#" onclick="changeStatus('{{$item->id_produk}}', 'arsip')" class="btn btn-info" title="Pindah ke Arsip"><i class="fas fa-folder-open"></i></a>
+                                                                @else
+                                                                    <a href="#" onclick="changeStatus('{{$item->id_produk}}', 'publik')" class="btn btn-info" title="Pindah ke Publik"><i class="fas fa-eye"></i></a>
+                                                                @endif
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </td>
+                                              </tr>
+                                              @endforeach
+                                          </tbody>
                                         </table>
+                                        @if ($pr->count() === 0)
                                         <div class="col-lg-12 text-center mt-5 mb-4" >
                                             <img src="{{url('icon/shopping-bag.svg')}}" style="max-width: 120px; height:auto" alt="">
                                             <p class="text-secondary">Tidak ada produk</p>
                                         </div>
+                                        @endif
                                         {{-- <div class="text-right mt-3 mr-3">
                                             <nav class="d-inline-block">
                                                 <ul class="pagination mb-0">
@@ -127,7 +164,7 @@
                               </div>
                         </div>
                     </div>
-                    <div class="row tabcontent" id="produk" style="display: none;">
+                    {{-- <div class="row tabcontent" id="produk" style="display: none;">
                         <div class="col-lg-12 text-center mt-4 mb-4">
                             <img src="{{url('icon/voucher-adm.svg')}}" style="max-width: 120px; height:auto" alt="">
                             <p class="text-secondary">Tidak ada data</p>
@@ -148,21 +185,120 @@
                     <div class="card-wrap">
                       <div class="card-body">
                       </div>
-                    </div>
+                    </div> --}}
                   </div>
             </div>
         </div>
     @endsection
 
     @push('scripts')
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js'></script>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js'></script>
-        <script>
-            
-            $(document).ready(function() {
-                $('#category_select').select2();
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js'></script>
+    <script>
+        
+        $(document).ready(function() {
+            $('#category_select').select2();
+        });
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        function confirmDelete(id) {
+            event.preventDefault();
+            console.log(id);
+            Swal.fire({
+                title: 'Apakah Anda Yakin?',
+                text: "Anda tidak akan bisa mengembalikan data yang dihapus!",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, hapus produk!'
+            })
+            .then(function (success) {
+                if (success.value) {
+                    var url = '{{ url("mitra/portal/produk/delete/") }}/'+id;
+                    console.log(url);
+                    $.ajax({
+                        url: url,
+                        type: "GET",
+                        success: function (data) {
+                            console.log(data);
+                            if (data.status == 1) {
+                                Swal.fire({
+                                    title: "Success!",
+                                    type: "success",
+                                    text: "Produk telah di hapus \n Click OK",
+                                    icon: "success",
+                                    confirmButtonClass: "btn btn-outline-info",
+                                });
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                            Swal.fire({
+                                title: 'Opps...',
+                                text: error.message,
+                                type: 'error',
+                                timer: '1500'
+                            })
+                        }
+                    });
+                }
             });
-            
-        </script>
+        }
+
+        function changeStatus(id, status){
+            event.preventDefault();
+            console.log(id, status);
+            Swal.fire({
+                title: 'Apakah Anda Yakin?',
+                text: "Produk akan di "+status+" !",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, '+status+'kan!'
+            })
+            .then(function (success) {
+                if (success.value) {
+                    var url = '{{ url("mitra/portal/produk/change-status") }}';
+                    console.log(url);
+                    $.ajax({
+                        url: url,
+                        type: "POST",
+                        data:{
+                            id:id,
+                            status:status
+                        },
+                        success: function (data) {
+                            console.log(data.html);
+                            if (data.status == 1) {
+                                Swal.fire({
+                                    title: "Success!",
+                                    type: "success",
+                                    text: "Produk telah di "+status+"kan \n Click OK",
+                                    icon: "success",
+                                    confirmButtonClass: "btn btn-outline-info",
+                                });
+
+                                location.replace("{{ route('portal.mitra.product.list.arsip') }}");
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                            Swal.fire({
+                                title: 'Opps...',
+                                text: error.message,
+                                type: 'error',
+                                timer: '1500'
+                            })
+                        }
+                    });
+                }
+            });
+        }
+    </script>
     @endpush
       

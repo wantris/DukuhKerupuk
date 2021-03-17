@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Subscriber;
-use Twilio\Twiml;
+use Twilio\TwiML as Twiml;
 
 class SubscriberController extends Controller
 {

@@ -12,13 +12,13 @@
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-cookie-bite"></i> <span>Produk</span></a>
             <ul class="dropdown-menu">
               <li><a class="nav-link {{ Request::routeIs('portal.mitra.product.list') ? 'text-primary' : '' }}"  href="{{route('portal.mitra.product.list')}}">Produk Saya </a></li>
-              <li><a class="nav-link {{ Request::routeIs('portal.mitra.product.add') ? 'text-primary' : '' }}" href="layout-transparent.html">Tambah Produk</a></li>
+              <li><a class="nav-link {{ Request::routeIs('portal.mitra.product.add') ? 'text-primary' : '' }}" href="{{route('portal.mitra.product.add')}}">Tambah Produk</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-tags"></i> <span>Promosi Saya</span></a>
             <ul class="dropdown-menu">
-              <li><a class="nav-link" href="layout-default.html">Daftar Promosi</a></li>
+              <li><a class="nav-link {{ Request::routeIs('portal.mitra.promo.list') ? 'text-primary' : '' }}" href="{{route('portal.mitra.promo.list', 'promo-toko')}}">Daftar Promosi</a></li>
               <li><a class="nav-link" href="layout-transparent.html">Tambah Promosi</a></li>
             </ul>
           </li>
