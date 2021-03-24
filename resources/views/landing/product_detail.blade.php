@@ -113,18 +113,22 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__pic">
                         <div class="product__details__pic__item">
+                            @php
+                                $img = App\ProductImage::where('product_id', $pr->id_produk)->where('rule', 1)->first();
+                            @endphp
                             <img class="product__details__pic__item--large"
-                                src="{{url("ogani/img/product/details/product-details-1.jpg")}}" alt="">
+                                src="{{url("/mitra/product_image/".$img->image)}}" alt="">
                         </div>
                         <div class="product__details__pic__slider owl-carousel">
-                            <img data-imgbigurl="{{url("ogani/img/product/details/product-details-2.jpg")}}"
-                                src="{{url("ogani/img/product/details/thumb-1.jpg")}}" alt="">
-                            <img data-imgbigurl="{{url("ogani/img/product/details/product-details-3.jpg")}}"
-                                src="{{url("ogani/img/product/details/thumb-2.jpg")}}" alt="">
-                            <img data-imgbigurl="{{url("ogani/img/product/details/product-details-5.jpg")}}"
-                                src="{{url("ogani/img/product/details/thumb-3.jpg")}}" alt="">
-                            <img data-imgbigurl="{{url("ogani/img/product/details/product-details-4.jpg")}}"
-                                src="{{url("ogani/img/product/details/thumb-4.jpg")}}" alt="">
+                            @php
+                                $rowImg = App\ProductImage::where('product_id', $pr->id_produk)->get();
+                            @endphp
+                            @if ($img->count() > 0)
+                                @foreach ($rowImg as $item)
+                                    <img data-imgbigurl="{{url("/mitra/product_image/".$item->image)}}"
+                                    src="{{url("/mitra/product_image/".$item->image)}}" alt="">
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>

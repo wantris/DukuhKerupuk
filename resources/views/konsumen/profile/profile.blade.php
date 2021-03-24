@@ -179,7 +179,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-12 col-lg-8 mb-5 border-right pr-5">
-                                    <form action="{{route('profile.konsumen.update')}}" method="post">
+                                    <form action="{{route('profile.konsumen.update')}}" method="post" enctype="multipart/form-data">
                                         @csrf
                                         <div class="row mt-3">
                                             <div class="col-4 text-right">
@@ -213,21 +213,21 @@
                                                 <div class="row">
                                                     <div class="col-lg-6 col-12">
                                                         <label class="custom-control fill-checkbox mr-3">
-                                                            <input type="radio" class="fill-control-input" value="Laki-laki" name="gender" id="checkAll">
+                                                            <input type="radio" class="fill-control-input" @if($user->gender === "Laki-laki") checked @endif value="Laki-laki" name="gender" id="checkAll">
                                                             <span class="fill-control-indicator"></span>
                                                             Laki-laki
                                                         </label>
                                                     </div>
                                                     <div class="col-lg-6 col-12">
                                                         <label class="custom-control fill-checkbox mr-3"> 
-                                                            <input type="radio" class="fill-control-input" value="Perempuan" name="gender" id="checkAll">
+                                                            <input type="radio" class="fill-control-input" @if($user->gender === "Perempuan") checked @endif value="Perempuan" name="gender" id="checkAll">
                                                             <span class="fill-control-indicator"></span>
                                                             Perempuan
                                                         </label>
                                                     </div>
                                                     <div class="col-lg-6 col-12">
                                                         <label class="custom-control fill-checkbox">
-                                                            <input type="radio" class="fill-control-input" value="Lainnya" name="gender" id="checkAll">
+                                                            <input type="radio" class="fill-control-input" @if($user->gender === "Lainnya") checked @endif value="Lainnya" name="gender" id="checkAll">
                                                             <span class="fill-control-indicator"></span>
                                                             Lainnya
                                                         </label>
@@ -268,10 +268,10 @@
                                                                 }
                                                             @endphp
                                                             @if ($user->birth_day != null)
-                                                                <option value="{{$i}}">{{$parsed[$i]}}</option>
+                                                                <option value="{{$i}}">{{$parsed[$i-1]}}</option>
                                                             @endif
                                                             @for ($i = 0; $i < $count; $i++)
-                                                                <option value="{{$i}}">{{$parsed[$i]}}</option>
+                                                                <option value="{{$i+1}}">{{$parsed[$i]}}</option>
                                                             @endfor
                                                         </select>
                                                     </div>
@@ -295,15 +295,16 @@
                                                 <input type="submit" class="site-btn" value="Simpan">
                                             </div>
                                         </div>
-                                    </form>
+                                    
                                 </div>
                                 <div class="col-lg-4 col-12">
                                     <div class="row">
-                                        <div class="col-12 text-center">
-                                            <img src="https://cf.shopee.co.id/file/29c4428521eeb2b7c6f583f406d1d589_tn" class="change-profile-image " alt="">
+                                        <div class="col-12 text-center" id="div-profile-image">
+                                            <img src="{{url('/konsumen/avatar/'.$user->gambar_profil)}}" class="change-profile-image" id="profile-image" alt="">
                                         </div>
                                         <div class="col-12 text-center mt-3">
-                                            <a href="#" class="site-btn" style="padding:12px 12px; font-size:12px">Pilih Gambar</a>
+                                            <a href="#" onclick="uploadImage()" class="site-btn" style="padding:12px 12px; font-size:12px">Pilih Gambar</a>
+                                            <input type="file" class="d-none" onchange="previewImage()" name="avatar_image" id="profile_input">
                                         </div>
                                         <div class="col-12 text-center mt-3">
                                             <div class="image-rule text-secondary">Ukuran gambar: maks 1MB</div>
@@ -311,6 +312,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -326,6 +328,29 @@
  
      <!-- Js Plugins -->
      @include('layouts.js_lib')
+
+    <script>
+            function uploadImage(){
+                event.preventDefault();
+                $("#profile_input").trigger('click');
+                return false;
+            }
+
+            function previewImage() {
+                var oFReader = new FileReader();
+                oFReader.readAsDataURL(document.getElementById("profile_input").files[0]);
+            
+                oFReader.onload = function(oFREvent) {
+                    var html = `
+                        <span class="pip">
+                            <img src="" class="change-profile-image" id="profile-image" alt=""><br/>
+                        </span>
+                    `;
+                    document.getElementById("div-profile-image").innerHTML = html;
+                    document.getElementById("profile-image").src = oFREvent.target.result;
+                };
+            };
+    </script>
 
 </body>
 

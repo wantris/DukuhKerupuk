@@ -18,6 +18,7 @@ class AddEmailToUsersTable extends Migration
             $table->string('email', 50)->nullable()->after('username');
             $table->enum('gender', ['Laki-laki', 'Perempuan', 'Lainnya'])->nullable()->after('role');
             $table->date('birth_day')->nullable()->after('gender');
+            $table->string('gambar_profil', 255)->nullable()->after('birth_day');
         });
     }
 
@@ -33,6 +34,7 @@ class AddEmailToUsersTable extends Migration
             $table->dropColumn('email');
             $table->dropColumn('gender');
             $table->dropColumn('birth_day');
+            $table->dropColumn('gambar_profil');
         });
     }
 }

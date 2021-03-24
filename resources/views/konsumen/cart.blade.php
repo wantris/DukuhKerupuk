@@ -15,6 +15,18 @@
 
     <!-- Css Styles -->
     @include('layouts.header')
+    <style>
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+        -webkit-appearance: none !important;
+        margin: 0 !important;
+        }
+    
+        /* Firefox */
+        input[type=number] {
+        -moz-appearance: textfield !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -95,95 +107,71 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shoping__cart__table" >
-                        <table style="width: 100%;">
+                        <table style="width: 100%;" class="table-responsive">
                             <thead>
                                 <tr>
                                     <th style="width: 7% !important;"><label class="custom-control fill-checkbox">
                                         <input type="checkbox" class="fill-control-input" id="checkAll">
                                         <span class="fill-control-indicator"></span></th>
                                     <th class="shoping__product">Produk</th>
-                                    <th>Harga</th>
+                                    <th style="width: 20% !important;">Harga</th>
                                     <th>Jumlah</th>
                                     <th>Total</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td style="width: 7%  !important;"><label class="custom-control fill-checkbox">
-                                        <input type="checkbox" class="fill-control-input">
-                                        <span class="fill-control-indicator"></span></td>
-                                    <td class="shoping__cart__item">
-                                        <img src="{{url("ogani/img/cart/cart-1.jpg")}}" alt="">
-                                        <h5>Vegetable’s Package</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        $55.00
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
+                                @foreach ($cart as $item)
+                                    <tr id="div_{{$item->id_keranjang}}" class="penjualan">
+                                        <td style="width: 7%  !important;"><label class="custom-control fill-checkbox">
+                                            <input type="checkbox" class="fill-control-input" id="checkbox_{{$item->id_keranjang}}" data-subtotal="{{$item->subtotal}}" data-produk="{{$item->id_produk}}" data-id="{{$item->id_keranjang}}">
+                                            <span class="fill-control-indicator"></span></td>
+                                        <td class="shoping__cart__item">
+                                            @php
+                                                $img = App\ProductImage::where('product_id', $item->id_produk)->where('rule', 1)->first();
+                                            @endphp
+                                            <img src="{{url("/mitra/product_image/".$img->image)}}" style="width: 100px; height:100px" alt="">
+                                            <h5>{{$item->productRef->nama_produk}}</h5>
+                                        </td>
+                                        <td class="shoping__cart__price text-center">
+                                            @php
+                                                $pr = App\Promo::where('product_id', $item->id_produk)->orderBy('created_at','desc')->first();
+                                                if($pr){
+                                                    if($pr->tipe_diskon === 'langsung'){
+                                                        $diskon = (int)$item->productRef->harga - (int)$pr->jumlah_diskon;
+                                                    }else{
+                                                        $diskon = (int)$item->productRef->harga - ((int)$item->productRef->harga * (int)$pr->jumlah_diskon);
+                                                    }
+                                                }
+                                            @endphp
+                                            @if ($pr)
+                                                <div class="d-flex">
+                                                    <span style="text-decoration:line-through" class="mr-4">Rp {{number_format($diskon,'0','.','.')}}</span>
+                                                    <span>Rp {{number_format($item->productRef->harga,'0','.','.')}}</span>
+                                                </div>
+                                            @else
+                                                Rp {{number_format($item->productRef->harga,'0','.','.')}}
+                                            @endif
+                                        </td>
+                                        <td class="shoping__cart__quantity">
+                                            <div class="quantity" data-id="{{$item->id_keranjang}}">
+                                                <input type="hidden" class="harga_inp" id="inp_harga_{{$item->id_keranjang}}" value="@if($pr) {{$diskon}} @else {{$item->productRef->harga}} @endif ">
+                                                <input type="hidden" class="subtotal_inp" data-id="{{$item->id_keranjang}}" id="inp_subtotal_{{$item->id_keranjang}}" value="{{$item->subtotal}}">
+                                                <input type="hidden" id="">
+                                                <div class="pro-qty">
+                                                    <input type="number" class="qty" id="qty_{{$item->id_keranjang}}" value="{{$item->qty}}">
+                                                    
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        $110.00
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 7%  !important;"><label class="custom-control fill-checkbox">
-                                        <input type="checkbox" class="fill-control-input">
-                                        <span class="fill-control-indicator"></span></td>
-                                    <td class="shoping__cart__item">
-                                        <img src="{{url("ogani/img/cart/cart-2.jpg")}}" alt="">
-                                        <h5>Fresh Garden Vegetable</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        $39.00
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        $39.99
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 7%  !important;"><label class="custom-control fill-checkbox">
-                                        <input type="checkbox" class="fill-control-input">
-                                        <span class="fill-control-indicator"></span></td>
-                                    <td class="shoping__cart__item">
-                                        <img src="{{url("ogani/img/cart/cart-1.jpg")}}" alt="">
-                                        <h5>Organic Bananas</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        $69.00
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        $69.99
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td class="shoping__cart__total">
+                                            Rp <span id="subtotal_item_text_{{$item->id_keranjang}}">{{number_format($item->subtotal,'0','.','.')}}</span>
+                                        </td>
+                                        <td class="shoping__cart__item__close">
+                                            <a href="#" onclick="deleteCart('{{$item->id_keranjang}}')"><span class="icon_close"></span></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -192,7 +180,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shoping__cart__btns">
-                        <a href="#" class="primary-btn cart-btn">Lanjutkan Belanja</a>
+                        <a href="#" class="primary-btn cart-btn mr-3">Lanjutkan Belanja</a>
+                        <a href="#" class="primary-btn cart-btn bg-danger text-white" onclick="deleteAll()">Hapus</a>
                         <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
                             Upadate Cart</a>
                     </div>
@@ -202,8 +191,8 @@
                         <div class="shoping__discount">
                             <h5>Kode Diskon</h5>
                             <form action="#">
-                                <input type="text" placeholder="Enter your coupon code">
-                                <button type="submit" class="site-btn">Ambil Diskon</button>
+                                <input type="text" placeholder="Enter your coupon code" id="inp_diskon">
+                                <button type="button" onclick="addDiskon()"  class="site-btn">Ambil Diskon</button>
                             </form>
                         </div>
                     </div>
@@ -212,10 +201,13 @@
                     <div class="shoping__checkout">
                         <h5>Total Keranjang</h5>
                         <ul>
-                            <li>Subtotal <span>$454.98</span></li>
-                            <li>Total <span>$454.98</span></li>
+                            <li>Subtotal <span id="subtotal_text">0</span><span>  Rp  </span></li>
+                            <input type="hidden" id="diskon_inp">
+                            <input type="hidden" name="id_diskon" id="id_diskon">
+                            <li>Diskon <span id="diskon_text">0</span><span>  Rp  </span></li>
+                            <li>Total <span id="total_text">0</span><span>  Rp  </span></li>
                         </ul>
-                        <a href="{{route('checkout')}}" class="primary-btn">Proses Ke Checkout</a>
+                        <a href="#" onclick="checkout()" class="primary-btn">Proses Ke Checkout</a>
                     </div>
                 </div>
             </div>
@@ -230,11 +222,190 @@
     <!-- Js Plugins -->
     @include('layouts.js_lib')
 
+    @include('layouts.cart_sec')
+
 
     <script>
-        $("#checkAll").click(function(){
-            $('input:checkbox').not(this).prop('checked', this.checked);
+
+        $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
         });
+
+        function checkout(){
+            event.preventDefault();
+            var id = [];
+            var product_id = [];
+            var qty = [];
+            var harga = [];
+            var diskon = $('#diskon_inp').val();
+            var url = "{{route('checkout.post')}}";
+            var id_promo = $('#id_diskon').val();
+
+            $(".fill-control-input:checked").each(function() {
+                var id_keranjang = $(this).data('id');
+                var harga_tmp = parseFloat($('#inp_harga_'+id_keranjang).val()) || 0;
+                var qty_tmp = parseFloat($('#qty_'+id_keranjang).val()) || 0;
+                var id_produk = $(this).data('produk');
+
+                id.push(id_keranjang);
+                harga.push(harga_tmp);
+                qty.push(qty_tmp);
+                product_id.push(id_produk);
+            });
+
+            if(id.length === 0){
+                Swal.fire({
+                    title: "Anda belum memilih produk",
+                    type: "error",
+                    icon: "error",
+                    confirmButtonClass: "btn btn-outline-info",
+                })
+            } else{
+                console.log(id_promo);
+                $.ajax({
+                url: url, //harus sesuai url di buat di route
+                type: "POST",
+                data: {
+                    harga: harga,
+                    id:id,
+                    qty:qty,
+                    product_id:product_id,
+                    diskon : diskon,
+                    id_diskon:id_promo
+                },
+                cache: false,
+                    success: function (dataResult) {
+                        console.log(dataResult);
+                        var dataResult = JSON.parse(dataResult);
+                        if(dataResult.statusCode==200){
+                            console.log(dataResult.token);
+                            Swal.fire({
+                                title: "Berhasil",
+                                text: "Produk telah di checkout",
+                                icon: "success",
+                            })
+                            .then(function (value) {
+                                    if (value) {
+                                        window.location.href = "/checkout/"+ dataResult.token;
+                                    }
+                            });
+                        }
+                        else if(dataResult.statusCode==201){
+                            alert("Error occured !");
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    },
+                });    
+            }
+        }
+
+        function deleteCart(id){
+            event.preventDefault();
+            Swal.fire({
+                    title: 'Apakah Anda Yakin?',
+                    text: "Anda akan menghapus produk dari keranjang !",
+                    showCancelButton: true,
+                    confirmButtonColor: '#7fad39',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Hapus!'
+            })
+            .then(function (success) {
+                    if (success.value) {
+                        var url = '{{ url("konsumen/cart/delete/") }}/'+id;
+                        console.log(url);
+                        $.ajax({
+                            url: url,
+                            type: "GET",
+                            success: function (data) {
+                                console.log(data);
+                                if (data.status == 1) {
+                                    Swal.fire({
+                                        title: "Success!",
+                                        type: "success",
+                                        text: "Produk telah di hapus \n Click OK",
+                                        icon: "success",
+                                        confirmButtonClass: "btn btn-outline-info",
+                                    })
+                                    .then(function(){
+                                        $('#div_'+id).remove();
+                                    });
+                                }
+                            },
+                            error: function (error) {
+                                console.log(error);
+                                Swal.fire({
+                                    title: 'Opps...',
+                                    text: error.message,
+                                    type: 'error',
+                                    timer: '1500'
+                                })
+                            }
+                        });
+                    }
+                });
+            }
+
+            function deleteAll(){
+                var allVals = [];  
+
+                $(".fill-control-input:checked").each(function() {  
+                    allVals.push($(this).attr('data-id'));
+                    var json = JSON.stringify(allVals);
+
+                    event.preventDefault();
+                    Swal.fire({
+                        title: 'Apakah Anda Yakin?',
+                        text: "Anda akan menghapus produk dari keranjang !",
+                        showCancelButton: true,
+                        confirmButtonColor: '#7fad39',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, Hapus!'
+                     })
+                     .then(function (success) {
+                        if (success.value) {
+                            var url = '{{ route("cart.delete.multiple") }}';
+                            var join_selected_values = allVals.join(","); 
+                            console.log(url);
+                            $.ajax({
+                                url: url,
+                                type: "POST",
+                                data:'ids='+join_selected_values,
+                                success: function (data) {
+                                    // var data = JSON.parse(data);
+                                    if (data.status == 1) {
+                                        console.log(data.message);
+                                        Swal.fire({
+                                            title: "Success!",
+                                            type: "success",
+                                            text: "Produk telah di hapus \n Click OK",
+                                            icon: "success",
+                                            confirmButtonClass: "btn btn-outline-info",
+                                        })
+                                        .then(function(){
+                                            $.each(allVals, function( index, value ) {
+                                                $('#div_'+value).remove();
+                                            });
+                                        });
+                                    }
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                    Swal.fire({
+                                        title: 'Opps...',
+                                        text: error.message,
+                                        type: 'error',
+                                        timer: '1500'
+                                    })
+                                }
+                            });
+                        }
+                    });
+                });  
+            }
     </script>
 
 

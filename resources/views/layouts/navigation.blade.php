@@ -19,7 +19,12 @@
             </div>
             <div class="header__top__right__language">
                 @if (Auth::guard('users')->check())
-                    <div><a href="{{url('konsumen/logout')}}" style="text-decoration: none;color:black">Logout</a></div>
+                    <div>Akun</div>
+                    <span class="arrow_carrot-down"></span>
+                    <ul>
+                        <li><a href="{{route('profile.konsumen')}}">Profil</a></li>
+                        <li><a href="{{url('konsumen/logout')}}">Logout</a></li>
+                    </ul>
                 @else 
                     <div>Login</div>
                     <span class="arrow_carrot-down"></span>
@@ -89,7 +94,12 @@
                             </div>
                             <div class="header__top__right__language">
                                 @if (Auth::guard('users')->check())
-                                    <div><a href="{{url('konsumen/logout')}}" style="text-decoration: none;color:black">Logout</a></div>
+                                    <div>Akun</div>
+                                    <span class="arrow_carrot-down"></span>
+                                    <ul>
+                                        <li><a href="{{route('profile.konsumen')}}">Profil</a></li>
+                                        <li><a href="{{url('konsumen/logout')}}">Logout</a></li>
+                                    </ul>
                                 @else 
                                     <div>Login</div>
                                     <span class="arrow_carrot-down"></span>
@@ -134,7 +144,10 @@
                     <div class="header__cart">
                         <ul>
                             <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a href="{{route('cart.index')}}"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                            @php
+                                $countCart = App\Keranjang::where('id_user',Auth::guard('users')->id())->get();
+                            @endphp
+                            <li><a href="{{route('cart.index')}}"><i class="fa fa-shopping-bag"></i> <span>{{$countCart->count()}}</span></a></li>
                         </ul>
                     </div>
                 </div>

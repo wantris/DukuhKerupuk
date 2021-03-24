@@ -94,123 +94,125 @@
     <!-- Checkout Section Begin -->
     <section class="checkout spad">
         <div class="container">
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-lg-12">
                     <h6><span class="icon_tag_alt"></span> Have a coupon? <a href="#" data-toggle="coupon" href="#couponExample" role="button" aria-expanded="false" aria-controls="couponExample">Click here</a> to enter your code
                     </h6>
                 </div>
-            </div>
+            </div> --}}
             <div class="checkout__form">
                 <h4>Billing Details</h4>
-                <form action="#">
-                    <div class="row mb-3">
-                        <div class="col-12">
-                            <div class="d-flex">
-                                <label class="custom-control fill-checkbox mr-4">
-                                    <input type="checkbox" class="fill-control-input">
-                                    <span class="fill-control-indicator"></span>
-                                    COD
-                                </label>
-                                <label class="custom-control fill-checkbox mr-4">
-                                    <input type="checkbox" class="fill-control-input">
-                                    <span class="fill-control-indicator"></span>
-                                    Anter
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+                <form action="{{route('checkout.save')}}" method="POST">
+                    @csrf
                     <div class="row">
-                        <div class="col-lg-8 col-md-6">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="checkout__input">
-                                        <p>Nama Lengkap<span>*</span></p>
-                                        <input type="text" name="name" placeholder="Nama Lengkap">
-                                    </div>
+                        <div class="col-lg-12 mb-4 col-md-6">
+                            <div class="checkout__order">
+                                <h4 style="color: #7fad39">Konfirmasi Alamat</h4>
+                                <div class="row">
+                                    @php
+                                        $alm = App\Alamat::where('user_id', Auth::guard('users')->id())->where('is_featured', 1)->first();
+                                    @endphp
+                                    @if ($alm)
+                                        <div class="col-lg-4">
+                                            <input type="hidden" name="alm_utama" value="{{$alm->id}}">
+                                            <span class="font-weight-bold">{{$alm->nama_lengkap}} ({{$alm->nomor_telp}})</span>
+                                        </div>
+                                        <div class="col-5">
+                                            <span class="">{{$alm->alamat_detail}}</span>
+                                        </div>
+                                    @endif
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="checkout__input">
-                                        <p>Nomor Telepon<span>*</span></p>
-                                        <input type="text" name="number_phone" placeholder="Nomor telepon" class="checkout__input__add">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="checkout__input">
-                                        <p>Alamat<span>*</span></p>
-                                        <input type="text" name="address" placeholder="Street Address" class="checkout__input__add">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-4">
-                                <div class="col-12">
-                                    <div class="checkout__input">
-                                        <p>Provinsi<span>*</span></p>
-                                        <select name="province" id="province-select" size="5">
-                                            <option selected>Pilih Provinsi</option>
-                                            @foreach ($province as $province)
-                                            <option value="{{$province->province_id}}">{{$province->name}}</option>
-                                          @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-4">
-                                <div class="col-12 mt-2">
-                                    <div class="checkout__input">
-                                        <p>kota<span>*</span></p>
-                                        <select name="city_destination" id="city-select">
-                                            <option>Pilih Kota</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-2">
-                                <div class="col-12">
-                                    <div class="checkout__input">
-                                        <p>Kode Pos<span>*</span></p>
-                                        <input type="text" name="pos_code">
+                                <div class="row mt-2">
+                                    <div class="col-12">
+                                        <hr>
+                                        <div class="d-flex">
+                                            <label class="custom-control fill-checkbox mr-4">
+                                                <input type="radio" name="pengiriman" value="cod" class="fill-control-input">
+                                                <span class="fill-control-indicator"></span>
+                                                COD
+                                            </label>
+                                            <label class="custom-control fill-checkbox mr-4">
+                                                <input type="radio" name="pengiriman" value="antar" class="fill-control-input">
+                                                <span class="fill-control-indicator"></span>
+                                                Antar
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6">
+                        <div class="col-lg-12 col-md-6">
                             <div class="checkout__order">
-                                <h4>Your Order</h4>
-                                <div class="checkout__order__products">Products <span>Total</span></div>
-                                <ul>
-                                    <li>Vegetable’s Package <span>$75.99</span></li>
-                                    <li>Fresh Vegetable <span>$151.99</span></li>
-                                    <li>Organic Bananas <span>$53.99</span></li>
-                                </ul>
-                                <div class="checkout__order__subtotal">Subtotal <span>$750.99</span></div>
-                                <div class="checkout__order__total">Total <span>$750.99</span></div>
-                                <div class="checkout__input__checkbox">
-                                    <label for="acc-or">
-                                        Create an account?
-                                        <input type="checkbox" id="acc-or">
-                                        <span class="checkmark"></span>
-                                    </label>
+                                <h4 style="color: #7fad39">Produk Dipesan</h4>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <span class="font-weight-bold" style="font-size: 19px">produk</span>
+                                    </div>
+                                    <div class="col-3 txt-center">
+                                        <span class="font-weight-bold" style="font-size: 19px">Harga Produk</span>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <span class="font-weight-bold" style="font-size: 19px">Jumlah Produk</span>
+                                    </div>
+                                    <div class="col-3 text-right">
+                                        <span class="font-weight-bold" style="font-size: 19px">Subtotal Produk</span>
+                                    </div>
                                 </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor incididunt
-                                    ut labore et dolore magna aliqua.</p>
-                                <div class="checkout__input__checkbox">
-                                    <label for="payment">
-                                        Check Payment
-                                        <input type="checkbox" id="payment">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <div class="checkout__input__checkbox">
-                                    <label for="paypal">
-                                        Paypal
-                                        <input type="checkbox" id="paypal">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
+                                @php
+                                    $total = 0;
+                                @endphp
+                                @foreach ($json->product_id as $key => $produk)
+                                    @php
+                                        $pr = App\Product::find($produk);
+                                        $promo = App\Promo::where('product_id', $produk)->first();
+                                        
+                                        if($promo){
+                                            if($promo->tipe_diskon === 'presentase'){
+                                                $diskon = (int)$pr->harga - ((int)$pr->harga * $promo->jumlah_diskon);
+                                            }elseif($promo->tipe_diskon === 'langsung'){
+                                                $diskon = (int)$pr->harga - (int)$promo->jumlah_diskon;
+                                            };
+                                        }else{
+                                            $diskon = $pr->harga;
+                                        }
+                                        $qty = (int)$json->qty[$key];
+                                        $subtotal = (int)$diskon * $qty;
+                                        $harga = number_format($pr->harga,'0','.','.');
+                                        $total += $subtotal;
+                                        $total_diskon = $total - (int)$json->diskon;
+                                    @endphp
+                                    <div class="row mt-3">
+                                        <div class="col-3">
+                                            <input type="hidden" name="id_produk[]" value="{{$produk}}">
+                                            <input type="hidden" name="qty[]" value="{{$qty}}">
+                                            <input type="hidden" name="subtotal[]" value="{{$subtotal}}">
+                                            <input type="hidden" name="harga[]" value="{{$diskon}}">
+                                            <input type="hidden" name="mitra_id[]" value="{{$pr->id_mitra}}">
+                                            <span class="" style="font-size: 16px">{{$pr->nama_produk}}</span>
+                                        </div>
+                                        <div class="col-3 txt-center">
+                                            @if($promo)
+                                                <span class="" style="font-size: 16px">Rp {{number_format($diskon,'0','.','.')}}</span>
+                                                <span class="mr-3 " style="text-decoration: line-through;font-size: 16px">Rp {{$harga}}</span>  
+                                            @else
+                                                <span class="">Rp {{$harga}}</span> 
+                                            @endif
+                                        </div>
+                                        <div class="col-3 text-center">
+                                            <span class="" style="font-size: 16px">{{$json->qty[$key]}}</span>
+                                        </div>
+                                        <div class="col-3 text-right">
+                                            <span class="" style="font-size: 16px">Rp {{number_format($subtotal,'0','.','.')}}</span>
+                                        </div>
+                                    </div>
+                                @endforeach
+                                <div class="checkout__order__subtotal mt-3">Subtotal <span>Rp {{number_format($total,'0','.','.')}}</span></div>
+                                <div class="checkout__order__total">Diskon <span>Rp {{number_format($json->diskon,'0','.','.')}}</span></div>
+                                <input type="hidden" name="diskon" value="{{$json->diskon}}">
+                                <input type="hidden" name="id_promo" value="{{$json->id_diskon}}">
+                                <input type="hidden" name="total" value="{{$total_diskon}}">
+                                <input type="hidden" name="token" value="{{$token}}">
+                                <div class="checkout__order__total">Total <span>Rp  {{number_format($total_diskon,'0','.','.')}}</span></div>
                                 <button type="submit" class="site-btn">PLACE ORDER</button>
                             </div>
                         </div>

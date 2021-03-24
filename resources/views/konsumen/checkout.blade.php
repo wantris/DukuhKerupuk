@@ -43,7 +43,7 @@
         <div class="ps-container">
           <form class="ps-checkout__form" action="do_action" method="post">
             <div class="row">
-                  <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                     <div class="ps-checkout__billing">
                       <h3>Checkout Pembelian</h3>
                             <div class="form-group d-flex">
@@ -111,7 +111,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                  <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 ">
                     <div class="ps-checkout__order">
                       <header>
                         <h3>Your Order</h3>

@@ -60,7 +60,13 @@ Route::group(['prefix' => 'konsumen'], function () {
     Route::group(['middleware' => 'users'], function () {
         Route::get('/account/profil', 'Konsumen\KonsumenController@profile')->name('profile.konsumen');
         Route::post('/account/profil', 'Konsumen\KonsumenController@profileSave')->name('profile.konsumen.update');
+
         Route::get('/account/alamat', 'Konsumen\KonsumenController@address')->name('address.konsumen');
+        Route::post('/account/alamat', 'Konsumen\KonsumenController@addressSave')->name('address.konsumen.save');
+        Route::post('/account/alamat/change-status', 'Konsumen\KonsumenController@changeStatus')->name('address.konsumen.status.change');
+        Route::get('/account/alamat/delete/{id}', 'Konsumen\KonsumenController@delete')->name('address.konsumen.delete');
+        Route::post('/account/update', 'Konsumen\KonsumenController@addressUpdate')->name('address.konsumen.update');
+
         Route::get('/account/password', 'Konsumen\KonsumenController@changePassword')->name('password.konsumen');
         Route::get('/account/purchase/type/{type}', 'Konsumen\KonsumenController@purchase')->name('purchase.konsumen');
         Route::get('/account/cities/{province_id}', 'Konsumen\CheckoutController@getCities');
@@ -69,13 +75,17 @@ Route::group(['prefix' => 'konsumen'], function () {
 
     //keranjang
     Route::get('/cart', 'Konsumen\KeranjangController@index')->name('cart.index');
+    Route::post('/cart/add', 'Konsumen\KeranjangController@save')->name('cart.save');
+    Route::get('/cart/delete/{id}', 'Konsumen\KeranjangController@delete')->name('cart.delete');
+    Route::post('/cart/delete-multiple', 'Konsumen\KeranjangController@deleteMultiple')->name('cart.delete.multiple');
+    Route::post('/cart/promo', 'Konsumen\KeranjangController@addPromo')->name('cart.addpromo');
 });
 
 
 // Produk Landing
 Route::group(['prefix' => 'product'], function () {
     Route::get('/', 'ProdukController@listProduk')->name('produk');
-    Route::get('/detail', 'ProdukController@detailProduk')->name('detail.produk');
+    Route::get('/detail/{slug}', 'ProdukController@detailProduk')->name('detail.produk');
 });
 
 //Mitra landing
@@ -113,12 +123,21 @@ Route::group(['prefix' => 'mitra'], function () {
         Route::patch('/portal/promo/edit/{id}', 'Mitra\PromoController@update')->name('portal.mitra.promo.update');
         Route::get('/portal/promo/delete/{id}', 'Mitra\PromoController@delete')->name('portal.mitra.promo.delete');
         Route::post('/portal/promo/change-status', 'Mitra\PromoController@changeStatus')->name('portal.mitra.promo.status');
+
+        Route::get('/portal/transaksi/list/{status}', 'Mitra\TransaksiController@index')->name('portal.mitra.trans.list');
+        Route::patch('/portal/transaksi/change-status/{kd}', 'Mitra\TransaksiController@changeStatus')->name('portal.mitra.trans.status');
+        Route::get('/portal/transaksi/detail/{kd}', 'Mitra\TransaksiController@detail')->name('portal.mitra.trans.detail');
     });
 });
 
 
 
 Route::group(['prefix' => 'checkout'], function () {
-    Route::get('/', 'Konsumen\CheckoutController@index')->name('checkout');
+    Route::post('/create', 'Konsumen\CheckoutController@postCheckout')->name('checkout.post');
     Route::get('/cities/{province_id}', 'Konsumen\CheckoutController@getCities');
+    Route::get('/{token}', 'Konsumen\CheckoutController@index');
+    Route::post('/save', 'Konsumen\CheckoutController@saveCheckout')->name('checkout.save');
+    Route::get('/bukti-transfer/{kd}', 'Konsumen\CheckoutController@getBukti')->name('checkout.bukti');
+    Route::post('/bukti-transfer', 'Konsumen\CheckoutController@postBukti')->name('checkout.bukti.post');
+    Route::get('/process/success', 'Konsumen\CheckoutController@success')->name('checkout.success');
 });
