@@ -8,7 +8,7 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ogani | Template</title>
+    <title>Pesanan</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -41,48 +41,7 @@
     <!-- Hero Section Begin -->
     <section class="hero hero-normal">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="hero__categories">
-                        <div class="hero__categories__all">
-                            <i class="fa fa-bars"></i>
-                            <span>All departments</span>
-                        </div>
-                        <ul>
-                            <li><a href="#">Fresh Meat</a></li>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fruit & Nut Gifts</a></li>
-                            <li><a href="#">Fresh Berries</a></li>
-                            <li><a href="#">Ocean Foods</a></li>
-                            <li><a href="#">Butter & Eggs</a></li>
-                            <li><a href="#">Fastfood</a></li>
-                            <li><a href="#">Fresh Onion</a></li>
-                            <li><a href="#">Papayaya & Crisps</a></li>
-                            <li><a href="#">Oatmeal</a></li>
-                            <li><a href="#">Fresh Bananas</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-9">
-                    <div class="hero__search">
-                        <div class="hero__search__form">
-                            <form action="#">
-                                <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
-                                </div>
-                                <input type="text" placeholder="What do yo u need?">
-                                <button type="submit" class="site-btn">SEARCH</button>
-                            </form>
-                        </div>
-                        <div class="hero__search__phone">
-                            <div class="hero__search__phone__icon">
-                                <i class="fa fa-phone"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <@include('layouts.searchbar')
         </div>
     </section>
     <!-- Hero Section End -->
@@ -96,8 +55,8 @@
                         <h2>Akun Saya</h2>
                         <div class="breadcrumb__option">
                             <a href="./index.html">Home</a>
-                            <a href="./index.html">Vegetables</a>
-                            <span>Vegetable’s Package</span>
+                            <a href="./index.html">Pesanan</a>
+                            <span>Semua</span>
                         </div>
                     </div>
                 </div>
@@ -203,14 +162,13 @@
                                                         <td>{{$item->created_at->isoFormat('D MMMM Y')}}</td>
                                                         <td>
                                                             <div class="d-flex">
-                                                                <a href="#" class="site-btn mr-3" style="padding:12px 12px; font-size:12px">Detail</a>
+                                                                <a href="{{route('purchase.konsumen.detail', $item->kd_transaksi)}}" class="site-btn mr-3" style="padding:12px 12px; font-size:12px">Detail</a>
                                                                 @if ($item->status === "pending")
                                                                     <a href="{{route('checkout.bukti', $item->kd_transaksi)}}" class="site-btn mr-3" style="padding:12px 12px; font-size:12px;background-color:#f56954">Bayar</a>
                                                                 @endif
                                                             </div>
                                                         </td>
                                                     </tr>
-                                            
                                                 @endforeach
                                             </tbody>
                                         </table>

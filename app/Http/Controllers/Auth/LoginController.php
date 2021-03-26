@@ -55,7 +55,7 @@ class LoginController extends Controller
         }
 
         //Authentication failed...
-        return $this->loginFailed();
+        return redirect()->back();
     }
 
     public function logout()

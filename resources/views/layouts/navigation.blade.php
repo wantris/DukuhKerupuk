@@ -11,12 +11,12 @@
             </ul>
         </div>
         <div class="humberger__menu__widget">
-            <div class="header__top__right__auth mr-2">
+            {{-- <div class="header__top__right__auth mr-2">
                 <a href="#"><i class="fa fa-user"></i> Mitra</a>
             </div>
             <div class="header__top__right__auth mr-2">
                 <a href="#"><i class="fa fa-user"></i>Konsumen</a>
-            </div>
+            </div> --}}
             <div class="header__top__right__language">
                 @if (Auth::guard('users')->check())
                     <div>Akun</div>
@@ -37,8 +37,8 @@
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
-                <li class="active"><a href="./index.html">Utama</a></li>
-                <li><a href="{{route('produk')}}">Produk</a></li>
+                <li class="{{ Request::routeIs('index') ? 'active' : '' }}"><a href="{{route('index')}}">Utama</a></li>
+                <li class="{{ Request::routeIs('produk') ? 'active' : '' }}"><a href="{{route('produk','all')}}">Produk</a></li>
                 {{-- <li><a href="#">Pages</a>
                     <ul class="header__menu__dropdown">
                         <li><a href="./shop-details.html">Shop Details</a></li>
@@ -47,7 +47,7 @@
                         <li><a href="./blog-details.html">Blog Details</a></li>
                     </ul>
                 </li> --}}
-                <li><a href="./blog.html">Blog</a></li>
+                {{-- <li><a href="./blog.html">Blog</a></li> --}}
                 <li><a href="./contact.html">Kontak</a></li>
             </ul>
         </nav>
@@ -86,12 +86,12 @@
                                 <a href="#"><i class="fa fa-linkedin"></i></a>
                                 <a href="#"><i class="fa fa-pinterest-p"></i></a>
                             </div>
-                            <div class="header__top__right__auth mr-3">
+                            {{-- <div class="header__top__right__auth mr-3">
                                 <a href="#"><i class="fa fa-user"></i>Mitra</a>
                             </div>
                             <div class="header__top__right__auth mr-3">
                                 <a href="#"><i class="fa fa-user"></i>Konsumen</a>
-                            </div>
+                            </div> --}}
                             <div class="header__top__right__language">
                                 @if (Auth::guard('users')->check())
                                     <div>Akun</div>
@@ -119,14 +119,14 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="./index.html"><img src="{{url("ogani/img/logo.png")}}" alt=""></a>
+                        <a href="{{url('/')}}"><img src="{{url("ogani/img/logo.png")}}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="./index.html">Utama</a></li>
-                            <li><a href="{{route('produk')}}">Produk</a></li>
+                            <li class="{{ Request::routeIs('index') ? 'active' : '' }}"><a href="{{route('index')}}">Utama</a></li>
+                            <li {{ Request::routeIs('produk') ? 'active' : '' }}><a href="{{route('produk','all')}}">Produk</a></li>
                             {{-- <li><a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
                                     <li><a href="./shop-details.html">Shop Details</a></li>
@@ -135,7 +135,7 @@
                                     <li><a href="./blog-details.html">Blog Details</a></li>
                                 </ul>
                             </li> --}}
-                            <li><a href="./blog.html">Blog</a></li>
+                            {{-- <li><a href="./blog.html">Blog</a></li> --}}
                             <li><a href="./contact.html">Kontak</a></li>
                         </ul>
                     </nav>

@@ -8,7 +8,7 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ogani | Template</title>
+    <title>Keranjang</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -42,43 +42,7 @@
     <!-- Hero Section Begin -->
     <section class="hero hero-normal">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="hero__categories">
-                        <div class="hero__categories__all">
-                            <i class="fa fa-bars"></i>
-                            <span>All departments</span>
-                        </div>
-                        <ul>
-                            <li><a href="#">Fresh Meat</a></li>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fruit & Nut Gifts</a></li>
-                            <li><a href="#">Fresh Berries</a></li>
-                            <li><a href="#">Ocean Foods</a></li>
-                            <li><a href="#">Butter & Eggs</a></li>
-                            <li><a href="#">Fastfood</a></li>
-                            <li><a href="#">Fresh Onion</a></li>
-                            <li><a href="#">Papayaya & Crisps</a></li>
-                            <li><a href="#">Oatmeal</a></li>
-                            <li><a href="#">Fresh Bananas</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-9">
-                    <div class="hero__search">
-                        <div class="hero__search__form">
-                            <form action="#">
-                                <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
-                                </div>
-                                <input type="text" placeholder="What do yo u need?">
-                                <button type="submit" class="site-btn">SEARCH</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('layouts.searchbar')
         </div>
     </section>
     <!-- Hero Section End -->
@@ -92,7 +56,7 @@
                         <h2>Keranjang</h2>
                         <div class="breadcrumb__option">
                             <a href="./index.html">Home</a>
-                            <span>Shopping Cart</span>
+                            <span>Keranjang</span>
                         </div>
                     </div>
                 </div>
@@ -146,8 +110,8 @@
                                             @endphp
                                             @if ($pr)
                                                 <div class="d-flex">
-                                                    <span style="text-decoration:line-through" class="mr-4">Rp {{number_format($diskon,'0','.','.')}}</span>
-                                                    <span>Rp {{number_format($item->productRef->harga,'0','.','.')}}</span>
+                                                    <span style="text-decoration:line-through" class="mr-4">Rp {{number_format($item->productRef->harga,'0','.','.')}}</span>
+                                                    <span>Rp {{number_format($diskon,'0','.','.')}}</span>
                                                 </div>
                                             @else
                                                 Rp {{number_format($item->productRef->harga,'0','.','.')}}

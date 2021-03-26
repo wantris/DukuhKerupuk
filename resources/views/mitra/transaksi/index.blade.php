@@ -79,7 +79,10 @@
                                                         </div></td>
                                                     <td>{{$item->created_at->isoFormat('D MMMM Y')}}</td>
                                                     <td><div class="d-flex">
-                                                            <a href="#" class="btn btn-primary mr-2" title="Detail"><i class="fas fa-eye"></i></a>
+                                                                <a href="{{route('portal.mitra.trans.detail', $item->kd_transaksi)}}" class="btn btn-primary mr-2" title="Detail Transaksi"><i class="fas fa-receipt"></i></a>
+                                                            @if ($item->bukti_transfer != null)
+                                                                <a href="#" class="btn btn-info mr-2" id="lihat-bukti" onclick="lookTf('{{$item}}')" title="Lihat Bukti Transfer"><i class="fas fa-images"></i></a>
+                                                            @endif
                                                             
                                                         </div>
                                                     </td>
@@ -156,6 +159,18 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
+            function lookTf(item){
+                event.preventDefault();
+                var item = JSON.parse(item);
+                var url = "{{url('/transfer/bukti-transfer')}}/"+item.bukti_transfer;
+                console.log(url);
+                $("#lihat-bukti").fireModal({
+                    title:"Bukti Transfer",
+                    body: '<img src="'+ url +'" alt="Bukti Transfer" class="img-fluid">' , 
+                    center: true
+                });
+            };
 
             function confirmDelete(id) {
                 event.preventDefault();

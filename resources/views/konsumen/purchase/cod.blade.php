@@ -41,7 +41,7 @@
     <!-- Hero Section Begin -->
     <section class="hero hero-normal">
         <div class="container">
-            @include('layouts.searchbar')
+            <@include('layouts.searchbar')
         </div>
     </section>
     <!-- Hero Section End -->
@@ -56,7 +56,7 @@
                         <div class="breadcrumb__option">
                             <a href="./index.html">Home</a>
                             <a href="./index.html">Pesanan</a>
-                            <span>Pending</span>
+                            <span>COD</span>
                         </div>
                     </div>
                 </div>
@@ -124,13 +124,13 @@
                 </div>
                 <div class="col-lg-9 col-md-7">
                     <div class="topnav shadow-sm">
-                        <a  href="{{route('purchase.konsumen', 1)}}">Semua</a>
-                        <a class="active" href="{{route('purchase.konsumen', 2)}}">Belum Bayar</a>
+                        <a href="{{route('purchase.konsumen', 1)}}">Semua</a>
+                        <a  href="{{route('purchase.konsumen', 2)}}">Belum Bayar</a>
                         <a href="{{route('purchase.konsumen', 3)}}">Cek Bukti</a>
                         <a href="{{route('purchase.konsumen', 4)}}">Dikemas</a>
                         <a href="{{route('purchase.konsumen', 5)}}">Dikirim</a>
                         <a href="{{route('purchase.konsumen', 6)}}">Selesai</a>
-                        <a href="{{route('purchase.konsumen', 7)}}">COD</a>
+                        <a class="active" href="{{route('purchase.konsumen', 7)}}">COD</a>
                       </div>
                     <div class="card shadow-sm mt-3">
                         <div class="card-body px-4 py-4" style="height: 500px">
@@ -140,7 +140,6 @@
                                         <table id="table-ts" class="table table-striped table-bordered table-responsive">
                                             <thead>
                                                 <tr>
-                                                    <th>ID</th>
                                                     <th>Nota</th>
                                                     <th>Mitra</th>
                                                     <th>Total Harga</th>
@@ -154,7 +153,6 @@
                                             <tbody>
                                                 @foreach ($ts as $item)
                                                     <tr>
-                                                        <td>{{$item->id}}</td>
                                                         <td>{{$item->kd_transaksi}}</td>
                                                         <td>{{$item->mitraRef->nama_mitra}}</td>
                                                         <td>{{$item->total_harga}}</td>
@@ -166,12 +164,11 @@
                                                             <div class="d-flex">
                                                                 <a href="{{route('purchase.konsumen.detail', $item->kd_transaksi)}}" class="site-btn mr-3" style="padding:12px 12px; font-size:12px">Detail</a>
                                                                 @if ($item->status === "pending")
-                                                                    <a href="#" class="site-btn mr-3" style="padding:12px 12px; font-size:12px;background-color:#f56954">Bayar</a>
+                                                                    <a href="{{route('checkout.bukti', $item->kd_transaksi)}}" class="site-btn mr-3" style="padding:12px 12px; font-size:12px;background-color:#f56954">Bayar</a>
                                                                 @endif
                                                             </div>
                                                         </td>
                                                     </tr>
-                                            
                                                 @endforeach
                                             </tbody>
                                         </table>

@@ -8,7 +8,7 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ogani | Template</title>
+    <title>Dukuh Kerupuk</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -39,9 +39,9 @@
                             <span>Semua Kategori</span>
                         </div>
                         <ul>
-                            <li><a href="#">Kerupuk Kulit</a></li>
-                            <li><a href="#">kerupuk Udang</a></li>
-                            
+                            @foreach ($ct as $ct)
+                            <li><a href="{{route('produk',$ct->id)}}">{{$ct->name}}</a></li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -59,12 +59,11 @@
                             </form>
                         </div>
                     </div>
-                    <div class="hero__item set-bg" data-setbg="{{url("ogani/img/hero/banner.jpg")}}">
+                    <div class="hero__item set-bg" data-setbg="{{url("ogani/img/hero/banner2.png")}}">
                         <div class="hero__text">
-                            <span>FRUIT FRESH</span>
-                            <h2>Vegetable <br />100% Organic</h2>
-                            <p>Free Pickup and Delivery Available</p>
-                            <a href="#" class="primary-btn">SHOP NOW</a>
+                            <h2 style="color: #7fad39">Kerupuk Pilihan <br /><br><span ><h2 class="text-white mt-2">100% Original</h2></span></h2>
+                            <p class="text-white">Dapatkan kemudahan dan harga pas di portal kamu</p>
+                            <a href="#" class="primary-btn " style="border: 1px solid white; background-color:white; color:#7fad39">SBeli Sekarang</a>
                         </div>
                     </div>
                 </div>
@@ -115,140 +114,38 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title">
-                        <h2>Featured Product</h2>
+                        <h2>Produk Utama Kami</h2>
                     </div>
                     <div class="featured__controls">
-                        <ul>
+                        {{-- <ul>
                             <li class="active" data-filter="*">All</li>
-                            <li data-filter=".oranges">Oranges</li>
-                            <li data-filter=".fresh-meat">Fresh Meat</li>
-                            <li data-filter=".vegetables">Vegetables</li>
-                            <li data-filter=".fastfood">Fastfood</li>
-                        </ul>
+                            <li class="active" data-filter=".fresh-meat">Fres</li>
+                           
+                        </ul> --}}
                     </div>
                 </div>
             </div>
             <div class="row featured__filter">
+                @foreach ($pr as $pr)
                 <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
                     <div class="featured__item">
-                        <div class="featured__item__pic set-bg" data-setbg="{{url("ogani/img/featured/feature-1.jpg")}}">
+                        @php
+                            $img = App\ProductImage::where('product_id', $pr->id_produk)->where('rule', 1)->first();
+                        @endphp
+                        <div class="featured__item__pic set-bg" @if($img) data-setbg="{{url("/mitra/product_image/".$img->image)}} @endif">
                             <ul class="featured__item__pic__hover">
                                 <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                 <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                <li><a href="#" onclick="addKeranjang('{{$pr}}')"><i class="fa fa-shopping-cart"></i></a></li>
                             </ul>
                         </div>
                         <div class="featured__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
+                            <h6><a href="{{route('detail.produk', $pr->slug)}}">{{$pr->nama_produk}}</a></h6>
+                            <h5>Rp {{number_format($pr->harga,'0','.','.')}}</h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fastfood">
-                    <div class="featured__item">
-                        <div class="featured__item__pic set-bg" data-setbg="{{url("ogani/img/featured/feature-2.jpg")}}">
-                            <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="featured__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fresh-meat">
-                    <div class="featured__item">
-                        <div class="featured__item__pic set-bg" data-setbg="{{url("ogani/img/featured/feature-3.jpg")}}">
-                            <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="featured__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 mix fastfood oranges">
-                    <div class="featured__item">
-                        <div class="featured__item__pic set-bg" data-setbg="{{url("ogani/img/featured/feature-4.jpg")}}">
-                            <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="featured__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 mix fresh-meat vegetables">
-                    <div class="featured__item">
-                        <div class="featured__item__pic set-bg" data-setbg="{{url("ogani/img/featured/feature-5.jpg")}}">
-                            <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="featured__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fastfood">
-                    <div class="featured__item">
-                        <div class="featured__item__pic set-bg" data-setbg="{{url("ogani/img/featured/feature-6.jpg")}}">
-                            <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="featured__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 mix fresh-meat vegetables">
-                    <div class="featured__item">
-                        <div class="featured__item__pic set-bg" data-setbg="{{url("ogani/img/featured/feature-7.jpg")}}">
-                            <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="featured__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 mix fastfood vegetables">
-                    <div class="featured__item">
-                        <div class="featured__item__pic set-bg" data-setbg="{{url("ogani/img/featured/feature-8.jpg")}}">
-                            <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="featured__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -260,12 +157,12 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="banner__pic">
-                        <img src="{{url("ogani/img/banner/banner-1.jpg")}}" alt="">
+                        <img src="{{url("ogani/img/banner/kerpuk-kering.png")}}" alt="">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="banner__pic">
-                        <img src="{{url("ogani/img/banner/banner-2.jpg")}}" alt="">
+                        <img src="{{url("ogani/img/banner/diskon.png")}}" alt="">
                     </div>
                 </div>
             </div>
@@ -274,7 +171,7 @@
     <!-- Banner End -->
 
     <!-- Latest Product Section Begin -->
-    <section class="latest-product spad">
+    {{-- <section class="latest-product spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-6">
@@ -474,11 +371,11 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- Latest Product Section End -->
 
     <!-- Blog Section Begin -->
-    <section class="from-blog spad">
+    {{-- <section class="from-blog spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -535,7 +432,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- Blog Section End -->
 
     <!-- Footer Section Begin -->
@@ -545,7 +442,59 @@
     <!-- Js Plugins -->
     @include('layouts.js_lib')
 
+    <script>
 
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+    function addKeranjang(item){
+        event.preventDefault();
+        item = JSON.parse(item);
+        var product_id = item.id_produk;
+        var qty = 1;
+        var user_id = "{{Auth::guard('users')->id()}}";
+        var url = "{{route('cart.save')}}";
+        if(user_id != null){
+            $.ajax({
+                url: url, //harus sesuai url di buat di route
+                type: "POST",
+                data: {
+                    id_produk: product_id,
+                    qty: qty,
+                },
+                cache: false,
+                success: function (dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    if (dataResult.statusCode == 200) {
+                        Swal.fire({
+                            title: "Produk telah di tambahkan ke keranjang",
+                            icon: "success",
+                        });
+                    } else if (dataResult.statusCode == 201) {
+                        alert("Error occured !");
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                    Swal.fire({
+                        title: "Opps!",
+                        text: "Anda Harus login Terlebih Dahulu!",
+                        icon: "error",
+                    });
+                },
+            });
+        }else{
+            Swal.fire({
+                title: "Opps!",
+                text: "Anda Harus login Terlebih Dahulu!",
+                icon: "error",
+            });
+        }
+    }
+</script>
 
 </body>
 

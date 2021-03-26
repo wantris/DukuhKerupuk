@@ -74,7 +74,7 @@
                   </div>
                 </div>
                 <div class="mt-5 text-muted text-center">
-                  Belum punya akun Mitra? <a href="{{route('register.mitra')}}" style="color: #7fad39">Daftar Sekarang</a>
+                  Belum punya akun Mitra? <a href="{{route('register.konsumen')}}" style="color: #7fad39">Daftar Sekarang</a>
                 </div>
                 <div class="simple-footer">
                   Copyright &copy; DukuhKerupuk 2021

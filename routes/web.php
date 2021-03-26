@@ -37,7 +37,7 @@ Route::get('/admin/user/delete_user/{id_admin}', 'UserController@delete_user')->
 // Route::get('/admin/subscriber/', 'SubscriberController@data_user')->name('data_user');
 
 // User
-Route::get('/', 'LandingController@index');
+Route::get('/', 'LandingController@index')->name('index');
 Route::get('/mitra', 'LandingController@mitra')->name('Mitra');
 Route::get('/agen', 'LandingController@agen')->name('Agen');
 Route::post('/subscriber', 'SubscriberController@register')->name('subscriber.post');
@@ -69,6 +69,8 @@ Route::group(['prefix' => 'konsumen'], function () {
 
         Route::get('/account/password', 'Konsumen\KonsumenController@changePassword')->name('password.konsumen');
         Route::get('/account/purchase/type/{type}', 'Konsumen\KonsumenController@purchase')->name('purchase.konsumen');
+        Route::get('/account/purchase/detail/{kd}', 'Konsumen\KonsumenController@detailPesanan')->name('purchase.konsumen.detail');
+        Route::patch('/account/purchase/finish/{kd}', 'Konsumen\KonsumenController@finishTrans')->name('purchase.konsumen.finish');
         Route::get('/account/cities/{province_id}', 'Konsumen\CheckoutController@getCities');
     });
 
@@ -84,7 +86,7 @@ Route::group(['prefix' => 'konsumen'], function () {
 
 // Produk Landing
 Route::group(['prefix' => 'product'], function () {
-    Route::get('/', 'ProdukController@listProduk')->name('produk');
+    Route::get('/kategori/{categories}', 'ProdukController@listProduk')->name('produk');
     Route::get('/detail/{slug}', 'ProdukController@detailProduk')->name('detail.produk');
 });
 

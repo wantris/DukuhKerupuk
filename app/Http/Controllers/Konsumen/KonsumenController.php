@@ -6,6 +6,7 @@ use App\Alamat;
 use Illuminate\Http\Request;
 use App\Province;
 use App\City;
+use App\DetailTransaksi;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -23,6 +24,7 @@ class KonsumenController extends Controller
 
     public function profileSave(Request $request)
     {
+
         $user = User::find(Auth::guard('users')->id());
         if (!is_null($user)) {
             try {
@@ -86,7 +88,7 @@ class KonsumenController extends Controller
             $add->is_featured = 0;
             $add->save();
 
-            return redirect()->route('address.konsumen')->with('success', 'Berhasil menambahkan alamat');
+            return redirect()->back()->with('success', 'Berhasil menambahkan alamat');
         } catch (Throwable $e) {
             return $e;
             // return redirect()->route('address.konsumen')->with('failed', 'Gagal menambahkan alamat');
@@ -180,22 +182,24 @@ class KonsumenController extends Controller
     public function purchase($type)
     {
         if ($type === "1") {
-
             $ts = Transaksi::where('user_id', Auth::guard('users')->id())->get();
             return view('konsumen.purchase.index', compact('ts'));
         } elseif ($type === "2") {
             $ts = Transaksi::where('user_id', Auth::guard('users')->id())->where('status', 'pending')->get();
             return view('konsumen.purchase.pending', compact('ts'));
         } elseif ($type === "3") {
+            $ts = Transaksi::where('user_id', Auth::guard('users')->id())->where('status', 'cek')->get();
+            return view('konsumen.purchase.cek', compact('ts'));
+        } elseif ($type === "4") {
             $ts = Transaksi::where('user_id', Auth::guard('users')->id())->where('status', 'dikemas')->get();
             return view('konsumen.purchase.dikemas', compact('ts'));
-        } elseif ($type === "4") {
+        } elseif ($type === "5") {
             $ts = Transaksi::where('user_id', Auth::guard('users')->id())->where('status', 'dikirim')->get();
             return view('konsumen.purchase.dikirim', compact('ts'));
-        } elseif ($type === "5") {
+        } elseif ($type === "6") {
             $ts = Transaksi::where('user_id', Auth::guard('users')->id())->where('status', 'selesai')->get();
             return view('konsumen.purchase.selesai', compact('ts'));
-        } elseif ($type === "6") {
+        } elseif ($type === "7") {
             $ts = Transaksi::where('user_id', Auth::guard('users')->id())->where('pengiriman', 'cod')->get();
             return view('konsumen.purchase.cod', compact('ts'));
         }
@@ -205,5 +209,31 @@ class KonsumenController extends Controller
     {
         $city = City::where('province_id', $id)->pluck('name', 'city_id');
         return response()->json($city);
+    }
+
+    public function finishTrans(Request $request, $kd)
+    {
+        $status = $request->status;
+
+        try {
+            Transaksi::where('kd_transaksi', $kd)->update([
+                'status' => $status
+            ]);
+
+            $success['status'] = '1';
+            $success['message'] = $kd;
+            return response()->json($success, 200);
+        } catch (Throwable $e) {
+            $success['status'] = 'error';
+            $success['message'] = $e;
+            return response()->json($success, 500);
+        }
+    }
+
+    public function detailpesanan($kd)
+    {
+        $detail = DetailTransaksi::where('transaksi_kd', $kd)->get();
+        $ts = Transaksi::where('kd_transaksi', $kd)->first();
+        return view('konsumen.purchase.detail_pesanan', compact('ts', 'detail'));
     }
 }

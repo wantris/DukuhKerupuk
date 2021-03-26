@@ -61,7 +61,7 @@ class AuthKonsumenController extends Controller
 
                 return redirect()->route('verification.konsumen')->with(['phone_number' => $this->phone_number]);
             } catch (Throwable $e) {
-                echo $e;
+                // echo $e;
                 return redirect()->back()->with('registerFailed', 'Pendaftaran akun gagal');
             }
         } else {

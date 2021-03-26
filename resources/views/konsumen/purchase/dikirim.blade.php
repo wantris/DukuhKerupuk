@@ -41,7 +41,7 @@
     <!-- Hero Section Begin -->
     <section class="hero hero-normal">
         <div class="container">
-            @include('layouts.searchbar')
+            <@include('layouts.searchbar')
         </div>
     </section>
     <!-- Hero Section End -->
@@ -56,7 +56,7 @@
                         <div class="breadcrumb__option">
                             <a href="./index.html">Home</a>
                             <a href="./index.html">Pesanan</a>
-                            <span>Pending</span>
+                            <span>Dikirim</span>
                         </div>
                     </div>
                 </div>
@@ -124,11 +124,11 @@
                 </div>
                 <div class="col-lg-9 col-md-7">
                     <div class="topnav shadow-sm">
-                        <a  href="{{route('purchase.konsumen', 1)}}">Semua</a>
-                        <a class="active" href="{{route('purchase.konsumen', 2)}}">Belum Bayar</a>
+                        <a href="{{route('purchase.konsumen', 1)}}">Semua</a>
+                        <a  href="{{route('purchase.konsumen', 2)}}">Belum Bayar</a>
                         <a href="{{route('purchase.konsumen', 3)}}">Cek Bukti</a>
                         <a href="{{route('purchase.konsumen', 4)}}">Dikemas</a>
-                        <a href="{{route('purchase.konsumen', 5)}}">Dikirim</a>
+                        <a class="active" href="{{route('purchase.konsumen', 5)}}">Dikirim</a>
                         <a href="{{route('purchase.konsumen', 6)}}">Selesai</a>
                         <a href="{{route('purchase.konsumen', 7)}}">COD</a>
                       </div>
@@ -140,7 +140,6 @@
                                         <table id="table-ts" class="table table-striped table-bordered table-responsive">
                                             <thead>
                                                 <tr>
-                                                    <th>ID</th>
                                                     <th>Nota</th>
                                                     <th>Mitra</th>
                                                     <th>Total Harga</th>
@@ -153,8 +152,7 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($ts as $item)
-                                                    <tr>
-                                                        <td>{{$item->id}}</td>
+                                                    <tr id="tr_{{$item->kd_transaksi}}">
                                                         <td>{{$item->kd_transaksi}}</td>
                                                         <td>{{$item->mitraRef->nama_mitra}}</td>
                                                         <td>{{$item->total_harga}}</td>
@@ -164,14 +162,14 @@
                                                         <td>{{$item->created_at->isoFormat('D MMMM Y')}}</td>
                                                         <td>
                                                             <div class="d-flex">
-                                                                <a href="{{route('purchase.konsumen.detail', $item->kd_transaksi)}}" class="site-btn mr-3" style="padding:12px 12px; font-size:12px">Detail</a>
+                                                                <a href="{{route('purchase.konsumen.detail', $item->kd_transaksi)}}" class="site-btn mr-3" style="padding:12px 12px; font-size:12px; ">Detail</a>
+                                                                <a href="#" class="site-btn mr-3" onclick="akhiriPesanan('{{$item->kd_transaksi}}')" style="padding:12px 12px; font-size:12px;background-color:#0981b6">Akhiri</a>
                                                                 @if ($item->status === "pending")
-                                                                    <a href="#" class="site-btn mr-3" style="padding:12px 12px; font-size:12px;background-color:#f56954">Bayar</a>
+                                                                    <a href="{{route('checkout.bukti', $item->kd_transaksi)}}" class="site-btn mr-3" style="padding:12px 12px; font-size:12px;background-color:#f56954">Bayar</a>
                                                                 @endif
                                                             </div>
                                                         </td>
                                                     </tr>
-                                            
                                                 @endforeach
                                             </tbody>
                                         </table>
@@ -202,9 +200,63 @@
      @include('layouts.js_lib')
 
      <script>
+          $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
          $(document).ready( function () {
             $('#table-ts').DataTable();
         } );
+
+        function akhiriPesanan(kd){
+            event.preventDefault();
+            Swal.fire({
+                    title: 'Apakah Anda Yakin?',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, proses untuk '+status
+                })
+            
+                .then(function (success) {
+                    if (success.value) {
+                        var url = '{{ url("/konsumen/account/purchase/finish") }}/'+kd;
+                        console.log(url);
+                        $.ajax({
+                            url: url,
+                            type: "PATCH",
+                            data:{
+                                status:'selesai'
+                            },
+                            success: function (data) {
+                                console.log(data);
+                                if (data.status == 1) {
+                                    console.log(data.message);
+                                    Swal.fire({
+                                        title: "Success!",
+                                        type: "success",
+                                        text: "Transaksi telah "+ status +" \n Click OK",
+                                        icon: "success",
+                                        confirmButtonClass: "btn btn-outline-info",
+                                    });
+                                    $('#tr_'+kd).remove();
+                                }
+                            },
+                            error: function (error) {
+                                console.log(error);
+                                Swal.fire({
+                                    title: 'Opps...',
+                                    text: error.message,
+                                    type: 'error',
+                                    timer: '1500'
+                                })
+                            }
+                        });
+                    }
+                });
+        }
      </script>
 
 </body>

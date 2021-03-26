@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\ProductCategories;
+use App\Product;
 
 class LandingController extends Controller
 {
     public function index()
     {
-        return view('home');
+        $ct = ProductCategories::all();
+        $pr = Product::limit(8)->get();
+        return view('home', compact('ct', 'pr'));
     }
 
     public function mitra()

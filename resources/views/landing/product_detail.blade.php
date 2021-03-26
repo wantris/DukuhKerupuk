@@ -8,7 +8,7 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ogani | Template</title>
+    <title>{{$pr->nama_produk}}</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -41,48 +41,7 @@
     <!-- Hero Section Begin -->
     <section class="hero hero-normal">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="hero__categories">
-                        <div class="hero__categories__all">
-                            <i class="fa fa-bars"></i>
-                            <span>All departments</span>
-                        </div>
-                        <ul>
-                            <li><a href="#">Fresh Meat</a></li>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fruit & Nut Gifts</a></li>
-                            <li><a href="#">Fresh Berries</a></li>
-                            <li><a href="#">Ocean Foods</a></li>
-                            <li><a href="#">Butter & Eggs</a></li>
-                            <li><a href="#">Fastfood</a></li>
-                            <li><a href="#">Fresh Onion</a></li>
-                            <li><a href="#">Papayaya & Crisps</a></li>
-                            <li><a href="#">Oatmeal</a></li>
-                            <li><a href="#">Fresh Bananas</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-9">
-                    <div class="hero__search">
-                        <div class="hero__search__form">
-                            <form action="#">
-                                <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
-                                </div>
-                                <input type="text" placeholder="What do yo u need?">
-                                <button type="submit" class="site-btn">SEARCH</button>
-                            </form>
-                        </div>
-                        <div class="hero__search__phone">
-                            <div class="hero__search__phone__icon">
-                                <i class="fa fa-phone"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('layouts.searchbar')
         </div>
     </section>
     <!-- Hero Section End -->
@@ -93,11 +52,11 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
-                        <h2>Vegetable’s Package</h2>
+                        <h2>{{$pr->nama_produk}}</h2>
                         <div class="breadcrumb__option">
                             <a href="./index.html">Home</a>
-                            <a href="./index.html">Vegetables</a>
-                            <span>Vegetable’s Package</span>
+                            <a href="./index.html">Detail produk</a>
+                            <span>{{$pr->nama_produk}}</span>
                         </div>
                     </div>
                 </div>
@@ -134,32 +93,47 @@
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__text">
-                        <h3>Vetgetable’s Package</h3>
-                        <div class="product__details__rating">
+                        <h3>{{$pr->nama_produk}}</h3>
+                        {{-- <div class="product__details__rating">
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star-half-o"></i>
                             <span>(18 reviews)</span>
+                        </div> --}}
+                        @php
+                            $promo = App\Promo::where('product_id', $pr->id_produk)->orderBy('created_at','DESC')->first();
+                            if($promo){
+                                if($promo->tipe_diskon === "presentase"){
+                                    $diskon = $pr->harga - ($pr->harga * $promo->jumlah_diskon);
+                                }else{
+                                    $diskon = $pr->harga - $promo->jumlah_diskon;
+                                }
+                            }
+                        @endphp
+                        <div class="product__details__price d-flex mt-5">
+                            @if($promo)
+                                <span class="mr-2" style="text-decoration: line-through">Rp {{number_format($pr->harga,'0','.','.')}}</span>
+                                <span>Rp {{number_format($diskon,'0','.','.')}}</span> 
+                            @else 
+                                <span class="mr-2" style="text-decoration: line-through">Rp {{number_format($pr->harga,'0','.','.')}}</span>
+                            @endif
                         </div>
-                        <div class="product__details__price">$50.00</div>
-                        <p>Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam sit amet quam
-                            vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Vestibulum ac diam sit amet
-                            quam vehicula elementum sed sit amet dui. Proin eget tortor risus.</p>
+                        <p>{{$pr->deskripsi_produk}}</p>
                         <div class="product__details__quantity">
                             <div class="quantity">
                                 <div class="pro-qty">
-                                    <input type="text" value="1">
+                                    <input type="text" id="qty_inp" value="1">
                                 </div>
                             </div>
                         </div>
-                        <a href="#" class="primary-btn">ADD TO CARD</a>
+                        <a href="#" onclick="addKeranjang('{{$pr}}')" class="primary-btn">ADD TO CARD</a>
                         <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
                         <ul>
-                            <li><b>Availability</b> <span>In Stock</span></li>
-                            <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
-                            <li><b>Weight</b> <span>0.5 kg</span></li>
+                            <li><b>Stok</b> <span>{{$pr->stok}}</span></li>
+                            <li><b>Terjual</b> <span>{{$pr->penjualan}}</span></li>
+                            <li><b>Kadaluwarsa Produk</b> <span>{{$pr->expireds->name}}</span></li>
                             <li><b>Share on</b>
                                 <div class="share">
                                     <a href="#"><i class="fa fa-facebook"></i></a>
@@ -190,25 +164,8 @@
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
                                 <div class="product__details__tab__desc">
-                                    <h6>Informasi Mitra</h6>
-                                    <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                        Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus. Vivamus
-                                        suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam
-                                        vehicula elementum sed sit amet dui. Donec rutrum congue leo eget malesuada.
-                                        Vivamus suscipit tortor eget felis porttitor volutpat. Curabitur arcu erat,
-                                        accumsan id imperdiet et, porttitor at sem. Praesent sapien massa, convallis a
-                                        pellentesque nec, egestas non nisi. Vestibulum ac diam sit amet quam vehicula
-                                        elementum sed sit amet dui. Vestibulum ante ipsum primis in faucibus orci luctus
-                                        et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam
-                                        vel, ullamcorper sit amet ligula. Proin eget tortor risus.</p>
-                                        <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem
-                                        ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet
-                                        elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum
-                                        porta. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus
-                                        nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
-                                        Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed
-                                        porttitor lectus nibh. Vestibulum ac diam sit amet quam vehicula elementum
-                                        sed sit amet dui. Proin eget tortor risus.</p>
+                                    <h6>Informasi Produk</h6>
+                                    <p>{{$pr->deskripsi_produk}}</p>
                                 </div>
                             </div>
                             <div class="tab-pane" id="tabs-2" role="tabpanel">
@@ -220,11 +177,15 @@
                                                 <div class="row">
                                                     <div class="col-lg-5 col-12">
                                                         <div class="row">
+                                                            @php
+                                                                $mitra = App\Mitra::where('id_mitra', $pr->id_mitra)->first();
+                                                                $produk = App\Product::where('id_mitra', $pr->id_mitra)->get();
+                                                            @endphp
                                                             <div class="col-4 ">
                                                                 <img src="{{url("ogani/img/product/product-1.jpg")}}" class="mitra-img-product" alt="">   
                                                             </div>
                                                             <div class="col-8 border-right">
-                                                                <div class="mitra-title">Kerupuk Pak Sugeng</div>
+                                                                <div class="mitra-title">{{$mitra->nama_mitra}}</div>
                                                                 <div class="mitra-time text-secondary mb-3"><i class="icofont-wall-clock mr-2"></i>Aktif 5 jam lalu</div>
                                                                 <div class="mitra-shop-detail-btn">
                                                                     <a href="" class="chat-mitra-btn float-left mb-2"><i class="fa fa-comments" aria-hidden="true"></i> Chat Mitra</a>
@@ -242,13 +203,13 @@
                                                                 </div>
                                                                 <div class="d-flex view-mitra">
                                                                     <label for="" class="mr-3">Produk</label>
-                                                                    <span style="color: #05386b">52</span>
+                                                                    <span style="color: #05386b">{{$produk->count()}}</span>
                                                                   </div>
                                                             </div>
                                                             <div class="col-7 ">
                                                                 <div class="d-flex view-mitra">
                                                                     <label for="" class="mr-3">Bergabung</label>
-                                                                    <span style="color: #05386b">2 tahun lalu</span>
+                                                                    <span style="color: #05386b">{{$mitra->created_at->diffForHumans()}}</span>
                                                                 </div>
                                                                 <div class="d-flex view-mitra">
                                                                     <label for="" class="mr-3">Pengikut</label>
@@ -464,66 +425,49 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="{{url("ogani/img/product/product-1.jpg")}}">
-                            <ul class="product__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="{{url("ogani/img/product/product-2.jpg")}}">
-                            <ul class="product__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="{{url("ogani/img/product/product-3.jpg")}}">
-                            <ul class="product__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
+                @php
+                   $product = App\Product::where('id_mitra', $pr->id_mitra)->inRandomOrder()->limit(4)->get(); 
+                @endphp
+                
+                @foreach ($product as $item)
+                    @php
+                        $img = App\ProductImage::where('product_id', $item->id_produk)->where('rule',1)->first();
+                    @endphp
+                    @php
+                        $promo = App\Promo::where('product_id', $item->id_produk)->orderBy('created_at','DESC')->first();
+                        if($promo){
+                            if($promo->tipe_diskon === "presentase"){
+                                $diskon = $pr->harga - ($pr->harga * $promo->jumlah_diskon);
+                            }else{
+                                $diskon = $pr->harga - $promo->jumlah_diskon;
+                            }
+                        }
+                    @endphp
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg" data-setbg="{{url("/mitra/product_image/".$img->image)}}">
+                                <ul class="product__item__pic__hover">
+                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="product__item__text">
+                                <h6><a href="#">{{$item->nama_produk}}</a></h6>
+                                <div class="d-flex text-center">
+                                    @if ($promo)
+                                        <h5 class="mr-2 ml-5" style="text-decoration: line-through">Rp {{number_format($item->harga,'0','.','.')}}</h5>
+                                        <h5>Rp {{number_format($diskon,'0','.','.')}}</h5>
+                                    @else
+                                        <h5>Rp {{number_format($item->harga,'0','.','.')}}</h5>
+                                    @endif
+                                        
+                                </div>
+                                
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="{{url("ogani/img/product/product-7.jpg")}}">
-                            <ul class="product__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -537,6 +481,13 @@
      @include('layouts.js_lib')
 
      <script>
+
+        $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+        });
+
          var $star_rating = $('.star-rating .fa');
 
         var SetRatingStar = function() {
@@ -561,6 +512,51 @@
                 x.classList.add("text-green");
             }else{
                 x.classList.remove("text-green");
+            }
+        }
+
+        function addKeranjang(item){
+            event.preventDefault();
+            item = JSON.parse(item);
+            var product_id = item.id_produk;
+            var qty = $('#qty_inp').val();
+            var user_id = "{{Auth::guard('users')->id()}}";
+            var url = "{{route('cart.save')}}";
+            if(user_id != null){
+                $.ajax({
+                    url: url, //harus sesuai url di buat di route
+                    type: "POST",
+                    data: {
+                        id_produk: product_id,
+                        qty: qty,
+                    },
+                    cache: false,
+                    success: function (dataResult) {
+                        var dataResult = JSON.parse(dataResult);
+                        if (dataResult.statusCode == 200) {
+                            Swal.fire({
+                                title: "Produk telah di tambahkan ke keranjang",
+                                icon: "success",
+                            });
+                        } else if (dataResult.statusCode == 201) {
+                            alert("Error occured !");
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        Swal.fire({
+                            title: "Opps!",
+                            text: "Anda Harus login Terlebih Dahulu!",
+                            icon: "error",
+                        });
+                    },
+                });
+            }else{
+                Swal.fire({
+                    title: "Opps!",
+                    text: "Anda Harus login Terlebih Dahulu!",
+                    icon: "error",
+                });
             }
         }
      </script>

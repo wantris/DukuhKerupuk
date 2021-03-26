@@ -69,6 +69,9 @@ class CheckoutController extends Controller
 
     public function saveCheckout(Request $request)
     {
+        if ($request->alm_utama === null) {
+            return redirect()->back()->with('failed', 'Tambah alamat dahulu');
+        }
         $mitra =  array_count_values($request->mitra_id);
         $alm = Alamat::find($request->alm_utama);
         $prev_kd = "";
@@ -119,6 +122,8 @@ class CheckoutController extends Controller
                         $tr->kota = $alm->cityRef->name;
                         $tr->kode_pos = $alm->kode_pos;
                         $tr->alamat = $alm->alamat_detail;
+                        $tr->latitude = $alm->latitude;
+                        $tr->longitude = $alm->longitude;
                         $tr->total_harga = $total;
                         $tr->diskon = $jumlah_diskon;
                         $tr->status = "pending";
@@ -225,6 +230,8 @@ class CheckoutController extends Controller
                             $tr->kota = $alm->cityRef->name;
                             $tr->kode_pos = $alm->kode_pos;
                             $tr->alamat = $alm->alamat_detail;
+                            $tr->latitude = $alm->latitude;
+                            $tr->longitude = $alm->longitude;
                             $tr->total_harga = $total;
                             $tr->diskon = $jumlah_diskon;
                             $tr->status = "pending";
