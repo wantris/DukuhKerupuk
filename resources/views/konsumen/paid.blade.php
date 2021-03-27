@@ -16,6 +16,14 @@
     <!-- Css Styles -->
     @include('layouts.header')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        h2{
+        color:#7fad39;
+        font-weight: 100;
+        font-size: 25px;
+        }
+
+    </style>
 
 </head>
 
@@ -60,14 +68,23 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="card shadow mx-auto" style="max-width: 450px; border-radius:40px; border-bottom:6px solid #7fad39">
+                    <div class="card mx-auto shadow" style="max-width: 450px; border-radius:40px; border-bottom:6px solid #7fad39">
                         <div class="card-body">
+                            <div class="col-12">
+                                <p class="h4 text-center font-weight-bold mb-2 mt-2" style="color: #7fad39">Upload Bukti Transfer</p>
+                            </div>
+                            <div class="col-12 text-center">
+                                <div class="text-center">
+                                        <h2 class="font-weight-bold mx-auto" id="hours"></h2>
+                                    @php
+                                        $maxTime = date('Y-m-d H:i:s', strtotime($ts->created_at . " +3 hours"))
+                                    @endphp
+                                    <input type="hidden" name="max_time" id="max-time" value="{{$maxTime}}">
+                                </div>
+                            </div>
                             <form action="{{route('checkout.bukti.post')}}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row mb-4">
-                                    <div class="col-12">
-                                        <p class="h4 text-center font-weight-bold mb-2 mt-2" style="color: #7fad39">Upload Bukti Transfer</p>
-                                    </div>
                                     <div class="col-12">
                                         <img class="text-center" src="{{url('ogani/img/confirmed.svg')}}" alt="">
                                     </div>
@@ -111,6 +128,76 @@
             $('#upload-btn').text(file);
             $('#submit').removeClass('d-none');
         }
+
+        // Set the date we're counting down to
+
+        var maxTime = $('#max-time').val();
+
+        var countDownDate = new Date(maxTime).getTime();
+        console.log(countDownDate, maxTime);
+
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+
+        // Get today's date and time
+        var now = new Date().getTime();
+            
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+            
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+        // Output the result in an element with id="demo"
+        // document.getElementById("demo").innerHTML = hours.toLocaleString(undefined,{minimumIntegerDigits: 2}) + ":"
+        // + minutes.toLocaleString(undefined,{minimumIntegerDigits: 2}) + ":" + seconds.toLocaleString(undefined,{minimumIntegerDigits: 2});
+        $('#hours').text( hours.toLocaleString(undefined,{minimumIntegerDigits: 2}) + ":" + minutes.toLocaleString(undefined,{minimumIntegerDigits: 2}) + ":" + seconds.toLocaleString(undefined,{minimumIntegerDigits: 2}));
+        // $('#minutes').text(minutes.toLocaleString(undefined,{minimumIntegerDigits: 2})+":");
+        // $('#seconds').text(seconds.toLocaleString(undefined,{minimumIntegerDigits: 2}));
+            
+        // If the count down is over, write some text 
+        if (distance < 0) {
+            clearInterval(x);
+                var kd = "{{$ts->kd_transaksi}}";
+                var url = "{{url('/checkout/ubah-expired')}}/"+kd;
+                $('#hours').text("00:00:00");
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    success: function (data) {
+                        if (data.status == 1) {
+                            Swal.fire({
+                                title: "Success!",
+                                type: "success",
+                                text: data.message,
+                                icon: "success",
+                                confirmButtonClass: "btn btn-outline-info",
+                            }).then(function(){
+                                location.replace("{{route('purchase.konsumen', 3)}}");
+                            });
+                            // document.getElementById('ket_status_'+id).text() = status;
+                            // document.getElementById('status_'+id).innerHTML = data.html;
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+                // Swal.fire({
+                //     title: "Success!",
+                //     type: "success",
+                //     text: "Waktu untuk mengirim bukti transfer telah habis \n Click OK",
+                //     icon: "success",
+                //     confirmButtonClass: "btn btn-outline-info",
+                // })
+                // .then(function(){
+                    
+                // });
+        }
+        }, 1000);
    </script>
 
  

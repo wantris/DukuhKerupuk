@@ -10,6 +10,7 @@ use App\Province;
 use Illuminate\Support\Str;
 use App\City;
 use App\DetailTransaksi;
+use Carbon\Carbon;
 use App\Product;
 use App\Promo;
 use Illuminate\Support\Facades\Auth;
@@ -305,7 +306,8 @@ class CheckoutController extends Controller
 
     public function getBukti($kd)
     {
-        return view('konsumen.paid', compact('kd'));
+        $ts = Transaksi::where('kd_transaksi', $kd)->first();
+        return view('konsumen.paid', compact('kd', 'ts'));
     }
 
     public function postBukti(Request $request)
@@ -331,5 +333,24 @@ class CheckoutController extends Controller
     public function success()
     {
         return view('konsumen.success');
+    }
+
+    public function expired($kd)
+    {
+        $mytime = Carbon::now();
+        $datetime = $mytime->toDateTimeString();
+        $time = date('H:i:s', strtotime($datetime));
+        $ts = Transaksi::where('kd_transaksi', $kd)->first();
+
+        if ($ts) {
+            Transaksi::where('kd_transaksi', $ts->kd_transaksi)->update([
+                'status' => 'expired'
+            ]);
+        }
+
+        $success['status'] = '1';
+        // $success['html'] = $html;
+        $success['message'] = 'Waktu kirim bukti transfer telah habis';
+        return response()->json($success, 200);
     }
 }

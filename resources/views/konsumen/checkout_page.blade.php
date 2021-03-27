@@ -127,7 +127,7 @@
                                         @endphp
                                         @if($alamat)
                                             @php
-                                                $alm2 = App\Alamat::where('user_id', Auth::guard('users')->id())->where('id','!=',$alm->id)->get();
+                                                $alm2 = App\Alamat::where('user_id', Auth::guard('users')->id())->where('id','!=',$alamat->id)->get();
                                             @endphp
                                             <div class="col-1">
                                                 <label class="custom-control fill-checkbox mr-4">

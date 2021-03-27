@@ -142,4 +142,5 @@ Route::group(['prefix' => 'checkout'], function () {
     Route::get('/bukti-transfer/{kd}', 'Konsumen\CheckoutController@getBukti')->name('checkout.bukti');
     Route::post('/bukti-transfer', 'Konsumen\CheckoutController@postBukti')->name('checkout.bukti.post');
     Route::get('/process/success', 'Konsumen\CheckoutController@success')->name('checkout.success');
+    Route::get('/ubah-expired/{token}', 'Konsumen\CheckoutController@expired');
 });

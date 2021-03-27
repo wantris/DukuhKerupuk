@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -16,7 +15,7 @@
     <!-- Css Styles -->
     @include('layouts.header')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> --}}
 
 </head>
 
@@ -79,8 +78,8 @@
                                         <span class="">{{$ts->alamat}}</span>
                                     </div>
                                     <div class="col-3">
-                                        <h1><i class="fas fa-check-circle" style="color:#7fad39;  -ms-transform: rotate(20deg); /* IE 9 */
-                                            transform: rotate(20deg);"></i></h1>
+                                        <h1><i class="fa fa-check-circle-o" style="color:#7fad39;  -ms-transform: rotate(5deg); /* IE 9 */
+                                            transform: rotate(5deg);"></i></h1>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
@@ -161,7 +160,6 @@
    @include('layouts.js_lib')
 
    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-RXf+QSDCUQs5uwRKaDoXt55jygZZm2V++WUZduaU/Ui/9EGp3f/2KZVahFZBKGH0s774sd3HmrhUy+SgOFQLVQ==" crossorigin="anonymous"></script>
    
 
    <script>

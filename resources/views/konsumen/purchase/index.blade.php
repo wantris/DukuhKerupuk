@@ -165,6 +165,8 @@
                                                                 <a href="{{route('purchase.konsumen.detail', $item->kd_transaksi)}}" class="site-btn mr-3" style="padding:12px 12px; font-size:12px">Detail</a>
                                                                 @if ($item->status === "pending")
                                                                     <a href="{{route('checkout.bukti', $item->kd_transaksi)}}" class="site-btn mr-3" style="padding:12px 12px; font-size:12px;background-color:#f56954">Bayar</a>
+                                                                @elseif($item->status == "expired")
+                                                                    <a class="site-btn bg-secondary text-white" style="padding:12px 12px; font-size:12px; " disabled>Kadaluwarsa</a>
                                                                 @endif
                                                             </div>
                                                         </td>
