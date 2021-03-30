@@ -8,7 +8,7 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Pesanan</title>
+    <title>Pesanan</title> 
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -166,7 +166,7 @@
                                                             <div class="d-flex">
                                                                 <a href="{{route('purchase.konsumen.detail', $item->kd_transaksi)}}" class="site-btn mr-3" style="padding:12px 12px; font-size:12px">Detail</a>
                                                                 @if ($item->status === "pending")
-                                                                    <a href="#" class="site-btn mr-3" style="padding:12px 12px; font-size:12px;background-color:#f56954">Bayar</a>
+                                                                    <a href="{{route('checkout.bukti', $item->kd_transaksi)}}" class="site-btn mr-3" style="padding:12px 12px; font-size:12px;background-color:#f56954">Bayar</a>
                                                                 @endif
                                                             </div>
                                                         </td>

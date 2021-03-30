@@ -27,16 +27,15 @@
             <ul class="dropdown-menu">
               <li><a class="nav-link" href="{{route('portal.mitra.trans.list','all')}}">Pesanan Saya</a></li>
               <li><a class="nav-link" href="{{route('portal.mitra.trans.cod','all')}}">Pesanan COD</a></li>
-              <li><a class="nav-link" href="layout-transparent.html">Pembatalan</a></li>
             </ul>
           </li>
-          <li class="nav-item dropdown">
+          {{-- <li class="nav-item dropdown">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-truck"></i> <span>Pengiriman</span></a>
             <ul class="dropdown-menu">
               <li><a class="nav-link" href="layout-default.html">Pengiriman Saya</a></li>
               <li><a class="nav-link" href="layout-transparent.html">Pengaturan Pengiriman</a></li>
             </ul>
-          </li>
+          </li> --}}
         </ul>
     </aside>
   </div>

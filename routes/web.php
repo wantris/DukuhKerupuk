@@ -136,6 +136,7 @@ Route::group(['prefix' => 'mitra'], function () {
         Route::get('/portal/transaksi/detail/{kd}', 'Mitra\TransaksiController@detail')->name('portal.mitra.trans.detail');
 
         Route::get('/portal/transaksi/cod/{status}', 'Mitra\TransaksiController@getCod')->name('portal.mitra.trans.cod');
+        Route::patch('/portal/transaksi/cod/change-status/{kd}', 'Mitra\TransaksiController@changeStatusCod')->name('portal.mitra.trans.status.cod');
     });
 });
 

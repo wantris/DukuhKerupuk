@@ -117,7 +117,7 @@
                                 <span class="mr-2" style="text-decoration: line-through">Rp {{number_format($pr->harga,'0','.','.')}}</span>
                                 <span>Rp {{number_format($diskon,'0','.','.')}}</span> 
                             @else 
-                                <span class="mr-2" style="text-decoration: line-through">Rp {{number_format($pr->harga,'0','.','.')}}</span>
+                                <span class="mr-2">Rp {{number_format($pr->harga,'0','.','.')}}</span>
                             @endif
                         </div>
                         <p>{{$pr->deskripsi_produk}}</p>

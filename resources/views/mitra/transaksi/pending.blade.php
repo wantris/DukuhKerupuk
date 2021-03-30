@@ -89,6 +89,7 @@
                                                             @elseif($item->status === "dikirim")
                                                                 <a href="#" onclick="changeStatus('{{$item->kd_transaksi}}','selesai')" class="btn btn-success mr-2" title="Buat selesai"><i class="fas fa-check"></i></a>
                                                             @endif
+                                                            <a href="https://www.google.com/maps/search/?api=1&query={{$item->latitude}},{{$item->longitude}}" class="btn btn-primary btn-icon icon-left"><i class="fas fa-credit-card"></i>Lihat Map</a>
                                                         </div>
 
                                                     </td>
@@ -157,7 +158,7 @@
             
                 .then(function (success) {
                     if (success.value) {
-                        var url = '{{ url("mitra/portal/transaksi/change-status/") }}/'+kd;
+                        var url = '{{ url("mitra/portal/transaksi/change-status") }}/'+kd;
                         console.log(url);
                         $.ajax({
                             url: url,

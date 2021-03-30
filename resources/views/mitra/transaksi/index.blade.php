@@ -83,7 +83,7 @@
                                                             @if ($item->bukti_transfer != null)
                                                                 <a href="#" class="btn btn-info mr-2" id="lihat-bukti" onclick="lookTf('{{$item}}')" title="Lihat Bukti Transfer"><i class="fas fa-images"></i></a>
                                                             @endif
-                                                            
+                                                            <a href="https://www.google.com/maps/search/?api=1&query={{$item->latitude}},{{$item->longitude}}" class="btn btn-primary btn-icon icon-left"><i class="fas fa-map"></i></a>
                                                         </div>
                                                     </td>
                                               </tr>

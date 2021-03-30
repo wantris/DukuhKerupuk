@@ -89,6 +89,7 @@
                                                             @elseif($item->status === "dikirim")
                                                                 <a href="#" onclick="changeStatus('{{$item->kd_transaksi}}','selesai')" class="btn btn-success mr-2" title="Buat selesai"><i class="fas fa-check"></i></a>
                                                             @endif
+                                                            <a href="https://www.google.com/maps/search/?api=1&query={{$item->latitude}},{{$item->longitude}}" class="btn btn-primary btn-icon icon-left"><i class="fas fa-map"></i></a>
                                                         </div>
                                                     </td>
                                               </tr>

@@ -43,8 +43,11 @@
                     </div>
                     <div class="card-stats-items mt-5">
                         <a href="" class="card-stats-item border-right">
-                            <div class="card-stats-item-count">23</div>
-                            <div class="card-stats-item-label">Proses Pembatalan</div>
+                            @php
+                                $cod = App\Transaksi::where('mitra_id', Auth::guard('mitra')->id())->where('pengiriman','cod')->get();
+                            @endphp
+                            <div class="card-stats-item-count">{{$cod->count()}}</div>
+                            <div class="card-stats-item-label">Proses COD</div>
                         </a>
                         <a href="" class="card-stats-item border-right">
                             @php

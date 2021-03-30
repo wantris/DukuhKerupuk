@@ -126,7 +126,7 @@
               <hr>
               <div class="text-md-right">
                 <div class="float-lg-left mb-lg-0 mb-3">
-                  <button class="btn btn-primary btn-icon icon-left"><i class="fas fa-credit-card"></i> Process Payment</button>
+                  <a href="https://www.google.com/maps/search/?api=1&query={{$ts->latitude}},{{$ts->longitude}}" class="btn btn-primary btn-icon icon-left"><i class="fas fa-credit-card"></i>Lihat Map</a>
                   <button class="btn btn-danger btn-icon icon-left"><i class="fas fa-times"></i> Cancel</button>
                 </div>
                 <button class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button>

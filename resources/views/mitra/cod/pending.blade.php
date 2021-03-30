@@ -30,8 +30,8 @@
                 <div class="card card-statistic-2">
                     <div class="card-stats mb-4">
                         <div class="topnav mx-4">
-                            <a class="tablinks active" href="{{route('portal.mitra.trans.cod','all')}}">Semua</a>
-                            <a href="{{route('portal.mitra.trans.cod','pending')}}" class="tablinks"  >Belum Bayar</a>
+                            <a class="tablinks" href="{{route('portal.mitra.trans.cod','all')}}">Semua</a>
+                            <a href="{{route('portal.mitra.trans.cod','pending')}}" class="tablinks active"  >Belum Bayar</a>
                             <a href="{{route('portal.mitra.trans.cod','cek')}}" class="tablinks" >Cek</a>
                             <a href="{{route('portal.mitra.trans.cod','menunggu')}}" class="tablinks" >Menunggu</a>
                             <a href="{{route('portal.mitra.trans.cod','selesai')}}" class="tablinks" >selesai</a>
@@ -85,11 +85,9 @@
                                                             @if ($item->status === "pending")
                                                                 <a href="#" onclick="changeStatus('{{$item->kd_transaksi}}','cek')" class="btn btn-success mr-2" title="Buat Cek"><i class="fas fa-check"></i></a>
                                                             @elseif($item->status === "cek")
-                                                                <a href="#" onclick="changeStatus('{{$item->kd_transaksi}}','dikemas')" class="btn btn-success mr-2" title="Buat dikemas"><i class="fas fa-check"></i></a>
-                                                            @elseif($item->status === "dikemas")
-                                                                <a href="#" onclick="changeStatus('{{$item->kd_transaksi}}','dikirim')" class="btn btn-success mr-2" title="Buat dikirim"><i class="fas fa-check"></i></a>
-                                                            @elseif($item->status === "dikirim")
-                                                                <a href="#" onclick="changeStatus('{{$item->kd_transaksi}}','selesai')" class="btn btn-success mr-2" title="Buat selesai"><i class="fas fa-check"></i></a>
+                                                                <a href="#" onclick="changeStatus('{{$item->kd_transaksi}}','menunggu')" class="btn btn-success mr-2" title="Buat dikemas"><i class="fas fa-check"></i></a>
+                                                            @elseif($item->status === "menunggu")
+                                                                <a href="#" onclick="changeStatus('{{$item->kd_transaksi}}','selesai')" class="btn btn-success mr-2" title="Buat dikirim"><i class="fas fa-check"></i></a>
                                                             @endif
                                                         </div>
                                                     </td>
@@ -202,43 +200,38 @@
                 });
             }
 
-            function changeStatus(id, status){
+            function changeStatus(kd, status) {
                 event.preventDefault();
-                console.log(id, status);
+                console.log(kd, status);
                 Swal.fire({
                     title: 'Apakah Anda Yakin?',
-                    text: "Produk akan di "+status+" !",
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ya, '+status+'kan!'
+                    confirmButtonText: 'Yes, proses untuk '+status
                 })
+            
                 .then(function (success) {
                     if (success.value) {
-                        var url = '{{ url("mitra/portal/produk/change-status") }}';
+                        var url = '{{ url("mitra/portal/transaksi/cod/change-status/") }}/'+kd;
                         console.log(url);
                         $.ajax({
                             url: url,
-                            type: "POST",
+                            type: "PATCH",
                             data:{
-                                id:id,
                                 status:status
                             },
                             success: function (data) {
-                                console.log(data.html);
+                                console.log(data);
                                 if (data.status == 1) {
                                     Swal.fire({
                                         title: "Success!",
                                         type: "success",
-                                        text: "Produk telah di "+status+"kan \n Click OK",
+                                        text: "Transaksi telah "+ status +" \n Click OK",
                                         icon: "success",
                                         confirmButtonClass: "btn btn-outline-info",
                                     });
-
-                                    location.replace("{{ route('portal.mitra.product.list') }}");
-                                    
-                                    // document.getElementById('ket_status_'+id).text() = status;
-                                    // document.getElementById('status_'+id).innerHTML = data.html;
+                                    $('#tr_'+kd).remove();
                                 }
                             },
                             error: function (error) {
@@ -254,6 +247,7 @@
                     }
                 });
             }
+            
         </script>
     @endpush
       
