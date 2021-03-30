@@ -77,7 +77,7 @@
                                 <div class="text-center">
                                         <h2 class="font-weight-bold mx-auto" id="hours"></h2>
                                     @php
-                                        $maxTime = date('Y-m-d H:i:s', strtotime($ts->created_at . " +3 hours"))
+                                        $maxTime = date('Y-m-d H:i:s', strtotime($ts->created_at . " +4 hours"))
                                     @endphp
                                     <input type="hidden" name="max_time" id="max-time" value="{{$maxTime}}">
                                 </div>

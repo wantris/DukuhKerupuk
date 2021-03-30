@@ -56,9 +56,10 @@ class KonsumenController extends Controller
 
     public function address()
     {
+        $user = User::find(Auth::guard('users')->id());
         $province = Province::all();
         $add = Alamat::with('provinceRef', 'cityRef')->where('user_id', Auth::guard('users')->id())->get();
-        return view('konsumen.profile.address', compact('province', 'add'));
+        return view('konsumen.profile.address', compact('province', 'add', 'user'));
     }
 
     public function addressSave(Request $request)
@@ -176,7 +177,8 @@ class KonsumenController extends Controller
 
     public function changePassword()
     {
-        return view('konsumen.profile.password');
+        $user = User::find(Auth::guard('users')->id());
+        return view('konsumen.profile.password', compact('user'));
     }
 
     public function purchase($type)

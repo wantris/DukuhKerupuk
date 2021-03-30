@@ -17,12 +17,12 @@ class LandingController extends Controller
 
     public function mitra()
     {
-        return view('landing.mitra');
+        return view('landing.mitra_page');
     }
 
-    public function agen()
+    public function konsumen()
     {
-        return view('landing.agen');
+        return view('landing.konsumen_page');
     }
 
     public function detailMitra()
@@ -38,5 +38,10 @@ class LandingController extends Controller
     public function produkMitraFav()
     {
         return view('landing.produk_mitra_fav');
+    }
+
+    public function contact()
+    {
+        return view('landing.contact');
     }
 }

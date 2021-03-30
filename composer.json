@@ -13,6 +13,7 @@
         "kavist/rajaongkir": "1.1",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
+        "maddhatter/laravel-fullcalendar": "^1.3",
         "o2system/curl": "^2.2",
         "o2system/gear": "^2.1",
         "o2system/kernel": "^2.0",

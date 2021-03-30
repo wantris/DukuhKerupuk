@@ -5,11 +5,9 @@
 
     @section('content')
         <div class="section-header">
-          <h1>Breadcrumb</h1>
+          <h1>Dashboard {{$mitra->nama_mitra}}</h1>
           <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-            <div class="breadcrumb-item"><a href="#">Bootstrap Components</a></div>
-            <div class="breadcrumb-item">Breadcrumb</div>
           </div>
         </div>
           <div class="row">
@@ -22,15 +20,24 @@
                     </div>
                     <div class="card-stats-items mt-4">
                         <a href="" class="card-stats-item border-right">
-                            <div class="card-stats-item-count">24</div>
+                            @php
+                                $pending = App\Transaksi::where('mitra_id', Auth::guard('mitra')->id())->where('status','pending')->get();
+                            @endphp
+                            <div class="card-stats-item-count">{{$pending->count()}}</div>
                             <div class="card-stats-item-label">Belum Bayar</div>
                         </a>
                         <a href="" class="card-stats-item border-right">
-                            <div class="card-stats-item-count">12</div>
+                          @php
+                              $cek = App\Transaksi::where('mitra_id', Auth::guard('mitra')->id())->where('status','cek')->get();
+                          @endphp
+                            <div class="card-stats-item-count">{{$cek->count()}}</div>
                             <div class="card-stats-item-label">Perlu Diroses</div>
                         </a>
                         <a href="" class="card-stats-item">
-                            <div class="card-stats-item-count">23</div>
+                            @php
+                                $dikemas = App\Transaksi::where('mitra_id', Auth::guard('mitra')->id())->where('status','dikemas')->get();
+                            @endphp
+                            <div class="card-stats-item-count">{{$dikemas->count()}}</div>
                             <div class="card-stats-item-label">Telah Diproses</div>
                         </a>
                     </div>
@@ -40,11 +47,17 @@
                             <div class="card-stats-item-label">Proses Pembatalan</div>
                         </a>
                         <a href="" class="card-stats-item border-right">
-                            <div class="card-stats-item-count">23</div>
+                            @php
+                                $pr_habis = App\Product::where('id_mitra', Auth::guard('mitra')->id())->where('stok',0)->get();
+                            @endphp
+                            <div class="card-stats-item-count">{{$pr_habis->count()}}</div>
                             <div class="card-stats-item-label">Produk Habis</div>
                         </a>
                         <a href="" class="card-stats-item">
-                            <div class="card-stats-item-count">23</div>
+                            @php
+                                $pr_jual = App\Product::where('id_mitra', Auth::guard('mitra')->id())->where('penjualan', '>',0)->get();
+                            @endphp
+                            <div class="card-stats-item-count">{{$pr_jual->count()}}</div>
                             <div class="card-stats-item-label">Produk Terjual</div>
                         </a>
                     </div>
@@ -55,7 +68,7 @@
                 </div>
               </div>
             </div>
-            <div class="row">
+            {{-- <div class="row">
               <div class="col-12">
                 <form action="" method="POST">
                   <div class="form-group">
@@ -69,7 +82,7 @@
                   </div>
                 </form>
               </div>
-            </div>
+            </div> --}}
             <div class="col-lg-4 col-md-4 col-12">
                 <div class="card card-statistic-2">
                     <div class="card-stats mb-3">
@@ -103,97 +116,109 @@
                     </div>
                     <div class="row tabcontent" id="kalender">
                         <div class="col-lg-12">
-                            <div class="mx-4" id='calendar'></div>
+                            <div class="mx-4" id='calendar'>
+                              {!! $calendar->calendar() !!}
+                              
+                            </div>
                         </div>
                     </div>
                     <div class="row tabcontent" id="produk" style="display: none;">
-                        <div class="col-lg-12 text-center mt-4 mb-4">
+                        @if ($promo_produk->count() > 0)
+                          <div class="col-lg-12 " style="padding: 0px 40px">
+                            <div class="table-responsive border pb-3" style="min-height: 300px">
+                              <table class="table table-striped" id="product-table">
+                                <thead>
+                                  <tr>
+                                      <th>Nama Promo</th>
+                                      <th>Produk</th>
+                                      <th>Jumlah Diskon</th>
+                                      <th>Batas Akhir</th>
+                                      <th>Kuota</th>
+                                      <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($promo_produk as $pp)
+                                        <tr id="tr_{{$pp->id}}">
+                                            <td>{{$pp->nama_promo}}</td>
+                                            <td>{{$pp->productRef->nama_produk}}</td>
+                                            <td>{{$pp->jumlah_diskon}}</td>
+                                            <td>{{$pp->end_date}}</td>
+                                            <td>{{$pp->kuota}}</td>
+                                            <td>
+                                              @if ((bool)$pp->tipe_promo === true)
+                                                Tersedia
+                                              @else
+                                                Tidak tersedia
+                                              @endif
+                                          </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                          <div class="col-12 pl-5 mt-3">
+                            <a href="#" class="text-primary">Lihat semua promo voucher <i class="fas fa-chevron-right mr-2"></i></a>
+                          </div>
+                        @else
+                          <div class="col-lg-12 text-center mt-4 mb-4">
                             <img src="{{url('icon/voucher-adm.svg')}}" style="max-width: 120px; height:auto" alt="">
                             <p class="text-secondary">Tidak ada data</p>
-                        </div>
-                        <div class="col-12 pl-5 mt-3">
-                            <a href="#" class="text-primary">Lihat semua promo produk <i class="fas fa-chevron-right mr-2"></i></a>
-                        </div>
+                          </div>
+                        @endif
                     </div>
                     <div class="row tabcontent" id="voucher" style="display: none;">
-                        <div class="col-lg-12 text-center mt-4 mb-4">
-                            <img src="{{url('icon/voucher-adm.svg')}}" style="max-width: 120px; height:auto" alt="">
-                            <p class="text-secondary">Tidak ada data</p>
+                        < @if ($promo_toko->count() > 0)
+                        <div class="col-lg-12 " style="padding: 0px 40px">
+                          <div class="table-responsive border pb-3" style="min-height: 300px">
+                            <table class="table table-striped" id="product-table">
+                              <thead>
+                                <tr>
+                                    <th>Nama Promo</th>
+                                    <th>Tipe Diskon</th>
+                                    <th>Jumlah Diskon</th>
+                                    <th>Batas Akhir</th>
+                                    <th>Kuota</th>
+                                    <th>Status</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  @foreach ($promo_toko as $pt)
+                                      <tr id="tr_{{$pt->id}}">
+                                          <td>{{$pt->nama_promo}}</td>
+                                          <td>{{$pt->tipe_promo}}</td>
+                                          <td>{{$pt->jumlah_diskon}}</td>
+                                          <td>{{$pt->end_date}}</td>
+                                          <td>{{$pt->kuota}}</td>
+                                          <td>
+                                            @if ((bool)$pt->tipe_promo === true)
+                                              Tersedia
+                                            @else
+                                              Tidak tersedia
+                                            @endif
+                                        </td>
+                                      </tr>
+                                  @endforeach
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
                         <div class="col-12 pl-5 mt-3">
-                            <a href="#" class="text-primary">Lihat semua promo voucher <i class="fas fa-chevron-right mr-2"></i></a>
+                          <a href="#" class="text-primary">Lihat semua promo voucher <i class="fas fa-chevron-right mr-2"></i></a>
                         </div>
+                      @else
+                        <div class="col-lg-12 text-center mt-4 mb-4">
+                          <img src="{{url('icon/voucher-adm.svg')}}" style="max-width: 120px; height:auto" alt="">
+                          <p class="text-secondary">Tidak ada data</p>
+                        </div>
+                      @endif
                     </div>
                     <div class="card-wrap">
                       <div class="card-body">
                       </div>
                     </div>
                   </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="card gradient-bottom">
-                <div class="card-header">
-                  <h4>Top 5 Produk</h4>
-                  <div class="card-header-action dropdown">
-                    <a href="#" data-toggle="dropdown" class="btn btn-danger dropdown-toggle">Bulan ini</a>
-                    <ul class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                      <li class="dropdown-title">Pilih Periode</li>
-                      <li><a href="#" class="dropdown-item">Hari ini</a></li>
-                      <li><a href="#" class="dropdown-item">Minggu ini</a></li>
-                      <li><a href="#" class="dropdown-item active">Bulan ini</a></li>
-                      <li><a href="#" class="dropdown-item">Tahun ini</a></li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="card-body" id="top-5-scroll">
-                  <ul class="list-unstyled list-unstyled-border">
-                    <li class="media">
-                      <img class="mr-3 rounded" width="55" src="{{url('assets-user/upload-produk/kerupuk.jpeg')}}" alt="product">
-                      <div class="media-body">
-                        <div class="float-right"><div class="font-weight-600 text-muted text-small">86 Terjual</div></div>
-                        <div class="media-title">kerupuk Kulit</div>
-                        <div class="mt-1">
-                          <div class="budget-price">
-                            <div class="budget-price-square bg-primary" data-width="64%"></div>
-                            <div class="budget-price-label">Rp. 200.000</div>
-                          </div>
-                          <div class="budget-price">
-                            <div class="budget-price-square bg-danger" data-width="43%"></div>
-                            <div class="budget-price-label">Rp.50.000</div>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="media">
-                      <img class="mr-3 rounded" width="55" src="{{url('assets-user/upload-produk/kerupuk2.jpeg')}}" alt="product">
-                      <div class="media-body">
-                        <div class="float-right"><div class="font-weight-600 text-muted text-small">67 Terjual</div></div>
-                        <div class="media-title">Kerupuk Udang</div>
-                        <div class="mt-1">
-                          <div class="budget-price">
-                            <div class="budget-price-square bg-primary" data-width="84%"></div>
-                            <div class="budget-price-label">Rp.300.000</div>
-                          </div>
-                          <div class="budget-price">
-                            <div class="budget-price-square bg-danger" data-width="60%"></div>
-                            <div class="budget-price-label">Rp.100.000</div>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-                <div class="card-footer pt-3 d-flex justify-content-center">
-                  <div class="budget-price justify-content-center">
-                    <div class="budget-price-square bg-primary" data-width="20"></div>
-                    <div class="budget-price-label">Selling Price</div>
-                  </div>
-                  <div class="budget-price justify-content-center">
-                    <div class="budget-price-square bg-danger" data-width="20"></div>
-                    <div class="budget-price-label">Budget Price</div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
           <div class="row">
@@ -202,64 +227,40 @@
                 <div class="card-header">
                   <h4>Invoices</h4>
                   <div class="card-header-action">
-                    <a href="#" class="btn btn-danger">View More <i class="fas fa-chevron-right"></i></a>
+                    <a href="#" class="btn btn-danger mr-3">Lihat Lebih Banyak  <i class="fas fa-chevron-right ml-3"></i></a>
                   </div>
                 </div>
                 <div class="card-body p-0">
                   <div class="table-responsive table-invoice">
                     <table class="table table-striped">
                       <tr>
-                        <th>Invoice ID</th>
-                        <th>Customer</th>
+                        <th>Kode Transaksi</th>
+                        <th>Pembeli</th>
                         <th>Status</th>
-                        <th>Due Date</th>
+                        <th>Tanggal</th>
                         <th>Action</th>
                       </tr>
-                      <tr>
-                        <td><a href="#">INV-87239</a></td>
-                        <td class="font-weight-600">Kusnadi</td>
-                        <td><div class="badge badge-warning">Unpaid</div></td>
-                        <td>July 19, 2018</td>
-                        <td>
-                          <a href="#" class="btn btn-primary">Detail</a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td><a href="#">INV-48574</a></td>
-                        <td class="font-weight-600">Hasan Basri</td>
-                        <td><div class="badge badge-success">Paid</div></td>
-                        <td>July 21, 2018</td>
-                        <td>
-                          <a href="#" class="btn btn-primary">Detail</a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td><a href="#">INV-76824</a></td>
-                        <td class="font-weight-600">Muhamad Nuruzzaki</td>
-                        <td><div class="badge badge-warning">Unpaid</div></td>
-                        <td>July 22, 2018</td>
-                        <td>
-                          <a href="#" class="btn btn-primary">Detail</a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td><a href="#">INV-84990</a></td>
-                        <td class="font-weight-600">Agung Ardiansyah</td>
-                        <td><div class="badge badge-warning">Unpaid</div></td>
-                        <td>July 22, 2018</td>
-                        <td>
-                          <a href="#" class="btn btn-primary">Detail</a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td><a href="#">INV-87320</a></td>
-                        <td class="font-weight-600">Ardian Rahardiansyah</td>
-                        <td><div class="badge badge-success">Paid</div></td>
-                        <td>July 28, 2018</td>
-                        <td>
-                          <a href="#" class="btn btn-primary">Detail</a>
-                        </td>
-                      </tr>
+                      @foreach ($ts as $ts)
+                        <tr>
+                          <td><a href="#">{{$ts->kd_transaksi}}</a></td>
+                          <td class="font-weight-600">{{$ts->userRef->nama_user}}</td>
+                          <td>
+                            @if ($ts->status === "pending")
+                              <div class="badge badge-warning">{{$ts->status}}</div> 
+                            @elseif($ts->status === "cek")
+                              <div class="badge badge-primary">{{$ts->status}}</div>
+                            @elseif($ts->status === "dikirim")
+                              <div class="badge badge-info">{{$ts->status}}</div>
+                            @elseif($ts->status === "expired")
+                              <div class="badge badge-danger">{{$ts->status}}</div>
+                            @endif
+                            </td>
+                          <td>{{$ts->created_at->isoFormat('D MMM Y')}}</td>
+                          <td>
+                            <a href="#" class="btn btn-primary">Detail</a>
+                          </td>
+                        </tr> 
+                      @endforeach
                     </table>
                   </div>
                 </div>
@@ -317,14 +318,13 @@
     @endsection
 
     @push('scripts')
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js'></script>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js'></script>
+    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
+    <script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
+    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/lang-all.js"></script>
+        {!! $calendar->script() !!}
         <script>
-            $(document).ready(function() {
-                // page is now ready, initialize the calendar...
-                $('#calendar').fullCalendar();
-            });
-
             function openCity(evt, cityName) {
                 event.preventDefault();
                 var i, tabcontent, tablinks;
@@ -338,7 +338,7 @@
                 }
                 document.getElementById(cityName).style.display = "block";
                 evt.currentTarget.className += " active";
-            }
+            };
         </script>
     @endpush
       

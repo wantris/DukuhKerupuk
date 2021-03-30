@@ -55,8 +55,8 @@
                         <h2>Akun Saya</h2>
                         <div class="breadcrumb__option">
                             <a href="./index.html">Home</a>
-                            <a href="./index.html">Vegetables</a>
-                            <span>Vegetable’s Package</span>
+                            <a href="./index.html">Profil</a>
+                            <span>Password</span>
                         </div>
                     </div>
                 </div>
@@ -74,13 +74,12 @@
                         <div class="sidebar__item">
                             <div class="row">
                                 <div class="col-4">
-                                    <img src="{{url("ogani/img/latest-product/lp-1.jpg")}}" alt="" style="width: 60px; height:60px; border-radius:40px">
+                                    <img src="{{url('/konsumen/avatar/'.$user->gambar_profil)}}" alt="" style="width: 60px; height:60px; border-radius:40px">
                                 </div>
                                 <div class="col-8 pl-0" >
-                                    <div class="account-name font-weight-bold">Wantris</div>
-                                    <div class="text-secondary number-phone">081295491852</div>
+                                    <div class="account-name font-weight-bold">{{$user->nama_user}}</div>
+                                    <div class="text-secondary number-phone">{{$user->no_tlp}}</div>
                                 </div>
-                                
                             </div>
                             <hr style="width: 50%">
                         </div>
@@ -118,6 +117,12 @@
                             <a href="#" class="link-account-profile" style="text-decoration: none" >
                                 <i class="icofont-sale-discount circle-icon text-white mr-3"></i>
                                 Coupon Saya
+                            </a>
+                        </div>
+                        <div class="sidebar__item">
+                            <a href="#" class="link-account-profile" style="text-decoration: none" >
+                                <i class="icofont-ui-love circle-icon text-white mr-3"></i>
+                                Produk Favorit
                             </a>
                         </div>
                     </div>

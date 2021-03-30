@@ -2,7 +2,7 @@
 <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
         <div class="humberger__menu__logo">
-            <a href="#"><img src="{{url("ogani/img/logo.png")}}" alt=""></a>
+            <a href="#"><img src="{{url("ogani/img/logo2.png")}}" style="width:120px; height:66px" alt=""></a>
         </div>
         <div class="humberger__menu__cart">
             <ul>
@@ -39,6 +39,9 @@
             <ul>
                 <li class="{{ Request::routeIs('index') ? 'active' : '' }}"><a href="{{route('index')}}">Utama</a></li>
                 <li class="{{ Request::routeIs('produk') ? 'active' : '' }}"><a href="{{route('produk','all')}}">Produk</a></li>
+                <li class="{{ Request::routeIs('mitra') ? 'active' : '' }}"><a href="{{route('mitra.page')}}">Mitra</a></li>
+                <li class="{{ Request::routeIs('konsumen.page') ? 'active' : '' }}"><a href="{{route('konsumen.page')}}">Konsumen</a></li>
+                <li class="{{ Request::routeIs('contact') ? 'active' : '' }}"><a  href="{{route('contact')}}">Kontak</a></li>
                 {{-- <li><a href="#">Pages</a>
                     <ul class="header__menu__dropdown">
                         <li><a href="./shop-details.html">Shop Details</a></li>
@@ -48,7 +51,6 @@
                     </ul>
                 </li> --}}
                 {{-- <li><a href="./blog.html">Blog</a></li> --}}
-                <li><a href="./contact.html">Kontak</a></li>
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
@@ -119,14 +121,17 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="{{url('/')}}"><img src="{{url("ogani/img/logo.png")}}" alt=""></a>
+                        <a href="{{url('/')}}"><img src="{{url("ogani/img/logo2.png")}}" style="width:120px; height:66px" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
                             <li class="{{ Request::routeIs('index') ? 'active' : '' }}"><a href="{{route('index')}}">Utama</a></li>
-                            <li {{ Request::routeIs('produk') ? 'active' : '' }}><a href="{{route('produk','all')}}">Produk</a></li>
+                            <li class="{{ Request::routeIs('produk') ? 'active' : '' }}"><a href="{{route('produk','all')}}">Produk</a></li>
+                            <li class="{{ Request::routeIs('mitra.page') ? 'active' : '' }}"><a href="{{route('mitra.page')}}">Mitra</a></li>
+                            <li class="{{ Request::routeIs('konsumen.page') ? 'active' : '' }}"><a href="{{route('konsumen.page')}}">Konsumen</a></li>
+                            <li class="{{ Request::routeIs('contact') ? 'active' : '' }}"><a  href="{{route('contact')}}">Kontak</a></li>
                             {{-- <li><a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
                                     <li><a href="./shop-details.html">Shop Details</a></li>
@@ -136,7 +141,7 @@
                                 </ul>
                             </li> --}}
                             {{-- <li><a href="./blog.html">Blog</a></li> --}}
-                            <li><a href="./contact.html">Kontak</a></li>
+                            {{-- <li><a href="./contact.html">Kontak</a></li> --}}
                         </ul>
                     </nav>
                 </div>

@@ -4,7 +4,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="footer__about">
                     <div class="footer__about__logo">
-                        <a href="./index.html"><img src="{{url("ogani/img/logo.png")}}" alt=""></a>
+                        <a href="./index.html"><img src="{{url("ogani/img/logo2.png")}}" style="width:120px; height:66px" alt=""></a>
                     </div>
                     <ul>
                         <li>Alamat: </li>

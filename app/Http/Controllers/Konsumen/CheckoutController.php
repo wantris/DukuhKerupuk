@@ -92,7 +92,6 @@ class CheckoutController extends Controller
                             if ($promo) {
                                 if ($promo->tipe_diskon === 'presentase') {
                                     $subtotal = (int)$request->qty[$key] * ((int)$product->harga - ((int)$product->harga * $promo->jumlah_diskon));
-                                    dd($request->qty);
                                 } elseif ($promo->tipe_diskon === 'langsung') {
                                     $subtotal = (int)$request->qty[$key] * ((int)$product->harga - (int)$promo->jumlah_diskon);
                                 };
@@ -151,7 +150,6 @@ class CheckoutController extends Controller
                             if ($promo) {
                                 if ($promo->tipe_diskon === 'presentase') {
                                     $subtotal = (int)$request->qty[$key] * ((int)$product->harga - ((int)$product->harga * $promo->jumlah_diskon));
-                                    dd($request->qty);
                                 } elseif ($promo->tipe_diskon === 'langsung') {
                                     $subtotal = (int)$request->qty[$key] * ((int)$product->harga - (int)$promo->jumlah_diskon);
                                 };
@@ -200,7 +198,6 @@ class CheckoutController extends Controller
                                 if ($promo) {
                                     if ($promo->tipe_diskon === 'presentase') {
                                         $subtotal = (int)$request->qty[$key] * ((int)$product->harga - ((int)$product->harga * $promo->jumlah_diskon));
-                                        dd($request->qty);
                                     } elseif ($promo->tipe_diskon === 'langsung') {
                                         $subtotal = (int)$request->qty[$key] * ((int)$product->harga - (int)$promo->jumlah_diskon);
                                     };

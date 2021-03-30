@@ -38,8 +38,11 @@ Route::get('/admin/user/delete_user/{id_admin}', 'UserController@delete_user')->
 
 // User
 Route::get('/', 'LandingController@index')->name('index');
-Route::get('/mitra', 'LandingController@mitra')->name('Mitra');
-Route::get('/agen', 'LandingController@agen')->name('Agen');
+// Route::get('/mitra', 'LandingController@mitra')->name('Mitra');
+// Route::get('/agen', 'LandingController@agen')->name('Agen');
+Route::get('/contact', 'LandingController@contact')->name('contact');
+Route::get('/mitra/landing', 'LandingController@mitra')->name('mitra.page');
+Route::get('/konsumen/landing', 'LandingController@konsumen')->name('konsumen.page');
 Route::post('/subscriber', 'SubscriberController@register')->name('subscriber.post');
 // Auth Mitra
 
@@ -88,6 +91,8 @@ Route::group(['prefix' => 'konsumen'], function () {
 Route::group(['prefix' => 'product'], function () {
     Route::get('/kategori/{categories}', 'ProdukController@listProduk')->name('produk');
     Route::get('/detail/{slug}', 'ProdukController@detailProduk')->name('detail.produk');
+    Route::get('/sort-by/{value}', 'ProdukController@sortBy')->name('produk.sort');
+    Route::post('/search', 'ProdukController@search')->name('produk.search');
 });
 
 //Mitra landing
@@ -129,6 +134,8 @@ Route::group(['prefix' => 'mitra'], function () {
         Route::get('/portal/transaksi/list/{status}', 'Mitra\TransaksiController@index')->name('portal.mitra.trans.list');
         Route::patch('/portal/transaksi/change-status/{kd}', 'Mitra\TransaksiController@changeStatus')->name('portal.mitra.trans.status');
         Route::get('/portal/transaksi/detail/{kd}', 'Mitra\TransaksiController@detail')->name('portal.mitra.trans.detail');
+
+        Route::get('/portal/transaksi/cod/{status}', 'Mitra\TransaksiController@getCod')->name('portal.mitra.trans.cod');
     });
 });
 

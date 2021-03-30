@@ -73,7 +73,23 @@
     <!-- Hero Section End -->
 
     <!-- Categories Section Begin -->
-    <section class="categories">
+    <div class="banner mb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="banner__pic">
+                        <img src="{{url("ogani/img/banner/kerpuk-kering.png")}}" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="banner__pic">
+                        <img src="{{url("ogani/img/banner/diskon.png")}}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- <section class="categories">
         <div class="container">
             <div class="row">
                 <div class="categories__slider owl-carousel">
@@ -105,7 +121,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- Categories Section End -->
 
     <!-- Featured Section Begin -->
@@ -152,22 +168,7 @@
     <!-- Featured Section End -->
 
     <!-- Banner Begin -->
-    <div class="banner">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="banner__pic">
-                        <img src="{{url("ogani/img/banner/kerpuk-kering.png")}}" alt="">
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="banner__pic">
-                        <img src="{{url("ogani/img/banner/diskon.png")}}" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <!-- Banner End -->
 
     <!-- Latest Product Section Begin -->

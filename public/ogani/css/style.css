@@ -1711,6 +1711,10 @@ ol {
     margin-bottom: 0;
 }
 
+.sidebar__item__size label.selected {
+    color: red;
+}
+
 .sidebar__item__size label input {
     position: absolute;
     visibility: hidden;
@@ -3359,6 +3363,16 @@ ol {
     color: #6f6f6f;
     padding-left: 20px;
     margin-bottom: 30px;
+    border: 1px solid #ebebeb;
+    border-radius: 4px;
+}
+
+.text-input-field {
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    color: #6f6f6f;
+    padding-left: 20px;
     border: 1px solid #ebebeb;
     border-radius: 4px;
 }

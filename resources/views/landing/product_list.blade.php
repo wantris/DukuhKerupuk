@@ -45,7 +45,7 @@
                         <h2>Dukuh Kerupuk</h2>
                         <div class="breadcrumb__option">
                             <a href="./index.html">Home</a>
-                            <span>Shop</span>
+                            <span>Produk</span>
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-5">
+                    <form action="{{route('produk.search')}}" method="post">
+                    @csrf
                     <div class="sidebar">
+                        <div class="sidebar__item">
+                            <h4>Nama Produk</h4>
+                            <div class="form-group">
+                                <input type="text" class="text-input-field" name="keyword" placeholder="Nama Produk">
+                            </div>
+                        </div>
                         <div class="sidebar__item">
                             <h4>Kategori</h4>
                             @php
@@ -89,8 +97,8 @@
                                 </div>
                                 <div class="range-slider">
                                     <div class="price-input">
-                                        <input type="text" id="minamount">
-                                        <input type="text" id="maxamount">
+                                        <input type="text" name="min" id="minamount">
+                                        <input type="text" name="max" id="maxamount">
                                     </div>
                                 </div>
                             </div>
@@ -102,13 +110,15 @@
                             @endphp
                             @foreach ($mitra as $mitra)
                             <div class="sidebar__item__size">
-                                <label for="large">
+                                <label onclick="mitra('{{$mitra->id_mitra}}')" class="label-mitra_{{$mitra->id_mitra}}" for="large_{{$mitra->id_mitra}}" data-id="{{$mitra->id_mitra}}">
                                     {{$mitra->nama_mitra}}
-                                    <input type="radio" id="large" value="{{$mitra->id_mitra}}">
+                                    <input type="radio" name="mitra" class="mitra_radio" id="large_{{$mitra->id_mitra}}" data-id="{{$mitra->id_mitra}}" value="{{$mitra->id_mitra}}">
                                 </label>
                             </div>
                             @endforeach
                         </div>
+                        <input type="submit" class="site-btn mr-3 mb-5" style="box-shadow: 0 4px 4px rgb(0 0 0 / 25%);" value="Cari">
+                        </form>
                         <div class="sidebar__item">
                             <div class="latest-product__text">
                                 <h4>Produk Terbaru</h4>
@@ -123,7 +133,7 @@
                                             @endphp
                                             <a href="{{route('detail.produk', $lt->slug)}}" class="latest-product__item">
                                                 <div class="latest-product__item__pic">
-                                                    <img src="{{url("/mitra/product_image/".$img->image)}}" alt="">
+                                                    <img src="{{url("/mitra/product_image/".$img->image)}}" style="width:120px" alt="">
                                                 </div>
                                                 <div class="latest-product__item__text">
                                                     <h6>{{$lt->nama_produk}}</h6>
@@ -178,15 +188,18 @@
                             <div class="col-lg-4 col-md-5">
                                 <div class="filter__sort">
                                     <span>Sort By</span>
-                                    <select>
-                                        <option value="0">Default</option>
-                                        <option value="0">Default</option>
+                                    <select id="sort_product">
+                                        <option value="0">Semua</option>
+                                        <option value="1">Terbaru</option>
+                                        <option value="2">Harga Tertinggi</option>
+                                        <option value="3">Harga Terendah</option>
+                                        <option value="4">Terlaris</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4">
                                 <div class="filter__found">
-                                    <h6><span>16</span> Products found</h6>
+                                    <h6><span>{{$pr->count()}}</span> Produk ditemukan</h6>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-3">
@@ -197,7 +210,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" id="list_product_id">
                         @foreach ($pr as $item)
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
@@ -222,7 +235,6 @@
                     <div class="col-12 text-center">
                         {{ $pr->links('vendor.pagination.custom') }}
                     </div>
-                   
                 </div>
             </div>
         </div>
@@ -268,7 +280,11 @@
                                 icon: "success",
                             });
                         } else if (dataResult.statusCode == 201) {
-                            alert("Error occured !");
+                            Swal.fire({
+                                title: "Opps!",
+                                text: dataResult.message,
+                                icon: "error",
+                            });
                         }
                     },
                     error: function (error) {
@@ -288,6 +304,54 @@
                 });
             }
         }
+
+        $('#sort_product').on('change', function (){
+            var value = $(this).val(); 
+            if(value != null){
+                $.ajax({
+                    url: "{{url('/product/sort-by/')}}/"+value, //harus sesuai url di buat di route
+                    type: "GET",
+                    cache: false,
+                    success: function (dataResult) {
+                        document.getElementById('list_product_id').innerHTML = dataResult;
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        Swal.fire({
+                            title: "Opps!",
+                            text: "Anda Harus login Terlebih Dahulu!",
+                            icon: "error",
+                        });
+                    },
+                });
+            }
+        });
+
+        function mitra(id){
+            $('.label-mitra_'+id).addClass('selected');
+
+            $('.mitra_radio').each(function(){
+                var idm = $(this).data("id");
+                console.log(idm);
+                if(!$('#large_'+idm).is(":checked")){
+                    $(this).removeClass('selected');
+                }
+            });
+
+        }
+
+        // $('.label-mitra').each(function(){
+        //     $(this).on('click', function(){
+        //         var id = $(this).data("id");
+        //         console.log(id);
+        //         if( ! $('.mitra_'+id).is('checked')){
+        //             $(this).addClass('selected');
+        //         }else{
+        //             $(this).removeClass('selected');
+        //         }
+        //     });
+        // });
+
     </script>
 
 </body>

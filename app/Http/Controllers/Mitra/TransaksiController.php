@@ -47,6 +47,28 @@ class TransaksiController extends Controller
                 'status' => $status
             ]);
 
+            if ($status === "selesai") {
+                $pr = DetailTransaksi::where('transaksi_kd', $kd)->get();
+                if ($pr->count() > 0) {
+                    foreach ($pr as $key => $pr) {
+                        $product = Product::where('id_produk', $pr->product_id)->first();
+                        Product::where('id_produk', $pr->product_id)->update([
+                            'penjualan' => (int)$product->penjualan + 1
+                        ]);
+                    }
+                }
+            } elseif ($status === "dikemas") {
+                $pr = DetailTransaksi::where('transaksi_kd', $kd)->get();
+                if ($pr->count() > 0) {
+                    foreach ($pr as $key => $pr) {
+                        $product = Product::where('id_produk', $pr->product_id)->first();
+                        Product::where('id_produk', $pr->product_id)->update([
+                            'stok' => (int)$product->stok - 1
+                        ]);
+                    }
+                }
+            }
+
             $success['status'] = '1';
             $success['message'] = $kd;
             return response()->json($success, 200);
@@ -62,5 +84,25 @@ class TransaksiController extends Controller
         $ts = Transaksi::with('userRef')->where('kd_transaksi', $kd)->first();
         $detail = DetailTransaksi::where('transaksi_kd', $kd)->get();
         return view('mitra.transaksi.invoice', compact('ts', 'detail', 'kd'));
+    }
+
+    public function getCod($status)
+    {
+        if ($status === 'all') {
+            $ts = Transaksi::with('userRef')->where('mitra_id', Auth::guard('mitra')->id())->where('pengiriman', 'cod')->get();
+            return view('mitra.cod.index', compact('ts'));
+        } elseif ($status === 'pending') {
+            $ts = Transaksi::with('userRef')->where('mitra_id', Auth::guard('mitra')->id())->where('status', $status)->where('pengiriman', 'cod')->get();
+            return view('mitra.cod.pending', compact('ts'));
+        } elseif ($status === 'cek') {
+            $ts = Transaksi::with('userRef')->where('mitra_id', Auth::guard('mitra')->id())->where('status', $status)->where('pengiriman', 'cod')->get();
+            return view('mitra.cod.cek', compact('ts'));
+        } elseif ($status === 'menunggu') {
+            $ts = Transaksi::with('userRef')->where('mitra_id', Auth::guard('mitra')->id())->where('status', $status)->where('pengiriman', 'cod')->get();
+            return view('mitra.cod.dikemas', compact('ts'));
+        } elseif ($status === 'selesai') {
+            $ts = Transaksi::with('userRef')->where('mitra_id', Auth::guard('mitra')->id())->where('status', $status)->where('pengiriman', 'cod')->get();
+            return view('mitra.cod.selesai', compact('ts'));
+        }
     }
 }
